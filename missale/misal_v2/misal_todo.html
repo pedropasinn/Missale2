@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>TEMPORA</title>
+
+    <link rel="stylesheet" href="missale_tokens.css" type="text/css" />
+    <link rel="stylesheet" href="missale_base.css" type="text/css" />
+    <link rel="stylesheet" href="missale_content.css" type="text/css" />
+    <link rel="stylesheet" href="misal.css" type="text/css" />
+    <link rel="stylesheet" href="misal_ui_moderno.css?v=1" type="text/css" />
+
+    <style>
+        /* Page-specific: misal_todo.html */
+        html, body {
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        /* Kindle native scroll fallback */
+        html.scroll-nativo body,
+        html.scroll-nativo #contenedor {
+            overflow: auto !important;
+            overflow-x: hidden !important;
+            -webkit-overflow-scrolling: touch;
+        }
+        html.scroll-nativo #scroller {
+            position: relative !important;
+            transform: none !important;
+            -webkit-transform: none !important;
+        }
+
+        /* Cabecera positioning */
+        div#cabecera {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            z-index: 50000 !important;
+            padding: 4px 2px !important;
+            padding-top: max(4px, var(--safe-top)) !important;
+            box-sizing: border-box !important;
+            display: block !important;
+            margin: 0 !important;
+        }
+
+        /* Footer */
+        #piedepantalla {
+            margin: 0;
+            text-align: center;
+            background-color: var(--brand);
+            color: white;
+            border: 0px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2.1em;
+            display: table;
+            padding-bottom: var(--safe-bottom);
+        }
+
+        .visibeilb { display: inline-block; }
+        .visibeil { display: inline; }
+
+        #icono-sticky {
+            position: absolute;
+            right: 0em;
+            text-align: left;
+            width: auto;
+            max-width: 45%;
+            opacity: 0.9;
+            background: transparent;
+            z-index: 50000;
+        }
+
+        #mis_intenciones0 {
+            background-color: var(--brand);
+            color: white;
+            opacity: .8;
+            border-radius: 5px;
+            display: none;
+            max-height: 50vh;
+            max-width: 100%;
+            min-width: 50%;
+            overflow-y: auto;
+        }
+
+        #mis_intenciones {
+            padding: 1em;
+            opacity: .8;
+            border-radius: 5px;
+        }
+</style>
+
+
+<script type="text/javascript" charset="utf-8" src="../cordova_loader.js"></script>
+
+    <script>
+    // Detecta Kindle e ativa scroll nativo
+    (function() {
+        var esKindle = /Kindle|Silk|KFTT|KFOT|KFJW|KFJWA|KFAP|KFAPW|KFARW|KFASWI|KFTHW|KFSOW/i.test(navigator.userAgent);
+        if (esKindle) {
+            document.documentElement.classList.add('scroll-nativo');
+            window.esKindle = true;
+            console.log('Kindle detectado - usando scroll nativo');
+        }
+    })();
+    </script>
+    <script src="../iscroll-lite.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../jquery.js"></script>
+    <script
+      type="text/javascript"
+      charset="utf-8"
+      src="mis_funciones_misal.js"></script>
+    <!-- 	<script src="../autocolumn.js" type="text/javascript" charset="utf-8"></script> -->
+    <script>
+      var pestana = "o"
+      var mipestana = "o"
+      var sinmisal = false
+
+      mimisal_1 = idiomas[mipreferencia["misal_pral"]]
+      mimisal_2 = idiomas[mipreferencia["segundoidioma"]]
+      var parcial2 = getUrlVars()["parcial"]
+
+    </script>
+  </head>
+
+  <body onload=" ">
+    <!-- Novo cabecera com estilo segmented -->
+    <div id="cabecera">
+        <div class="segmented" id="chipsNav">
+            <button class="seg-item active" data-tab="o" ontouchend="segmentClick(this, 'o')" onclick="segmentClick(this, 'o')">Ord</button>
+            <button class="seg-item" data-tab="t" ontouchend="segmentClick(this, 't')" onclick="segmentClick(this, 't')">Tmp</button>
+            <button class="seg-item" data-tab="s" ontouchend="segmentClick(this, 's')" onclick="segmentClick(this, 's')">Snt</button>
+            <button class="seg-item" data-tab="c" ontouchend="segmentClick(this, 'c')" onclick="segmentClick(this, 'c')">Com</button>
+            <button class="seg-item" data-tab="le" ontouchend="segmentClick(this, 'le')" onclick="segmentClick(this, 'le')">Lct</button>
+            <button class="seg-item" data-tab="pf" ontouchend="segmentClick(this, 'pf')" onclick="segmentClick(this, 'pf')">Pf</button>
+            <button class="seg-item" data-tab="pe" ontouchend="segmentClick(this, 'pe')" onclick="segmentClick(this, 'pe')">PE</button>
+        </div>
+    </div>
+
+    <script>
+    // Função para mudar de tab com o novo estilo segmented
+    function segmentClick(el, tab) {
+        // Remove active de todos
+        document.querySelectorAll('.seg-item').forEach(function(item) {
+            item.classList.remove('active');
+        });
+        // Adiciona active ao clicado
+        el.classList.add('active');
+        // Chama a função original
+        cambia_a_pest(tab);
+    }
+
+    // Atualiza o visual do segmented quando muda de tab por outra via
+    function updateSegmentedActive(tab) {
+        document.querySelectorAll('.seg-item').forEach(function(item) {
+            item.classList.remove('active');
+            if (item.getAttribute('data-tab') === tab) {
+                item.classList.add('active');
+            }
+        });
+    }
+    </script>
+
+    <!-- Chama pinta_tabs para criar menus e aplicar estilos (o cabecera já existe acima) -->
+    <script type="text/javascript">
+      pinta_tabs("../", mipestana)
+    </script>
+
+    <div id="icono-sticky">
+      <img src="../estrella_intenc4.png" alt="Icono"
+        style="float: right; height: 3em;"
+        ontouchend="$('#mis_intenciones0').toggle()" />
+      <div id=mis_intenciones0>
+        <div style="text-align: right;"><a
+            href="devocionario.html?editar=1"><img
+              src="../images/icons-png/edit-white.png"
+              style="margin-right: .5em"></a></div>
+        <div id=mis_intenciones></div>
+      </div>
+    </div>
+    <div id="contenedor">
+      <div id="scroller">
+        <div id="tab_o" class="cont_tab"></div>
+        <div id="tab_t" class="cont_tab" style="display: none"></div>
+        <div id="tab_s" class="cont_tab" style="display: none"></div>
+        <div id="tab_c" class="cont_tab" style="display: none"></div>
+        <div id="tab_le" class="cont_tab" style="display: none"></div>
+        <div id="tab_pf" class="cont_tab" style="display: none"></div>
+        <div id="tab_pe" class="cont_tab" style="display: none"></div>
+        <div class="final_pagina">
+          <div style="margin-bottom: 30pt; text-align: center">
+            <a class="boton"
+              ontouchend="myScroll.scrollToPage(0,0,100)">&#9679;</a>
+          </div>
+          <hr class="red" />
+          <hr class="red" />
+        </div>
+
+      </div>
+    </div>
+    <div id="mi_estr" style="display: none"></div>
+    <div id="mi_idiom1" style="display: none"></div>
+    <div id="mi_idiom2" style="display: none"></div>
+    <script>
+  arregla_top();
+  arregla_bottom();
+
+      pinta_botones("../", mipestana)
+
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,422 @@
+/*
+  Missale Romanum – Content Styles
+  Styles for liturgical content loaded from language directories.
+  Requires: missale_tokens.css loaded first.
+*/
+
+/* =========================================
+   BASE TYPOGRAPHY (Content areas)
+   ========================================= */
+body {
+    -webkit-text-size-adjust: none;
+}
+
+p {
+    margin-top: 1em;
+    margin-bottom: 8pt;
+    width: 100%;
+    clear: both;
+}
+
+h1 {
+    border: 2px solid;
+    width: 90%;
+    padding: 10px;
+    color: var(--rubric);
+    font-size: 130%;
+    font-weight: normal;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+h2 {
+    border: 1px solid;
+    width: 90%;
+    padding: 10px;
+    color: var(--rubric);
+    font-size: 120%;
+    font-weight: normal;
+    margin-left: auto;
+    text-align: center;
+    margin-right: auto;
+}
+h3 {
+    color: var(--rubric);
+    text-align: center;
+}
+h4 {
+    color: var(--rubric);
+    margin-top: 10px;
+    margin-bottom: 1em;
+}
+h5 {
+    text-align: center;
+    font-weight: bold;
+}
+
+/* =========================================
+   LINK STYLES
+   ========================================= */
+a.rlnk { text-decoration: none; color: red; }
+a.blnk { text-decoration: none; color: black; }
+a.glnkd { color: green; }
+a.rlnkd { color: red; }
+a.bllnkd { color: blue; }
+a.enlacepref, a.enlacepref:visited {
+    color: var(--foreground);
+    text-decoration: none;
+    font-style: italic;
+}
+
+[data-theme="dark"] a.blnk,
+[data-theme="dark"] a.bllnkd,
+[data-theme="dark"] .enlacepref,
+.noche a.blnk,
+.noche a.bllnkd,
+.noche .enlacepref {
+    color: gray;
+}
+
+/* =========================================
+   INDENTATION & PSALM FORMATTING
+   ========================================= */
+.ind1 { margin-left: 1%; }
+.ind2 { margin-left: 1.5%; }
+.ind3 { margin-left: 2%; }
+.ind4 { margin-left: 2.5%; }
+.indhym { margin-left: 2%; }
+
+.ps1i { margin-left: 2em; text-indent: -1.5em; margin-bottom: 0pt; }
+.ps1e { margin-left: 2em; text-indent: -1.5em; margin-bottom: 8pt; }
+.ps2i { margin-left: 2em; text-indent: -0.75em; margin-bottom: 0pt; }
+.ps2e { margin-left: 2em; text-indent: -0.75em; margin-bottom: 8pt; }
+
+/* =========================================
+   TEXT FORMATTING CLASSES
+   ========================================= */
+.boce { font-weight: bold; text-align: center; }
+.re { color: red; }
+.bo { font-weight: bold; }
+.rebo { color: red; font-weight: bold; }
+.rebo5 { color: red; font-weight: bold; font-size: 150%; }
+.rece { color: red; text-align: center; }
+.reboce { color: red; font-weight: bold; text-align: center; }
+.reboce4 { color: red; font-weight: bold; text-align: center; font-size: 125%; }
+.reboce5 { color: red; font-weight: bold; text-align: center; font-size: 150%; }
+
+.renm { color: red; margin-bottom: 0pt; }
+.recenm { color: red; text-align: center; margin-bottom: 0pt; }
+.rebonm { color: red; font-weight: bold; margin-bottom: 0pt; }
+.rebocenm { color: red; font-weight: bold; text-align: center; margin-bottom: 0pt; }
+
+.blce { color: blue; text-align: center; }
+.blboce { color: blue; font-weight: bold; text-align: center; }
+.bilingue { display: block; }
+
+.pueblo { font-weight: bold; }
+.tomate { color: tomato; }
+.verde { color: green; }
+.cursiva { font-style: italic; }
+.normal { font-weight: normal; }
+
+.consagracion { font-size: 130%; font-weight: bold; }
+.rubrica { font-size: 80%; margin-top: 1%; }
+.rubrica span.red { font-size: 100%; }
+
+/* Capitular */
+span.cap { color: var(--rubric); font-weight: bold; font-size: 150%; font-style: normal; }
+
+/* =========================================
+   RED / RUBRIC ELEMENTS
+   ========================================= */
+.red { color: var(--rubric); font-size: 80%; }
+.red .boton, .red .botonBueno { font-size: 120%; }
+.cruzroja { color: var(--rubric); font-size: 100%; font-weight: bold; }
+
+hr.thinred {
+    width: 85%; border: 1px; height: 1px;
+    color: red; background-color: red;
+}
+hr { margin-top: 3%; margin-bottom: 3%; }
+
+/* =========================================
+   SPECIAL HANGING INDENT
+   ========================================= */
+.ztoind { margin-left: 3.5em; text-indent: -3.5em; color: red; }
+
+/* =========================================
+   CONTENT FLOAT LAYOUT (bilingual)
+   ========================================= */
+div, div .re, hr .re {
+    float: left;
+    width: 98%;
+    display: block;
+}
+.latin { width: 49%; display: block; }
+.cast { display: block; width: 49%; }
+
+/* =========================================
+   LANGUAGE VISIBILITY (toggled by JS)
+   ========================================= */
+.latin, .misal_latin { display: none; }
+.cast, .misal_cast { display: none; }
+.engl, .misal_engl { display: none; }
+.germ, .misal_germ { display: none; }
+.ital, .misal_ital { display: none; }
+.fran, .misal_fran { display: none; }
+.port, .misal_port { display: none; }
+.lengua1 { display: none; }
+.lengua2 { display: none; }
+
+/* =========================================
+   LITURGICAL CYCLE VISIBILITY
+   ========================================= */
+.annosecundo, .parcial { display: none; }
+.tipo1 { display: block; }
+.tipo2 { display: none; visibility: hidden; }
+
+/* =========================================
+   READING-SPECIFIC STYLES
+   ========================================= */
+p.Areadingfrom, li.Areadingfrom, div.Areadingfrom {
+    margin-top: 13.15pt; line-height: 17.5pt; page-break-after: avoid;
+}
+p.ReadingGospelTitle, li.ReadingGospelTitle, div.ReadingGospelTitle {
+    margin-top: 17.5pt; line-height: 17.5pt; page-break-after: avoid;
+    font-variant: small-caps; color: var(--rubric);
+}
+p.Summary, li.Summary, div.Summary {
+    margin-top: 8.75pt; margin-right: 9pt; line-height: 120%;
+    page-break-after: avoid; color: var(--rubric); font-style: italic;
+}
+p.TextofReading, li.TextofReading, div.TextofReading {
+    text-align: justify; text-indent: 21pt; line-height: 17.5pt;
+}
+p.TextofReading3, li.TextofReading3, div.TextofReading3 {
+    text-align: justify; text-indent: 21pt; line-height: 17.5pt;
+}
+p.TextofReading-keepwithnext1, li.TextofReading-keepwithnext1, div.TextofReading-keepwithnext1 {
+    text-align: justify; text-indent: 21pt; line-height: 17.5pt; page-break-after: avoid;
+}
+p.PsalmAlleluiaTitle, li.PsalmAlleluiaTitle, div.PsalmAlleluiaTitle {
+    margin-top: 17.5pt; margin-bottom: 4.35pt; line-height: 17.5pt;
+    page-break-after: avoid; font-variant: small-caps; color: var(--rubric);
+}
+p.Psalmresponse, li.Psalmresponse, div.Psalmresponse {
+    margin-top: 8.75pt; text-indent: -18pt; line-height: 120%; page-break-after: avoid;
+}
+p.PsalmAlleluiaVerse, li.PsalmAlleluiaVerse, div.PsalmAlleluiaVerse {
+    margin-top: 4.5pt; line-height: 120%;
+}
+p.TextofReading-keepwithnext1-10, li.TextofReading-keepwithnext1-10, div.TextofReading-keepwithnext1-10 {
+    text-align: justify; text-indent: 21pt; line-height: 17.5pt;
+    page-break-after: avoid; letter-spacing: -0.15pt;
+}
+p.Rubric, li.Rubric, div.Rubric {
+    margin-top: 4.5pt; text-align: justify; line-height: 120%; color: var(--rubric);
+}
+p.PsalmAlleluiaVerse-keepwithnext1, li.PsalmAlleluiaVerse-keepwithnext1, div.PsalmAlleluiaVerse-keepwithnext1 {
+    margin-top: 4.5pt; line-height: 120%; page-break-after: avoid;
+}
+p.TextofReading-10, li.TextofReading-10, div.TextofReading-10 {
+    text-align: justify; text-indent: 21pt; line-height: 17.5pt; letter-spacing: -0.15pt;
+}
+p.TextofReading-keepwithnext1-20, li.TextofReading-keepwithnext1-20, div.TextofReading-keepwithnext1-20 {
+    text-align: justify; text-indent: 21pt; line-height: 17.5pt;
+    page-break-after: avoid; letter-spacing: -0.25pt;
+}
+p.TextofReading-20, li.TextofReading-20, div.TextofReading-20 {
+    text-align: justify; text-indent: 21pt; line-height: 17.5pt; letter-spacing: -0.25pt;
+}
+p.TextofReading3-keepwithnext1, li.TextofReading3-keepwithnext1, div.TextofReading3-keepwithnext1 {
+    text-align: justify; text-indent: 21pt; line-height: 17.5pt; page-break-after: avoid;
+}
+p.SequenceVerse, li.SequenceVerse, div.SequenceVerse {
+    margin-top: 4.5pt; line-height: 120%;
+}
+p.Rule-SectionSeparator, li.Rule-SectionSeparator, div.Rule-SectionSeparator {
+    text-align: justify; line-height: 120%; border: none; padding: 0cm; color: var(--rubric);
+}
+p.Rule-SectionSeparator-keepwithnext1, li.Rule-SectionSeparator-keepwithnext1, div.Rule-SectionSeparator-keepwithnext1 {
+    text-align: justify; page-break-after: avoid; border: none; padding: 0cm; color: var(--rubric);
+}
+p.TextofReading3-10, li.TextofReading3-10, div.TextofReading3-10 {
+    text-align: justify; text-indent: 21pt; letter-spacing: -0.15pt;
+}
+p.TextofReading3-10-keepwithnext1, li.TextofReading3-10-keepwithnext1, div.TextofReading3-10-keepwithnext1 {
+    text-align: justify; text-indent: 21pt; line-height: 17.5pt;
+    page-break-after: avoid; letter-spacing: -0.15pt;
+}
+p.TextofReading3-20, li.TextofReading3-20, div.TextofReading3-20 {
+    text-align: justify; text-indent: 21pt; letter-spacing: -0.25pt;
+}
+p.TextofReading3-20-keepwithnext1, li.TextofReading3-20-keepwithnext1, div.TextofReading3-20-keepwithnext1 {
+    text-align: justify; text-indent: 21pt; line-height: 17.5pt;
+    page-break-after: avoid; letter-spacing: -0.25pt;
+}
+p.SequenceVerse-keepwithnext1, li.SequenceVerse-keepwithnext1, div.SequenceVerse-keepwithnext1 {
+    margin-top: 4.5pt; line-height: 120%; page-break-after: avoid;
+}
+p.SEASONOFADVENT, li.SEASONOFADVENT, div.SEASONOFADVENT {
+    margin-bottom: 17.5pt; color: var(--rubric); font-weight: bold;
+}
+p.TheWordoftheLord, li.TheWordoftheLord, div.TheWordoftheLord {
+    margin-top: 8.75pt; text-indent: 21pt;
+}
+p.Incipit-multiplelines, li.Incipit-multiplelines, div.Incipit-multiplelines {
+    margin-top: 8.75pt; line-height: 17.5pt;
+}
+p.TheWordoftheLord4, li.TheWordoftheLord4, div.TheWordoftheLord4 {
+    margin-top: 8.75pt;
+}
+p.TheWordoftheLord4-keepwithnext1, li.TheWordoftheLord4-keepwithnext1, div.TheWordoftheLord4-keepwithnext1 {
+    margin-top: 8.75pt; text-indent: 21pt;
+}
+p.TheWordoftheLord4-10, li.TheWordoftheLord4-10, div.TheWordoftheLord4-10 {
+    margin-top: 8.75pt; text-indent: 21pt;
+}
+p.TheWordoftheLord4-10-keepwithnext1, li.TheWordoftheLord4-10-keepwithnext1, div.TheWordoftheLord4-10-keepwithnext1 {
+    margin-top: 8.75pt;
+}
+p.TheWordoftheLord4-20, li.TheWordoftheLord4-20, div.TheWordoftheLord4-20 {
+    margin-top: 8.75pt; text-indent: 21pt; letter-spacing: -0.25pt;
+}
+p.TheWordoftheLord4-20-keepwithnext1, li.TheWordoftheLord4-20-keepwithnext1, div.TheWordoftheLord4-20-keepwithnext1 {
+    margin-top: 8.75pt; text-indent: 21pt;
+}
+p.Incipit-oneline-20, li.Incipit-oneline-20, div.Incipit-oneline-20 {
+    margin-top: 8.75pt; text-align: justify; line-height: 17.5pt;
+    page-break-after: avoid; letter-spacing: -0.25pt;
+}
+p.TheWordoftheLord-keepwithnext1, li.TheWordoftheLord-keepwithnext1, div.TheWordoftheLord-keepwithnext1 {
+    margin-top: 8.75pt; text-align: justify; text-indent: 21pt;
+    line-height: 17.5pt; page-break-after: avoid;
+}
+p.TheWordoftheLord-keepwithnext1-20, li.TheWordoftheLord-keepwithnext1-20, div.TheWordoftheLord-keepwithnext1-20 {
+    margin-top: 8.75pt; text-align: justify; text-indent: 21pt;
+    line-height: 17.5pt; page-break-after: avoid; letter-spacing: -0.25pt;
+}
+p.TheWordoftheLord-keepwithnext1-10, li.TheWordoftheLord-keepwithnext1-10, div.TheWordoftheLord-keepwithnext1-10 {
+    margin-top: 8.75pt; text-align: justify; text-indent: 21pt;
+    line-height: 17.5pt; page-break-after: avoid; letter-spacing: -0.15pt;
+}
+p.Titolo0, li.Titolo0, div.Titolo0 {
+    margin-bottom: 6pt; page-break-after: avoid; color: red;
+}
+p.Sollemnitas, li.Sollemnitas, div.Sollemnitas {
+    line-height: 17.5pt; page-break-after: avoid; color: var(--rubric);
+}
+
+span.Rx { color: var(--rubric); }
+span.CfPs241-3 { color: var(--rubric); }
+span.Cross { color: var(--rubric); font-weight: bold; }
+span.Black { color: var(--foreground); }
+span.Lower-caseBold { font-weight: bold; }
+span.Italic { font-style: italic; }
+span.msoIns { text-decoration: underline; color: red; }
+span.msoDel { text-decoration: line-through; color: red; }
+
+div.Section1 { page: Section1; }
+
+/* =========================================
+   INDEX STYLES
+   ========================================= */
+div.indice {
+    margin-top: 1%; color: red; font-weight: bold; width: 85%;
+}
+div.indice a, div.indice a:visited {
+    font-weight: normal; text-decoration: none; font-style: italic; line-height: 150%;
+}
+div.indice a.boton, div.indice a.boton:visited { color: white; font-style: normal; }
+div.indice a.botonBueno, div.indice a.botonBueno:visited { color: white; font-style: normal; }
+div.indice span { font-weight: normal; }
+
+.indiceplegarias { margin-left: 2em; line-height: 200%; }
+.indicepref, .indicepref.red { width: 98%; margin-left: 1%; line-height: 150%; font-size: 100%; }
+.titulo_orac { font-size: 110%; color: var(--rubric); }
+
+/* =========================================
+   MISC CONTENT
+   ========================================= */
+.dia { display: none; padding-top: 2.1em; }
+.lectionarium { margin-top: 5%; margin-bottom: 5%; }
+div.separador { margin-top: 1em; margin-bottom: 0; height: 1px; }
+.alindcha { color: var(--rubric); float: right; font-weight: normal; }
+.alindcha:after { clear: both; }
+.alindcha + br { clear: both; }
+.letania { float: right; font-weight: normal; }
+h2 span.botonesnav { float: left; }
+div.padre { margin-top: .5em; }
+
+.marc_dcha { width: auto; float: right; text-align: right; margin-right: 1em; }
+.marc_izda { width: auto; float: left; }
+
+.final_pagina { margin-top: 20%; margin-bottom: 60%; }
+.sugerido div:not(.nosugerido) { color: darkgreen; }
+
+li { text-overflow: clip; }
+table { margin-left: 1%; text-align: center; }
+table th { padding-left: 1%; padding-right: 1%; }
+img { border: 0; vertical-align: middle; }
+
+.visibleb { display: inline-block; }
+.novisibleb { display: none; }
+
+/* =========================================
+   DARK MODE OVERRIDES FOR CONTENT
+   ========================================= */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+.noche h1, .noche h2, .noche h3, .noche h4 {
+    color: #ef4444;
+}
+
+[data-theme="dark"] span.enlace,
+[data-theme="dark"] span.blue,
+[data-theme="dark"] span.enlace_salmodia,
+[data-theme="dark"] span.azul,
+[data-theme="dark"] .blboce,
+.noche span.enlace,
+.noche span.blue,
+.noche span.enlace_salmodia,
+.noche span.azul,
+.noche .blboce {
+    color: lightblue;
+}
+
+[data-theme="dark"] .texto_incluido,
+.noche .texto_incluido {
+    background-color: DarkSlateGray;
+}
+
+[data-theme="dark"] #top_botones,
+.noche #top_botones {
+    background-color: #7e7a47;
+}
+
+/* =========================================
+   CONTENT AREA LINE-HEIGHT & TYPOGRAPHY
+   ========================================= */
+#scroller {
+    line-height: 1.6;
+    padding-bottom: 5em;
+}
+
+/* Upgrade legacy font declarations but keep pt units for preference system */
+.cont_tab {
+    font-family: var(--font-sans);
+    line-height: 1.6;
+}
+
+/* =========================================
+   TABLET LAYOUT
+   ========================================= */
+@media (min-width: 769px) {
+    #scroller {
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

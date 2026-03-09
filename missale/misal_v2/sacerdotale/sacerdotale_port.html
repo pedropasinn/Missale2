@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text.html;" charset="utf-8" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1, viewport-fit=cover">
+		<title>TEMPORA</title>
+
+		<link rel="stylesheet" href="../misal.css" type="text/css" />
+		<link rel="stylesheet" href="../devoc.css" type="text/css" />
+		<style>
+        html, body {
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #piedepantalla {
+                margin: 0;
+                text-align: center;
+                background-color: maroon;
+                color: white;
+                border:0px;
+                position: fixed;  /* Fijo en la pantalla */
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 1.9em;
+                display: table;
+                z-index: 30000;
+}
+
+            #contenedor {
+        position: absolute;
+        top: 2.1em;  /* Espacio debajo de la barra superior */
+        bottom: 1.9em; /* Espacio encima de la barra inferior */
+        left: 0;
+        width: 100vw;
+        overflow: auto; /* Evita que el contenedor haga scroll */
+        display: flex;
+        flex-direction: column;
+    }
+    #scroller {
+        flex: 1; /* Se expande para ocupar el espacio restante */
+        
+         /* 🔥 Habilita scroll táctil en iOS */
+        padding: 1em;
+        margin: 0;
+        width: 95%;
+        touch-action: pan-y;
+        position: absolute;
+        left:0;
+    }
+  /* Solo en iOS */
+  @supports (padding-bottom: env(safe-area-inset-bottom)) {
+      #piedepantalla {
+          padding-bottom: env(safe-area-inset-bottom);
+      }
+      body {
+          padding-bottom: env(safe-area-inset-bottom);
+      }
+                        #contenedor {
+                            bottom: -1.9em;
+  }
+    }
+  
+    @-moz-document url-prefix() {
+  #contenedor {
+    bottom: 2.1em;  /* Solo en Firefox */
+  }
+}
+body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+                 bottom: -1.9em;
+        }
+            #header {
+                background-color: maroon;
+                color: white;
+                position: fixed;
+                top: 0;
+                width: 100%;
+                z-index: 1000;
+                padding-bottom:0;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                                                    padding-top: env(safe-area-inset-top);
+            }
+
+            #header h1 {
+                margin: 0;
+                text-align: center;
+                background-color: maroon;
+                color: white;
+                border:0px;
+            }
+		</style>
+		<script type="text/javascript" charset="utf-8" src="../../jquery.js"></script>
+		<script type="text/javascript" charset="utf-8" src="../../cordova_loader.js"></script>
+		<script
+			type="text/javascript"
+			charset="utf-8"
+			src="../mis_funciones_devoc.js"></script>
+		<script>
+					$(document).ready(function () {
+    // Manejar clics en enlaces internos para cambiar de página
+    $('a').not('li a').on('click', function (event) {
+        event.preventDefault(); // Evitar comportamiento predeterminado del enlace
+        let targetPage = $(this).attr('href'); // Obtener el destino del enlace
+        
+        if (targetPage.startsWith('#')) {
+            // Mostrar la página correspondiente
+            $('.page').hide(); // Ocultar todas las páginas
+            $(targetPage).fadeIn(); // Mostrar la página seleccionada con animación
+        } else {
+            // Para enlaces externos o de descarga
+            window.location.href = targetPage;
+        }
+    });
+	//					$('#icono-sticky').css('top', (parseFloat(mipreferencia["margen_superior"]) + .3) + 'em');
+	//					$('#contenedor').css('top', (parseFloat(mipreferencia["margen_superior"]) + 7) + 'em');
+
+    // Mostrar la primera página al cargar
+    $('.page').hide(); // Ocultar todas las páginas
+    $(window.location.hash).show(); // Mostrar solo la página inicial
+
+				});
+				
+						function cambiaIdioma(idioma, num) {
+							pon_pref('idioma_dev_'+num,idioma)
+							window.location.reload()
+						}
+					function ejecutarCodigo(el) {
+    let codigo = el.getAttribute("data-url");
+    let funcion = new Function(codigo);
+    funcion(); // Ejecuta el código almacenado en data-url
+}
+				</script>
+		<style>
+					div.page div {
+						margin-top: .5em;
+					}
+					.lengua1 {
+width: 48%;
+float: left;
+display: block;
+					}
+					.lengua2 {
+width: 48%;
+float: right;
+display: block;
+					}
+
+				</style>
+	</head>
+	<body>
+		<div id="header" style="position: absolute; top: 0;">
+			<h1 style='width: 95%'>Missale Romanum</h1>
+			<div class="navbar">
+				<ul>
+					<li><a href="../feria_actual.html"
+							class="pestana"
+							id=tab_ind><img src="../../calendario_blanco.png"
+								style="height:1.3em;"></a></li>
+					<li><a
+							href="../devocionario.html#devotionarium"
+							class="pestana" id=tab_dev>Devotionarium</a></li>
+					<li><a href="../devocionario.html#sacerdotale"
+							class="pestana active" id=tab_sac>Sacerdotale</a></li>
+					<li><a
+							data-url="console.log('Ejecutando código antes de redirigir'); window.location='../igmr/igmr_'+dime_pref('id_igmr','cast')+'.html'"
+							onclick="ejecutarCodigo(this)"
+							class="pestana" id=tab_igmr>IGMR</a></li>
+					<li><a
+							href="../misal_todo.html"
+							class="pestana">MR</a></li>
+				</ul>
+			</div>
+		</div>
+		<div id=contenedor>
+			<div id=scroller>
+				<div class='page' id='exp_ptbr'>
+
+					<div data-role='content'>
+
+						<div><h2>EXPOSIÇÃO E BENÇÃO COM O SANTÍSSIMO SACRAMENTO</h2></div>
+
+						<div>
+
+							<div class='lengua1'>
+								<p>
+									Pange, lingua, gloriósi<br>
+									Córporis mystérium,<br>
+									Sanguinísque pretiósi,<br>
+									quem in mundi prétium<br>
+									fructus ventris generósi<br>
+									Rex effúdit géntium.
+								</p>
+							</div>
+
+							<div class='lengua2'>
+								<p>
+									Vamos todos louvar juntos<br>
+									o mistério do amor,<br>
+									pois o preço deste mundo<br>
+									foi o sangue redentor,<br>
+									recebido de Maria,<br>
+									que nos deu o Salvador.
+								</p>
+							</div>
+
+						</div>
+
+						<div class=red style='clear: both;  text-align: center; '>* * *</div>
+
+						<div>
+
+							<div class='lengua1'>
+								<p>
+									Tantum ergo sacraméntum<br>
+									venerémur cérnui,<br>
+									et antiquum documéntum<br>
+									novo cedat rítui;<br>
+									præstet fides suppleméntum<br>
+									sénsuum deféctui.
+								</p>
+							</div>
+
+							<div class='lengua2'>
+								<p>
+									Tão sublime sacramento<br>
+									adoremos neste altar,<br>
+									pois o Antigo Testamento<br>
+									deu ao Novo seu lugar,<br>
+									Venha a fé por suplemento<br>
+									os sentidos completar.
+								</p>
+							</div>
+						</div>
+
+						<div style='clear: both; '> </div>
+
+						<div>
+							<div class='lengua1'>
+								<p>
+									Genitóri Genitóque<br>
+									laus et iubilátio,<br>
+									salus, honor, virtus quoque<br>
+									sit et benedíctio;<br>
+									procedénti ab utróque<br>
+									compar sit laudátio.<br>
+									Amen.
+								</p>
+							</div>
+
+							<div class='lengua2'>
+								<p>
+									Ao Eterno Pai cantemos<br>
+									e a Jesus, o Salvador.<br>
+									Ao Espírito exaltemos,<br>
+									na Trindade, eterno amor.<br>
+									Ao Deus Uno e Trino demos<br>
+									a alegria do louvor.<br>
+									Amém.
+								</p>
+							</div>
+						</div>
+
+						<div style='clear: both; '> </div>
+
+						<div>
+							<div class='lengua1'>
+								<span class=red>V/. </span>Panem de cælo præstitísti eis <span
+									class=red>(T. P. </span>Allelúia<span class=red>)</span>.<br>
+								<span class=red>R/. </span>Omne delectamén­tum in se habéntem <span
+									class=red>(T. P. </span>Allelúia<span class=red>)</span>.
+							</div>
+
+							<div class='lengua2'>
+								<span class=red>V/. </span>Do Céu lhes destes o Pão <span class=red>(T.
+									P. </span>Aleluia<span class=red>)</span>.<br>
+								<span class=red>R/. </span>Que contém todo sabor <span class=red>(T. P.
+								</span>Aleluia<span class=red>)</span>.
+							</div>
+
+						</div>
+
+						<div style='clear: both; '> </div>
+
+						<div>
+							<div class='lengua1'>
+								<p>
+									Orémus.<br>
+									Deus, qui nobis sub sacraménto mirábili passiónis tuæ memóriam
+									Reliquísti,
+									tríbue, quǽsumus,
+									ita nos Córporis et Sánguinis
+									tui sacra mystéria venerári,
+									ut redemptiónis tuæ fructum in nobis iúgiter sentiámus.
+									Qui vivís et regnas in sǽcula sǽculórum.<br>
+									<span class=red>R/. </span>Amen.
+								</p>
+							</div>
+
+							<div class='lengua2'>
+								<p>
+									Oremos.<br>
+									Deus, que neste admirável sacramento
+									nos deixastes o memorial da vossa Paixão,
+									dai-nos venerar com tão grande amor o mistério do vosso Corpo e do
+									vosso Sangue,
+									que possamos colher continuamente os frutos da vossa Redenção.
+									Vós que viveis e reinais pelos séculos dos séculos.<br>
+									<span class=red>R/. </span>Amém.
+								</p>
+							</div>
+
+						</div>
+
+						<div class=red style='clear: both;  text-align: center; '>* * *</div>
+
+						<div style='clear: both; '>
+
+							<p>
+								Bendito seja Deus.<br>
+								Bendito seja o seu Santo Nome.<br>
+								Bendito seja Jesus Cristo, verdadeiro Deus e verdadeiro Homem.<br>
+								Bendito seja o Nome de Jesus.<br>
+								Bendito seja o seu Sacratíssimo Coração.<br>
+								Bendito seja o seu Preciosíssimo Sangue.<br>
+								Bendito seja Jesus, no Santíssimo Sacramento do Altar.<br>
+								Bendito seja o Espírito Santo Paráclito.<br>
+								Bendita seja a grande Mãe de Deus, Maria Santíssima.<br>
+								Bendita seja a sua Santa e Imaculada Conceição.<br>
+								Bendita seja a sua gloriosa Assunção.<br>
+								Bendito seja o Nome de Maria, Virgem e Mãe.<br>
+								Bendito seja São José, seu castíssimo esposo.<br>
+								Bendito seja Deus, nos seus Anjos e nos seus Santos.
+							</p>
+						</div>
+
+						<div class=red style='text-align: center; clear: both; '>* * *</div>
+						<div>
+							<div class='lengua1'>
+								<p>
+									Laudáte Dóminum omnes gentes:<br>
+									laudáte eum, omnes pópuli.<br>
+									Quóniam confirmáta est super nos misericórdia eius,<br>
+									et véritas Dómini manet in ætérnum.<br>
+									Glória Patri, et Fílio, et Spirítui Sancto.<br>
+									Sicut erat in princípio, et nunc, et semper,<br>
+									et in sǽcula sæculórum.<br>
+									Amen.
+								</p>
+							</div>
+
+							<div class='lengua2'>
+								<p>
+									Todos os povos, louvai o Senhor:<br>
+									louvai-O todas as gentes;<br>
+									porque a sua misericórdia se confirmou em nós;<br>
+									e a verdade do Senhor permanece para sempre.<br>
+									Glória ao Pai, e ao Filho, e ao Espírito Santo.<br>
+									Como era no princípio, agora e sempre.<br>
+									Amém.
+								</p>
+							</div>
+						</div>
+						<div class=red style='text-align: center; clear: both; '>* * *</div>
+						<div>
+							<div class='lengua1'>
+								<p>
+									Salve, Regina, Mater misericordiae,<br>
+									vita, dulcedo, et spes nostra, salve.<br>
+									Ad te clamamus, exsules filii Evae.<br>
+									Ad te suspiramus, gementes et flentes<br>
+									in hac lacrimarum valle.<br>
+									Eia ergo, advocata nostra,<br>
+									illos tuos misericordes oculos ad nos converte.<br>
+									Et Iesum benedictum fructum ventris tui,<br>
+									nobis, post hoc exsilium, ostende.<br>
+									O clemens, o pia, o dulcis Virgo Maria.<br>
+								</p>
+
+								<p>
+									<span class=red>V/. </span>Ora pro nobis, sancta Dei Génetrix.<br>
+									<span class=red>R/. </span>Ut digni efficiámur promissiónibus Christi.
+
+								</p>
+
+								<p>
+									Orémus.<br>
+									Omnípotens sempitérne Deus,
+									qui gloriósæ Vírginis Matris Maríæ corpus et ánimam,
+									ut dignum Fílii tui habitáculum éffici mererétur,
+									Spíritu Sancto cooperánte præparásti:
+									da, ut cuius commemoratióne lætámur,
+									eius pia intercessióne ab instántibus malis
+									et a morte perpétua liberémur.<br>
+									Per Christum Dóminum nostrum.<br>
+									<span class=red>R/. </span>Amen.
+								</p>
+
+								<p>
+									<span class=red>V/. </span>Divínum auxílium máneat semper nobíscum.<br>
+									<span class=red>R/. </span>Amen.
+								</p>
+
+							</div>
+
+							<div class='lengua2'>
+								<p>
+									Salve Rainha, Mãe de misericórdia,<br>
+									vida, doçura, esperança nossa, salve!<br>
+									A Vós bradamos, os degredados filhos de Eva.<br>
+									A Vós suspiramos, gemendo e chorando<br>
+									neste vale de lágrimas.<br>
+									Eia, pois, advogada nossa,<br>
+									esses Vossos olhos misericordiosos a nós volvei.<br>
+									E, depois deste desterro, mostrai-nos Jesus,<br>
+									bendito fruto do Vosso ventre.<br>
+									Ó clemente, ó piedosa, ó doce sempre Virgem Maria.
+								</p>
+
+								<p>
+									<span class=red>V/. </span>Rogai por nós, Santa Mãe de Deus.<br>
+									<span class=red>R/. </span>Para que sejamos dignos das promessas de
+									Cristo.
+
+								</p>
+
+								<p>
+									Oremos.<br>
+									Deus eterno e onipotente,
+									que vos dignastes preparar o corpo e a alma
+									da gloriosa Virgem Maria para digna morada do vosso Filho,
+									fazei que sejamos livres da morte eterna e dos males que nos rodeiam,
+									pela intercessão daquela cuja comemoração nos alegra.<br>
+									Por Cristo, nosso Senhor.<br>
+									<span class=red>R/. </span>Amém.
+								</p>
+
+								<p>
+									<span class=red>V/. </span>O divino auxílio nos acompanhe sempre.<br>
+									<span class=red>R/. </span>Amém.
+								</p>
+
+							</div>
+						</div>
+						<div class=red style='text-align: center; clear: both; '>* * *</div>
+						<div>
+							<span class="red">Ou, no Tempo Pascal:</span>
+						</div>
+						<div>
+							<div class='lengua1'>
+								<p>
+									Regina Caeli, laetáre, allelúia.<br>
+									Quia quem meruisti portare, allelúia.<br>
+									Resurréxit, sicut dixit, allelúia.<br>
+									Ora pro nobis Deum, allelúia.
+								</p>
+
+								<p>
+									<span class=red>V/. </span>Gaude et lætáre, Virgo María, allelúia.
+									<span class=red>R/. </span>Quia surréxit Dóminus vere, allelúia.
+
+								</p>
+
+								<p>
+									Orémus.<br>
+									Deus, qui per resurrectiónem Fílii tui
+									Dómini Nostri Iesu Christi,
+									mundum lætificáre dignatus es:
+									præsta, quæsumus;
+									ut per eius Genetrícem Vírginem Maríam
+									perpétuæ capiámus gáudia vitæ.<br>
+									Per Christum Dóminum nostrum.<br>
+									<span class=red>R/. </span>Amen.
+								</p>
+
+								<p>
+									<span class=red>V/. </span>Divínum auxílium máneat semper nobíscum.<br>
+									<span class=red>R/. </span>Amen.
+								</p>
+
+							</div>
+
+							<div class='lengua2'>
+								<p>
+									Rainha do Céu, alegrai-Vos, aleluia.<br>
+									Porque quem merecestes trazer em vosso seio, aleluia.<br>
+									Ressuscitou como disse, aleluia.<br>
+									Rogai a Deus por nós, aleluia.
+								</p>
+
+								<p>
+									<span class=red>V/. </span>Exultai e alegrai-vos, ó Virgem Maria,
+									aleluia.
+									<span class=red>R/. </span>Porque o Senhor ressuscitou verdadeiramente,
+									aleluia.
+								</p>
+
+								<p>
+									Oremos.<br>
+									Ó Deus, que Vos dignastes alegrar o mundo
+									com a Ressurreição do Vosso Filho
+									Jesus Cristo, Senhor Nosso,
+									concedei-nos, Vos suplicamos,
+									que por sua Mãe, a Virgem Maria,
+									alcancemos as alegrias da vida eterna.<br>
+									Por Cristo, Senhor Nosso.<br>
+									<span class=red>R/. </span>Amém.
+								</p>
+
+								<p>
+									<span class=red>V/. </span>O divino auxílio nos acompanhe sempre.<br>
+									<span class=red>R/. </span>Amém.
+								</p>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class='page' id='penit_ptbr'>
+
+					<div data-role='content'>
+
+						<div><h2>RITO DA PENITÊNCIA</h2></div>
+
+						<p>
+							<span class=red>O penitente diz a saudação habitual e se
+								benze:</span><br>
+							Em nome do Pai e do Filho e do Espírito Santo. Amém.
+						</p>
+
+						<p>
+							<span class="red">O sacerdote diz:</span><br>
+							O Senhor esteja em teu coração para que, arrependido, confesses os teus
+							pecados.
+						</p>
+
+						<p>
+							<span class="red">O sacerdote ou o penitente pode ler ou dizer de cor
+								algumas palavras da Sagrada Escritura sobre a misericórdia de Deus e o
+								arrependimento, por exemplo:</span><br>
+							Senhor, Tu sabes tudo; Tu sabes que eu te amo. <i>(Jo. XXI, 17)</i>
+						</p>
+
+						<p>
+							<span class="red">O penitente se acusa dos seus pecados.</span>
+						</p>
+
+						<p>
+							<span class="red">O sacerdote dá os conselhos oportunos e impõe a
+								penitência e convida o penitente a manifestar a contrição.<br>
+								O penitente pode dizer:</span><br>
+							Senhor Jesus, Filho de Deus, tende piedade de mim, que sou um pecador.
+						</p>
+
+						<p>
+							<span class="red">O sacerdote dá a absolvição:</span><br>
+							Deus, Pai de misericórdia, que,
+							pela morte e ressurreição do Seu Filho, reconciliou o mundo consigo
+							e enviou o Espírito Santo
+							para a remissão dos pecados,
+							te conceda, pelo ministério da Igreja,
+							o perdão e a paz.<br>
+							E EU TE ABSOLVO DOS TEUS PECADOS, EM NOME DO PAI, E DO FILHO <span
+								class='cruzroja'>&#10016;</span> E DO ESPÍRITO SANTO.<br>
+							<span class=red>R/. </span>Amém.
+						</p>
+
+						<p>
+							<span class="red">O sacerdote prossegue:</span><br>
+							A Paixão de Nosso Senhor Jesus Cristo,
+							a intercessão da Virgem Maria e de todos os santos,
+							as tuas boas obras e a tua paciência na adversidade,
+							sirvam de remédio para os teus pecados,
+							aumento de graça e prêmio da vida eterna.<br>
+							Vai em paz.
+						</p>
+
+					</div>
+				</div>
+
+				<div class='page' id='cfm_ptbr'>
+					<div data-role='content'>
+
+						<div><h2>A SAGRADA COMUNHÃO FORA DA MISSA</h2></div>
+						<div>
+							<b>RITO COM UMA CELEBRAÇÃO MAIS BREVE DA PALAVRA DE DEUS</b><br>
+							<span class="red">Usa-se esta forma quando as circunstâncias
+								desaconselharem uma celebração mais extensa da palavra de Deus,
+								sobretudo quando só uma ou duas pessoas forem comungar, por ser difícil
+								neste caso organizar uma verdadeira celebração comunitária.</span><br>
+
+							<p>
+								<i>Ritos iniciais</i><br>
+								<span class="red">Estando tudo preparado, o ministro saúda os que vão
+									comungar:</span><br>
+								O Senhor esteja convosco.<br>
+								<span class="red">Todos respondem:</span><br>
+								Ele está no meio de nós.
+							</p>
+
+							<p>
+								<span class="red">Segue-se o ato penitencial.<br>
+									O ministro convida à penitência os que vão comungar:</span><br>
+								Irmãos e irmãs, reconheçamos os nossos pecados para participarmos
+								dignamente desta santa celebração.<br>
+								<span class="red">Após um momento de silêncio, o ministro convida à
+									confissão:</span><br>
+								Confessemos os nossos pecados:<br>
+								<span class="red">E todos prosseguem:</span><br>
+								Confesso a Deus Todo-poderoso<br>
+								e a vós, irmãos e irmãs,<br>
+								que pequei muitas vezes<br>
+								por pensamentos e palavras,<br>
+								atos e omissões,<br>
+								<span class="red">e, batendo no peito, dizem:</span><br>
+								por minha culpa, minha culpa, minha tão grande culpa.<br>
+								<span class="red">Em seguida, continuam:</span><br>
+								E peço à Virgem Maria,<br>
+								aos anjos e santos<br>
+								e a vós, irmãos e irmãs,<br>
+								que rogueis por mim a Deus, nosso Senhor.<br>
+								<span class="red">O ministro conclui:</span><br>
+								Deus Todo-poderoso tenha compaixão de nós,<br>
+								perdoe os nossos pecados<br>
+								e nos conduza à vida eterna.<br>
+								<span class="red">Todos respondem:</span><br>
+								Amém.
+							</p>
+
+							<p>
+								<i>Breve leitura da Palavra de Deus</i><br>
+								<span class="red">Omitida a celebração da Palavra de Deus, um dos
+									presentes ou o próprio ministro lê, se for oportuno, um breve texto da
+									Sagrada Escritura em que se fale do Pão da vida.<br>
+									<i>Jo 6,54-55:</i></span><br>
+								Quem come a minha carne<br>
+								e bebe o meu sangue tem a vida eterna,<br>
+								e eu o ressuscitarei no último dia.<br>
+								Porque a minha carne é verdadeira comida<br>
+								e o meu sangue, verdadeira bebida.
+							</p>
+
+							<p>
+								<i>Sagrada Comunhão</i><br>
+								<span class="red">O ministro toma o recipiente ou cibório com o Corpo do
+									Senhor, coloca-o sobre o altar e faz genuflexão.
+									Em seguida, convida à oração do Senhor com estas palavras ou outras
+									semelhantes:</span><br>
+								Rezemos com amor e confiança<br>
+								a oração que o Senhor Jesus nos ensinou:<br>
+								<span class="red">e todos prosseguem juntos:</span><br>
+								Pai nosso que estais nos céus,<br>
+								santificado seja o vosso nome;<br>
+								venha a nós o vosso reino,<br>
+								seja feita a vossa vontade,<br>
+								assim na terra como no céu;<br>
+								o pão nosso de cada dia nos dai hoje;<br>
+								perdoai-nos as nossas ofensas,<br>
+								assim como nós perdoamos<br>
+								a quem nos tem ofendido;<br>
+								e não nos deixeis cair em tentação,<br>
+								mas livrai-nos do mal.
+							</p>
+
+							<p>
+								<span class="red">O ministro faz genuflexão, toma a hóstia e, elevando-a
+									sobre o recipiente ou cibório, diz em voz alta, voltado para os que vão
+									comungar:</span><br>
+								Felizes os convidados para a Ceia do Senhor.<br>
+								Eis o Cordeiro de Deus, que tira o pecado do mundo.<br>
+								<span class="red">E os que vão comungar acrescentam uma só
+									vez:</span><br>
+								Senhor, eu não sou digno<span class="red">(</span>a<span
+									class="red">)</span><br>
+								de que entreis em minha morada,<br>
+								mas dizei uma palavra e serei salvo<span class="red">(</span>a<span
+									class="red">)</span>.<br>
+								<span class="red">Se o próprio ministro comungar, reza em
+									silêncio:</span><br>
+								Que o Corpo de Cristo me guarde para a vida eterna.<br>
+								<span class="red">E comunga o Corpo de Cristo.<br>
+									A seguir, toma o recipiente ou cibório e, mostrando a hóstia um pouco
+									elevada aos que vão comungar, diz a cada um:</span><br>
+								O Corpo de Cristo.<br>
+								<span class="red">E o que vai comungar responde:</span><br>
+								Amém.<br>
+								<span class="red">E recebe a Comunhão.<br>
+									Terminada a distribuição da Comunhão, o ministro recolhe ao cibório os
+									fragmentos que houver e, se for oportuno, purifica as mãos.
+									Se ainda houver partículas, recoloca o Sacramento no tabernáculo e faz
+									genuflexão. Pode-se guardar durante algum tempo um sagrado silêncio ou
+									entoar um salmo ou canto de louvor.</span><br>
+							</p>
+
+							<p>
+								<span class="red">A seguir, o ministro conclui com a oração:</span><br>
+								Oremos.<br>
+								Senhor Jesus Cristo, neste admirável sacramento<br>
+								nos deixastes o memorial da vossa paixão.<br>
+								Dai-nos venerar com tão grande amor<br>
+								o mistério do vosso Corpo e do vosso Sangue,<br>
+								que possamos colher continuamente os frutos da vossa redenção.<br>
+								Vós que viveis e reinais para sempre.<br>
+								<span class="red">Todos respondem:</span><br>
+								Amém.<br>
+								<br>
+								<span class="red">No tempo pascal diz-se a seguinte oração:</span><br>
+								Oremos.<br>
+								Ó Deus, derramai em nós<br>
+								o vosso Espírito de caridade,<br>
+								para que, saciados pelos sacramentos pascais,<br>
+								permaneçamos unidos no vosso amor.<br>
+								Por Cristo, nosso Senhor.<br>
+								Amém.<br>
+							</p>
+
+							<p>
+								<i>Ritos finais</i><br>
+								<span class="red">O ministro, se for sacerdote ou diácono, abrindo os
+									braços, saúda o povo:</span><br>
+								O Senhor esteja convosco.<br>
+								<span class="red">Todos:</span><br>
+								Ele está no meio de nós.<br>
+								<span class="red">E abençoa o povo dizendo:</span><br>
+								Abençoe-vos Deus Todo-poderoso,<br>
+								Pai e Filho <span class='cruzroja'>&#10016;</span> e Espírito Santo.<br>
+								<span class="red">Todos respondem:</span><br>
+								Amém.<br>
+								<span class="red">Por fim o ministro diz:</span><br>
+								Ide em paz e o Senhor vos acompanhe.<br>
+								<span class="red">Todos respondem:</span><br>
+								Graças a Deus.<br>
+								<span class="red">Feita a devida reverência, o ministro se
+									retira.</span><br>
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class='page' id='cenf_ptbr'>
+					<div data-role='content'>
+
+						<div><h2>COMUNHÃO AOS ENFERMOS</h2></div>
+
+						<b>RITO ORDINÁRIO DA COMUNHÃO AOS ENFERMOS</b><br>
+
+						<p>
+							<i>Ritos iniciais</i><br>
+							<span class="red">O sacerdote, com veste conveniente a este ministério,
+								aproxima-se
+								e saúda cordialmente o enfermo e todos os presentes, acrescentando, se
+								for o caso,
+								a seguinte saudação: </span><br>
+							A paz esteja nesta casa e com todos os seus habitantes.<br>
+							<span class="red">Em seguida, depondo o sacramento sobre a mesa, adora-o
+								com todos os presentes.<br>
+								Se for oportuno, tendo recebido a água benta, asperge o doente e o
+								aposento
+								dizendo esta fórmula ou alguma outra, proposta no Ritual
+								particular:</span><br>
+							Que esta água nos lembre o nosso Batismo<br>
+							e o Cristo que nos salvou<br>
+							por sua morte e ressurreição.
+						</p>
+
+						<p>
+							<span class="red">Se for necessário, o Sacerdote ouça a confissão
+								sacramental do enfermo.<br>
+								Quando não se fizer dentro do rito a confissão sacramental do doente ou
+								houver outras pessoas para comungar,
+								o sacerdote convida o enfermo e os demais presentes ao ato penitencial:
+							</span><br>
+							Irmãos e irmãs, reconheçamos os nossos pecados,<br>
+							para participarmos dignamente desta santa celebração.<br>
+							<span class="red">Após uma pausa silenciosa, fazem todos a
+								confissão:</span><br>
+							Confesso a Deus Todo-poderoso<br>
+							e a vós, irmãos e irmãs,<br>
+							que pequei muitas vezes<br>
+							por pensamentos e palavras,<br>
+							atos e omissões,<br>
+							<span class="red">Batem no peito:</span><br>
+							por minha culpa, minha culpa, minha tão grande culpa.<br>
+							<span class="red">Continuam:</span><br>
+							E peço à Virgem Maria,<br>
+							aos anjos e santos<br>
+							e a vós, irmãos e irmãs,<br>
+							que rogueis por mim a Deus, nosso Senhor.<br>
+							<span class="red">E o sacerdote conclui:</span><br>
+							Deus Todo-poderoso tenha compaixão de nós,<br>
+							perdoe os nossos pecados<br>
+							e nos conduza à vida eterna.<br>
+							<span class="red">Todos respondem:</span><br>
+							Amém.
+						</p>
+
+						<p>
+							<i>Breve leitura da Palavra de Deus</i><br>
+							<span class="red">Se for conveniente, poderá ser lido por um dos
+								presentes ou pelo próprio sacerdote um texto da Escritura, por
+								exemplo:<br>
+								<i>Jo 6,54-55:</i></span><br>
+							Quem come a minha carne<br>
+							e bebe o meu sangue tem a vida eterna,<br>
+							e eu o ressuscitarei no último dia.<br>
+							Porque a minha carne é verdadeira comida<br>
+							e o meu sangue, verdadeira bebida.<br>
+							<span class="red">Se for conveniente, poder-se-á fazer uma breve
+								explicação da leitura.</span>
+						</p>
+
+						<p>
+							<i>Rito da Comunhão</i><br>
+							<span class="red">O sacerdote, com estas palavras ou outras semelhantes,
+								introduz a oração do Senhor:</span><br>
+							Agora, todos juntos, roguemos a Deus,<br>
+							como nosso Senhor Jesus Cristo nos ensinou:<br>
+							<span class="red">e todos prosseguem juntos:</span><br>
+							Pai nosso que estais nos céus,<br>
+							santificado seja o vosso nome;<br>
+							venha a nós o vosso reino,<br>
+							seja feita a vossa vontade,<br>
+							assim na terra como no céu;<br>
+							o pão nosso de cada dia nos dai hoje;<br>
+							perdoai-nos as nossas ofensas,<br>
+							assim como nós perdoamos<br>
+							a quem nos tem ofendido;<br>
+							e não nos deixeis cair em tentação,<br>
+							mas livrai-nos do mal.
+						</p>
+
+						<p>
+							<span class="red">O sacerdote apresenta o Santíssimo Sacramento, dizendo:
+							</span><br>
+							Felizes os convidados para a Ceia do Senhor!<br>
+							Eis o Cordeiro de Deus,<br>
+							que tira o pecado do mundo.<br>
+							<span class="red">O doente e os que forem comungar dizem</span><br>
+							Senhor, eu não sou digno<span class="red">(</span>a<span
+								class="red">)</span><br>
+							de que entreis em minha morada,<br>
+							mas dizei uma palavra e serei salvo<span class="red">(</span>a<span
+								class="red">)</span>.<br>
+							<span class="red">O sacerdote aproxima-se do doente, apresenta-lhe o
+								sacramento e diz:</span><br>
+							O Corpo de Cristo <span class="red">(ou: </span>O sangue de Cristo<span
+								class="red">)</span>.<br>
+							<span class="red">O doente responde:</span><br>
+							Amém.<br>
+							<span class="red">E recebe a Comunhão.<br>
+								Os presentes que vão comungar recebem a comunhão como de costume.<br>
+								Depois de distribuída a comunhão, o ministro faz a purificação de
+								costume. Se for conveniente, observe-se por algum tempo o silêncio
+								sagrado.</span>
+						</p>
+
+						<p>
+							<span class="red">O sacerdote conclui com a oração:</span><br>
+							Oremos.<br>
+							Senhor, Pai Santo, Deus todo-poderoso,<br>
+							nós vos pedimos confiantes<br>
+							que o sagrado Corpo <span class="red">(</span>sagrado Sangue<span
+								class="red">)</span><br>
+							de vosso Filho, nosso Senhor Jesus Cristo, <br>
+							seja para nosso irmão <span class="red">(</span>nossa irmã<span
+								class="red">)</span> remédio de eternidade,<br>
+							tanto para o corpo como para a alma.<br>
+							Por Cristo, nosso Senhor.<br>
+							<span class="red">R/. </span>Amém.<br>
+						</p>
+
+						<p>
+							<i>Ritos finais</i><br>
+							<span class="red">Em seguida abençoa o enfermo e os presentes, seja
+								traçando sobre eles o sinal-da-cruz com o cibório,
+								se ainda houver partículas consagradas, seja usando uma das seguintes
+								formas:</span><br>
+							Deus Pai te dê a sua bênção.<br>
+							<span class="red">R/. </span>Amém.<br>
+							Deus Filho te conceda a saúde.<br>
+							<span class="red">R/. </span>Amém.<br>
+							O Espírito Santo te ilumine.<br>
+							<span class="red">R/. </span>Amém.<br>
+							Guarde o teu corpo e salve a tua alma.<br>
+							<span class="red">R/. </span>Amém.<br>
+							Encha de luz teu coração e te conduza à vida eterna.<br>
+							<span class="red">R/. </span>Amém.<br>
+							<span class="red">(</span>E a vós todos, que aqui estais,<br>
+							abençoe-vos Deus todo-poderoso,<br>
+							Pai e Filho <span class='cruzroja'>&#10016;</span> e Espírito Santo.<br>
+							<span class="red">R/. </span>Amém<span class="red">)</span>.<br>
+							<br>
+							<span class="red">Ou:</span><br>
+							A bênção de Deus todo-poderoso,<br>
+							Pai e Filho <span class='cruzroja'>&#10016;</span> e Espírito Santo,<br>
+							desça sobre vós e permaneça para sempre.<br>
+							<span class="red">R/. </span>Amém.
+						</p>
+
+					</div>
+				</div>
+
+				<div class='page' id='agua_ptbr'>
+					<div data-role='content'>
+
+						<div><h2>PREPARAÇÃO DE ÁGUA BENTA FORA DA MISSA</h2></div>
+
+						<p>
+							<i>Ritos iniciais</i><br>
+							<span class="red">O celebrante inicia dizendo:</span><br>
+							Em nome do Pai e do Filho e do Espírito Santo.<br>
+							<span class="red">Todos fazem o sinal da cruz e respondem:</span><br>
+							Amém.
+						</p>
+
+						<p>
+							<span class="red">O celebrante saúda os presentes com estas ou outras
+								palavras apropriadas, de preferência extraídas das Sagradas
+								Escrituras:</span><br>
+							Deus, que nos regenerou em Cristo<br>
+							pela água e pelo Espírito Santo,<br>
+							esteja convosco.<br>
+							<span class="red">Todos respondem:</span><br>
+							Bendito seja Deus, que nos reuniu no amor de Cristo.<br>
+							<span class="red">Ou de outro modo apropriado.</span><br>
+						</p>
+
+						<p>
+							<span class="red">O celebrante, se for oportuno, prepara os presentes
+								para a celebração da bênção, com estas palavras ou outras
+								semelhantes:</span><br>
+							Com esta bênção da água, relembramos Cristo,<br>
+							água viva e o sacramento do Batismo,<br>
+							no qual renascemos pela água e pelo Espírito Santo.<br>
+							Toda vez, portanto, que formos aspergidos com esta água,<br>
+							ou usarmos água benta, com o sinal da cruz, ao entrar na igreja ou em
+							casa,<br>
+							estaremos dando graças a Deus por seus dons inefáveis,<br>
+							e implorando o seu auxílio, para conservarmos firme,<br>
+							em nossa vida, o sacramento, que recebemos com a fé.
+						</p>
+
+						<p>
+							<i>Leitura da Palavra de Deus</i><br>
+							<span class="red">Um dos presentes ou o próprio celebrante faz uma breve
+								leitura da Sagrada Escritura.<br>
+								<i>Jo 7, 37-39:</span></i><br>
+							Irmãos, vamos ouvir as palavras do santo Evangelho escrito por João.<br>
+							No último dia, o mais importante da festa,<br>
+							Jesus veio a público e exclamou dizendo:<br>
+							"Se alguém tiver sede, venha a mim e beba.<br>
+							Quem crê em mim, como diz a Escritura:<br>
+							do seu interior correrão rios de água viva."<br>
+							Referia-se ao Espírito que haviam de receber<br>
+							aqueles que cressem nele.<br>
+							De fato, ainda não fora dado o Espírito,<br>
+							pois Jesus não tinha sido ainda glorificado.
+						</p>
+
+						<p>
+							<i>Oração da Benção</i><br>
+							<span class="red">Em seguida, o celebrante diz:</span><br>
+							Oremos.<br>
+							<span class="red">Após breve pausa de silêncio, o celebrante, de mãos
+								estendidas, diz a oração da bênção:</span><br>
+							Bendito sois, Senhor,<br>
+							Deus todo-poderoso,<br>
+							que vos dignastes abençoar-nos em Cristo,<br>
+							água viva de nossa salvação,<br>
+							e reformar-nos interiormente,<br>
+							concedei-nos,<br>
+							junto com a aspersão e o uso desta água,<br>
+							renovar a juventude de nossa alma<br>
+							e sempre poder caminhar na vida<br>
+							pela graça do Espírito Santo.<br>
+							Por Cristo, nosso Senhor.<br>
+							<span class="red">R/. </span>Amém.
+						</p>
+
+						<p>
+							<span class="red">Após a oração da bênção, o celebrante asperge água
+								benta sobre os presentes, dizendo, se for oportuno:</span><br>
+							Que esta água lembre o nosso Batismo<br>
+							e o Cristo que nos salvou<br>
+							por sua Morte e Ressurreição.<br>
+							<span class="red">R/. </span>Amém.<br>
+							<span class="red">Enquanto isso, executa-se um canto
+								apropriado.</span><br>
+						</p>
+
+					</div>
+				</div>
+
+				<div class='page' id='casa_ptbr'>
+					<div data-role='content'>
+
+						<div><h2>BÊNÇÃO DE NOVA RESIDÊNCIA</h2></div>
+
+						<p>
+							<i>Ritos iniciais</i><br>
+							<span class="red">Reunidos em lugar apropriado os membros da família,
+								parentes e amigos, o ministro diz:</span><br>
+							Em nome do Pai e do Filho e do Espírito Santo.<br>
+							<span class="red">Todos fazem o sinal da cruz e respondem:</span><br>
+							Amém.
+						</p>
+
+						<p>
+							<span class="red">O ministro, se for sacerdote ou diácono, saúda os
+								presentes com estas ou outras palavras apropriadas, de preferência
+								extraídas das Sagradas Escrituras:</span><br>
+							A paz esteja nesta casa e com todos os seus habitantes.<br>
+							<span class="red">Todos respondem:</span><br>
+							Bendito seja Deus, que nos reuniu no amor de Cristo.<br>
+							<span class="red">Ou de outro modo apropriado.</span><br>
+						</p>
+
+						<p>
+							<span class="red">O celebrante prepara os presentes para a celebração com
+								estas palavras ou outras semelhantes:</span><br>
+							Caríssimos irmãos e irmãs,<br>
+							vamos dirigir uma fervorosa oração a Cristo,<br>
+							que se dignou nascer da Virgem Maria e habitou entre nós,<br>
+							para que também se digne entrar sob este teto<br>
+							e abençoar com sua presença esta casa.<br>
+							Que o Senhor Jesus esteja aqui no meio de vós,<br>
+							alimente em vós a caridade fraterna,<br>
+							participe das alegrias e alivie as tristezas.<br>
+							E vós, guiados pelos preceitos de Cristo,<br>
+							cuidai antes de tudo que esta <span class="red">(</span>nova<span
+								class="red">)</span> casa seja a morada da caridade,<br>
+							de onde se expanda, em todo sentido, o odor de Cristo.
+						</p>
+
+						<p>
+							<i>Leitura da Palavra de Deus</i><br>
+							<span class="red">Um dos presentes ou o próprio ministro, lerá um texto
+								das Sagradas Escrituras.<br>
+								<i>Lc 10, 5-9:</i></span><br>
+							Irmãos, vamos ouvir as palavras do santo Evangelho escrito por Lucas.<br>
+							Disse o Senhor aos seus discípulos: <br>
+							“Em qualquer casa em que entrardes, dizei primeiro: <br>
+							A paz esteja nesta casa. <br>
+							Se houver ali um filho da paz, <br>
+							repousará sobre ele vossa paz; <br>
+							se não houver, voltará para vós. <br>
+							Permanecei nesta casa, <br>
+							comei e bebei o que vos servirem.<br>
+							O operário é digno do salário. <br>
+							Não andeis de casa em casa. <br>
+							Em qualquer cidade, onde entrardes e vos receberem, <br>
+							comei do que vos for servido, <br>
+							e curai os enfermos que nela houver,<br>
+							e lhes dizei:<br>
+							O reino de Deus está próximo de vós".<br>
+							<span class="red">Se for oportuno, pode-se recitar ou cantar um salmo
+								responsorial ou outro canto apropriado.<br>
+								O ministro, se for oportuno, dirige algumas palavras aos presentes,
+								explicando a leitura bíblica para levá-los a entender, pela fé, o
+								sentido da celebração.</span>
+						</p>
+
+						<p>
+							<i>Preces</i><br>
+							<span class="red">Segue-se a oração comum. Dentre as invocações
+								propostas, o ministro poderá escolher as que julgar mais apropriadas,
+								ou acrescentar outras condizentes com as circunstâncias e condições
+								particulares.</span><br>
+							Vamos invocar, com gratidão e alegria, <br>
+							o Filho de Deus, Senhor do céu e da terra, <br>
+							que, fazendo-se homem, veio habitar entre nós e digamos:<br>
+							<span class="red">R/. </span><i>Permanecei conosco, Senhor.</i><br>
+							<br>
+							Senhor Jesus Cristo,<br>
+							que com Maria e José santificastes a vida de família,<br>
+							<span class="red">- </span>dignai-vos ficar conosco nesta casa<br>
+							para que vos sintamos nosso hóspede<br>
+							e vos veneremos como nosso chefe. <span class="red">R/.</span><br>
+							<br>
+							Todo edifício unido<br>
+							vós o transformais num templo santo;<br>
+							<span class="red">- </span>fazei que os residentes desta casa<br>
+							se transformem numa habitação do Espírito de Deus. <span
+								class="red">R/.</span><br>
+							<br>
+							Ensinastes os vossos fiéis<br>
+							a construírem sua casa sobre pedra firme;<br>
+							<span class="red">- </span>concedei que esta família<br>
+							tenha uma vida modelada por vossas palavras<br>
+							e, afastada toda desunião,<br>
+							vos sirva, de alma e coração abertos. <span class="red">R/.</span><br>
+							<br>
+							Éreis carente de casa própria<br>
+							e aceitáveis, na alegria da pobreza,<br>
+							a hospitalidade dos amigos;<br>
+							<span class="red">- </span>fazei que todos os necessitados de
+							habitação<br>
+							encontrem, com nossa ajuda,<br>
+							uma moradia digna. <span class="red">R/.</span>
+						</p>
+
+						<p>
+							<i>Oração da Benção</i><br>
+							<span class="red">O ministro, se for sacerdote ou diácono, de mãos
+								estendidas, se não, de mãos juntas, acrescenta:</span><br>
+							Favorecei, Senhor Jesus, os vossos filhos<br>
+							que pedem com humildade vossa bênção<br>
+							<span class="red">(</span>ao mudarem <span class="red">(</span>hoje<span
+								class="red">)</span> para esta nova residência<span
+								class="red">)</span>;<br>
+							sede refúgio para os que aqui moram,<br>
+							companheiro dos que saem,<br>
+							hóspede com os que entram,<br>
+							até o dia de terem, todos, feliz acolhimento<br>
+							na casa do vosso Pai.<br>
+							Vós que viveis e reinais para sempre.<br>
+							<span class="red">R/. </span>Amém.
+						</p>
+
+						<p>
+							<span class="red">Após a oração da bênção, o ministro asperge água benta
+								sobre os presentes e na casa, dizendo, se for oportuno:</span><br>
+							Que esta água nos lembre o nosso batismo<br>
+							e o Cristo, que nos salvou<br>
+							por sua Morte e Ressurreição.<br>
+							<span class="red">R/. </span>Amém.<br>
+						</p>
+
+						<p>
+							<i>Conclusão do Rito</i><br>
+							<span class="red">O ministro conclui o rito, dizendo:</span><br>
+							Que a paz de Cristo reine em nossos corações,<br>
+							a palavra de Cristo habite constantemente em nós,<br>
+							para que tudo que fizermos em palavras e obras,<br>
+							o façamos em nome do Senhor.<br>
+							<span class="red">Todos respondem:</span><br>
+							Amém.<br>
+							<span class="red">É louvável terminar o rito com um canto
+								apropriado.</span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="menu_diamante"
+			style="  position: absolute;  bottom: 2em;  left: 50%;  transform: translateX(-50%);  width: auto;  font-weight: bold;  display: none;  z-index: 30000;  text-align: left;">
+			<ul
+				class="ul_normal" id="tab_diamante">
+				<li  id="exitBtn" ontouchend="navigator.app.exitApp()">
+					<img src="../../exit.png" alt="Icono"	style="height: 1.2em;" /></li>
+				<li
+					ontouchend="event.stopPropagation();cambia_vista('menu_diamante'); window.location='../preferencias.html'; return false">
+					<img src="../../gear.png" alt="Icono"
+						style="height: 1.2em;"
+						ontouchend="$('#mis_intenciones0').toggle()" /></li>
+				<!-- <li
+		ontouchend=" cambia_idiomas(nuevoidioma1,nuevoidioma2);">
+		<img src="../../dos_colum.png" alt="Icono"
+			style="height: 1.2em;"> &nbsp;<=>&nbsp; <img src="../../una_colum.png"
+			alt="Icono"
+			style="height: 1.2em;"></li> -->
+				<li
+					ontouchend="event.stopPropagation();cambia_vista('menu_diamante'); window.location='../ayuda.html'; return false"><img
+						src="../../interrogacion_rojo.png" style="height:1.3em;"></li>
+				<li
+					id="menunoche"
+					ontouchend="event.stopPropagation();cambia_vista('menu_diamante'); pon_noche();"><img
+						style="height: 1em;" id="bot_noche" src="../../noche.png"></li>
+				<li
+					ontouchend="cambia_pref('tipoletra', nuevaletra ); cambia_fuente(); "><span
+						style=" font-family: Times New Roman; ">ABC</span> &nbsp;<=>&nbsp; <span
+						style=" font-family: Arial; ">ABC</span></li>
+				<li id="titulo002"
+					ontouchend="cambia_pref('tamanotexto', masgrande ); cambia_tamanoletra(masgrande);">12&nbsp;=>&nbsp;<span
+						style=" font-size: 13pt; ">13</span></li>
+				<li id="titulo003"
+					ontouchend="cambia_pref('tamanotexto', maspeq ); cambia_tamanoletra(maspeq); ">12&nbsp;=>&nbsp;<span
+						style=" font-size: 11pt; ">11</span></li>
+				<!-- <li
+		ontouchend="modocopia = ! modocopia ; if (modocopia) { $(this).css('background-color','green'); } else {$(this).css('background-color','maroon'); }; cambia_vista('menu_diamante'); "><img
+			style="height: 1em;" id="bot_copy" src="../../copy-icon.png"></li> -->
+			</ul>
+		</div>
+		<div id="piedepantalla" class="navbar">
+			<ol
+				id="menupie">
+				<li class="botonabajo" ontouchend="botonPantArriba();"><img
+						id="bot_arriba" src="../../angle-double-up2.png" style=" height: 1.6em;"
+						border="0"></li>
+				<li class="botonabajo"
+					ontouchend="cambia_titulos(); cambia_vista('menu_grabar');" '=""><img
+						id="bot_grabar" src="../../bookmark-o2.png"
+						style="height: 1.6em; display: none;"></li>
+				<li
+					ontouchend="event.stopPropagation();cambia_vista('menu_diamante');"><img id="bot_indice"
+						src="../../asterisk2.png" style=" height: 1.6em;"></li>
+				<li class="botonabajo"
+					ontouchend="botonPantAbajo();"><img id="bot_abajo"
+						src="../../angle-double-down2.png" style=" height: 1.6em;"></li>
+			</ol>
+		</div>
+	</body>
+	<script>
+
+
+if (!estoymac) {
+$('.solo_android').css('display', 'block');
+$('.solo_mac').css('display', 'none');
+} else {
+$('.solo_android').css('display', 'none');
+$('.solo_mac').css('display', 'block');
+}
+
+function getUrlParameter(name) {
+		name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+		var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+		var results = regex.exec(location.search);
+		return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+
+$(function($) {
+var input = $('#micampo');
+input.keyup(function(e) {
+pon_pref("misintenciones", $("#micampo").val().replace(/\n/g, "<br>"));
+});
+});
+$('#titulo002').html(mipreferencia['tamanotexto'] + "&nbsp;&#9654;&#xFE0E;&nbsp;<span style=' font-size: 120%; '>" + masgrande + "</span>");
+$('#titulo003').html(mipreferencia['tamanotexto'] + "&nbsp;&#9654;&#xFE0E;&nbsp;<span style=' font-size: 80%; '>" + maspeq + "</span>");
+
+document.addEventListener('DOMContentLoaded', function () { 
+if (esDispositivoMovil) {
+
+if (mipreferencia['presentaciontexto'] == 2) $(" .cast , .engl , .latin , .germ, .port, .ital  , .fran ").each(function() {
+$(this).touchend(function() {
+cambialengua(this);
+return false;
+});
+});
+} else {
+
+if (mipreferencia['presentaciontexto'] == 2) $(" .cast , .engl , .latin , .germ, .port, .ital  , .fran ").each(function() {
+$(this).click(function() {
+cambialengua(this);
+return false;
+});
+
+});
+}
+
+$('#idioma_1').val(dime_pref('idioma_dev_1',idiomas[mipreferencia['misal_pral']]))
+$('#idioma_2').val(dime_pref('idioma_dev_2',idiomas[mipreferencia['segundoidioma']]))
+});
+var ajuste = dime_pref("ajuste", 10);
+function getUrlParameter(name) {
+		name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+		var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+		var results = regex.exec(location.search);
+		return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+window.addEventListener("DOMContentLoaded", loaded, false);
+//document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, ajuste*100); }, false);
+</script>
+</html>

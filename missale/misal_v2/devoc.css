@@ -1,0 +1,298 @@
+
+::-webkit-scrollbar {
+  display: none;
+}
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  overflow: visible;
+  height: auto;
+}
+.noche {
+  background-color: #121212;
+  color: white;
+}
+/* Page container */
+.page {
+  width: 100%;
+  height: 100%;
+}
+
+/* Header styles */
+#header {
+  background-color: var(--brand, maroon);
+  color: white;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  padding-bottom: 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#header h1 {
+  margin: 0;
+  text-align: center;
+  background-color: var(--brand, maroon);
+  color: white;
+  border: 0px;
+}
+#piedepantalla {
+  margin: 0;
+  text-align: center;
+  background-color: var(--brand, maroon);
+  color: white;
+  border: 0px;
+}
+
+.navbar {
+  margin-top: 10px;
+  width: 100%;
+  margin-left: 0.2em;
+  margin-bottom: 0;
+}
+
+.navbar ul {
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.navbar li {
+  padding: 0; /* Ajustar el espacio interno */
+  font-size: 14px; /* Reducir el tamaño del texto si es necesario */
+  white-space: nowrap; /* Prevenir que el texto se divida en varias líneas */
+  text-overflow: ellipsis; /* Mostrar puntos suspensivos si el texto es demasiado largo */
+  overflow: hidden; /* Esconder el contenido que no cabe */
+}
+
+.navbar a {
+  text-decoration: none;
+  color: white;
+  padding: 5px 10px;
+  transition: background-color 0.3s;
+  display: inline-block;
+}
+
+.navbar a:hover {
+  background-color: #e0e0e0;
+}
+
+.navbar a.active {
+  background-color: white;
+  color: var(--brand, maroon);
+}
+
+/* Content styles */
+.content {
+  padding: 1em;
+  text-align: left;
+}
+
+.content h2 {
+  color: var(--brand, maroon);
+}
+
+.controlgroup {
+  margin: 0 auto;
+}
+
+.controlgroup a {
+  display: block;
+  text-decoration: none;
+  padding: 10px;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: left;
+  transition: background-color 0.3s;
+}
+
+.controlgroup a:hover {
+  background-color: #e0e0e0;
+}
+#icono-sticky {
+  position: absolute;
+  left: 0.5em;
+  top: 0.5em;
+  text-align: left;
+  width: auto;
+  max-width: 40%;
+  opacity: 0.9;
+  background: transparent;
+  z-index: 50000;
+}
+#icono-gear {
+  position: absolute;
+  right: 0.5em;
+  top: 1em;
+  text-align: left;
+  width: auto;
+  max-width: 40%;
+  opacity: 0.9;
+  background: transparent;
+  z-index: 50000;
+}
+
+.titulo_orac {
+  font-size: 16px;
+}
+
+.titulo_orac a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  margin-top: 0.5em;
+}
+
+.intenciones-container {
+  display: none;
+  width: 96%;
+  margin: 0 2%;
+}
+
+.edit-buttons,
+.save-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.edit-buttons button,
+.save-buttons button {
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.save-buttons {
+  display: none;
+}
+#micampo {
+  width: 90%;
+  height: 5em;
+}
+#misinttxt {
+  background-color: #904e4e;
+  color: white;
+  padding: 1em;
+  width: 90%;
+  float: left;
+  float: left;
+  display: block;
+  width: 80%;
+  border-radius: 5px;
+}
+h4 {
+  margin-bottom: 1em;
+}
+
+select {
+  /* Reset */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 0;
+  outline: 0;
+  font: inherit;
+  /* Personalize */
+  width: auto;
+  height: 2em;
+  padding: 0 4em 0 1em;
+  background-color: var(--brand, maroon);
+  color: white;
+  border-radius: 0.25em;
+  box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+
+  /* <option> colors */
+  /* Remove focus outline */
+  /* Remove IE arrow */
+}
+select option {
+  color: inherit;
+  background-color: #320a28;
+}
+select:focus {
+  outline: none;
+}
+select::-ms-expand {
+  display: none;
+}
+/* CSS */
+.button-23,
+.button-24 {
+  border: 1px solid var(--brand, maroon);
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: red;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
+    "Helvetica Neue", sans-serif;
+  font-size: initial;
+  font-weight: bold;
+  line-height: 1.5em;
+  margin: 0;
+  margin-bottom: 1em;
+  outline: none;
+  padding: 0.5em 1em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  touch-action: manipulation;
+  transition: box-shadow 0.2s, -ms-transform 0.1s, -webkit-transform 0.1s,
+    transform 0.1s;
+  user-select: none;
+  -webkit-user-select: none;
+  width: auto;
+}
+
+.button-23:focus-visible {
+  box-shadow: #222222 0 0 0 2px, rgba(255, 255, 255, 0.8) 0 0 0 4px;
+  transition: box-shadow 0.2s;
+}
+
+.button-23.activado,
+.activado span,
+.button-24.activado {
+  background-color: var(--brand, maroon);
+  border-color: var(--brand, maroon);
+  color: white;
+}
+.button-24 {
+  @extend .button-23;
+}
+a {
+  text-decoration: none;
+  color: var(--brand, maroon);
+}
+.rosario,
+.apartado {
+  display: none;
+  margin-bottom: 1em;
+}
+#rosario_arab {
+  float: left;
+}
+#rosario_arab .alindcha {
+  float: left;
+}
+#rosario_arab b.red {
+  float: right;
+}
+.collapsible {
+  display: none;
+}
+p {
+  margin-top: 0.5em;
+}
+#scroller{
+  padding-bottom: 5em;
+}

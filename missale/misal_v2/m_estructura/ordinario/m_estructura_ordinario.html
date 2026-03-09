@@ -1,0 +1,1154 @@
+<div class="interior">
+  <!-- Todo lo anterior debe estar al comienzo de todos los archivos -->
+  <style>
+    h4 {
+      margin-top: 1em;
+    }
+  </style>
+  <div id="superbot_1" class="solodos incrustado visibleb">
+    <span
+      id="superbot_1_1"
+      class="boton"
+      ontouchend=' $(".boton_mas span").each( function() { $(this).trigger("touchend").trigger("click"); } ); setTimeout( function() { muestraono("superbot_1",false); muestraono("superbot_2",true); }, 10) '>
+      +++
+    </span>
+  </div>
+  <div id="superbot_2" class="solodos novisibleb">
+    <span
+      class="boton"
+      ontouchend=' $(".boton_menos span").each( function() { $(this).trigger("touchend").trigger("click"); } ); setTimeout( function() { muestraono("superbot_1",true); muestraono("superbot_2",false); }, 10); '>
+      ---
+    </span>
+  </div>
+  <div
+    class="incrustado"
+    id="top_botones"
+    style="
+      border: 1px solid peachpuff;
+      background-color: seashell;
+      padding: 5px;
+      margin-top: 0.7em;
+      width: 95%;
+    ">
+    <div id="bot_global" class="div-botones visibleb">
+      <div class="div-botones-row">
+        <div
+          class="div-botones-col bot_ord noactivo"
+          ontouchend="if ($(this).hasClass('activo')) activa_bot('.bot_ord.activo:not(#bot_pleg .bot_ord)','ord','global'); ">
+          Ord
+        </div>
+        <div
+          class="div-botones-col bot_tmp"
+          ontouchend="if ($(this).hasClass('activo')) { activa_bot('.bot_tmp.activo','tmp','global'); pon_pref('opcion_elegida','1');} ">
+          Tmp
+        </div>
+        <div
+          class="div-botones-col bot_snt"
+          ontouchend="if ($(this).hasClass('activo')) { activa_bot('.bot_snt.activo','snt','global'); pon_pref('opcion_elegida','2');} ">
+          Snt
+        </div>
+        <div
+          class="div-botones-col bot_com"
+          ontouchend="if ($(this).hasClass('activo')) { activa_bot('.bot_com.activo','com','global'); pon_pref('opcion_elegida','3');}">
+          Com
+        </div>
+      </div>
+      <div id="x_tmp_titulo" class="txt_tmp txt_titulo"></div>
+      <div id="x_snt_titulo" class="txt_snt txt_titulo"></div>
+      <div id="x_com_titulo" class="txt_com txt_titulo"></div>
+      <div id="x_ord_titulo" class="txt_ord txt_titulo"></div>
+    </div>
+  </div>
+  <div id="todo">
+    <div id="todo_hasta_ofertorio">
+      <div style="text-align: center" class="padre padre_1"></div>
+      <div class="padre padre_2"></div>
+      <div id="ritos_iniciales" class="novisibleb">
+        <div class="solodos boton_menos">
+          <span
+            class="boton"
+            ontouchend='event.stopPropagation();setTimeout( function() { muestraono("ritos_iniciales",false); muestraono("botonmas1",true); }, 10); '>–</span>
+        </div>
+        <div id="todo_hasta_colecta">
+          <div id="antes_ant_ent">
+            <div class="rubrica padre padre_3"></div>
+          </div>
+          <div class="texto_incluido">
+            <div id="bot_ant_ent" class="div-botones">
+              <div class="div-botones-row">
+                <div
+                  class="div-botones-col bot_ord noactivo"
+                  ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'ord','ant_ent'); ">
+                  Ord
+                </div>
+                <div
+                  class="div-botones-col bot_tmp"
+                  ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'tmp','ant_ent'); ">
+                  Tmp
+                </div>
+                <div
+                  class="div-botones-col bot_snt"
+                  ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'snt','ant_ent'); ">
+                  Snt
+                </div>
+                <div
+                  class="div-botones-col bot_com"
+                  ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'com','ant_ent'); ">
+                  Com
+                </div>
+              </div>
+            </div>
+            <div id="x_tmp_ant_ent" class="txt_tmp txt_ant_ent"></div>
+            <div id="x_snt_ant_ent" class="txt_snt txt_ant_ent"></div>
+            <div id="x_com_ant_ent" class="txt_com txt_ant_ent"></div>
+          </div>
+          <div id="x_ord_ant_ent" class="txt_ord txt_ant_ent"></div>
+          <div id="desp_ant_ent">
+            <div class="rubrica padre padre_4"></div>
+            <div class="rubrica padre padre_5"></div>
+            <div class="padre padre_6"></div>
+            <div class="rubrica padre padre_7"></div>
+            <div class="pueblo padre padre_8"></div>
+            <div class="rubrica padre padre_9"></div>
+            <div class="padre padre_10"></div>
+            <div class="padre padre_11"></div>
+            <div class="padre padre_12"></div>
+            <div class="padre padre_13"></div>
+            <div class="padre padre_14"></div>
+            <div class="rubrica padre padre_15"></div>
+            <div class="pueblo padre padre_16"></div>
+            <div class="rubrica padre padre_17"></div>
+            <div class="padre padre_18"></div>
+            <div>
+              <div class="rubrica padre padre_19"></div>
+              <div id="bendicion_agua" class="novisibleb">
+                <div style="text-align: center" class="padre padre_20"></div>
+                <div class="rubrica padre padre_21"></div>
+                <div class="rubrica padre padre_22"></div>
+                <div class="padre padre_23"></div>
+                <div class="rubrica padre padre_24"></div>
+                <div>
+                  <div class="agrupado_ant padre padre_25"></div>
+                  
+                  <div class="agrupado_post padre padre_26"></div>
+                </div>
+                <div>
+                  <div class="agrupado_ant padre padre_27"></div>
+                  
+                  <div class="agrupado_ant padre padre_28"></div>
+                  
+                  <div class="agrupado_post padre padre_29"></div>
+                </div>
+                <div>
+                  <div class="agrupado_ant padre padre_30"></div>
+                  
+                  <div class="agrupado_post padre padre_31"></div>
+                </div>
+                <div class="padre padre_32"></div>
+                <div class="rubrica padre padre_33"></div>
+                <div>
+                  <div class="agrupado_ant padre padre_34"></div>
+                  
+                  <div class="agrupado_ant padre padre_35"></div>
+                  
+                  <div class="agrupado_post padre padre_36"></div>
+                </div>
+                <div class="rubrica padre padre_37"></div>
+                <div class="rubrica padre padre_38"></div>
+                <div id="agua_fueratp">
+                  <div class="padre padre_39">
+                    <hr class="red" style="width: 25%" />
+                  </div>
+                  <div class="padre padre_40"></div>
+                  <div class="padre padre_41"></div>
+                  <div class="padre padre_42"></div>
+                </div>
+                <div id="agua_durantetp">
+                  <hr class="red" style="width: 25%" />
+                  <div class="padre padre_43"></div>
+                  <div class="padre padre_44"></div>
+                  <div class="padre padre_45"></div>
+                  <div class="padre padre_46"></div>
+                  <div class="padre padre_47"></div>
+                  <div class="padre padre_48"></div>
+                  <hr class="red" style="width: 25%" />
+                </div>
+                <div class="rubrica padre padre_49"></div>
+                <div class="padre padre_50"></div>
+                <div class="padre padre_51"></div>
+              </div>
+              <div id="acto_penitencial">
+                <div style="text-align: center" class="padre padre_52"></div>
+                <div class="rubrica padre padre_53"></div>
+                <div class="red padre padre_54"></div>
+                <div id="penitencia1" class="visibleb">
+                  <br />
+                  <div class="padre padre_55"></div>
+                  <div class="padre padre_56"></div>
+                  <div class="rubrica padre padre_57"></div>
+                  <div class="oracionestodos">
+                    <div class="padre padre_58"></div>
+                  </div>
+                  <div class="rubrica padre padre_59"></div>
+                  <div class="padre padre_60"></div>
+                  <div class="rubrica padre padre_61"></div>
+                  <div class="pueblo padre padre_62"></div>
+                </div>
+                <div id="penitencia2" class="novisibleb">
+                  <br />
+                  <div class="padre padre_63"></div>
+                  <div class="padre padre_64"></div>
+                  <div class="rubrica padre padre_65"></div>
+                  <div class="padre padre_66"></div>
+                  <div class="rubrica padre padre_67"></div>
+                  <div class="pueblo padre padre_68"></div>
+                  <div class="rubrica padre padre_69"></div>
+                  <div class="padre padre_70"></div>
+                  <div class="rubrica padre padre_71"></div>
+                  <div class="pueblo padre padre_72"></div>
+                  <div class="rubrica padre padre_73"></div>
+                  <div class="padre padre_74"></div>
+                  <div class="rubrica padre padre_75"></div>
+                  <div class="pueblo padre padre_76"></div>
+                </div>
+                <div id="penitencia3" class="novisibleb">
+                  <br />
+                  <div class="padre padre_77"></div>
+                  <div class="padre padre_78"></div>
+                  <div class="germ">
+                    <span class="red">Oder:<br />Eine andere, frei formulierte Einladung.</span>
+                  </div>
+                  <div class="rubrica padre padre_79"></div>
+                  <div class="rubrica padre padre_80"></div>
+                  <div class="padre padre_81"></div>
+                  <div class="rubrica padre padre_82"></div>
+                  <div class="pueblo padre padre_83"></div>
+                  <div class="rubrica padre padre_84"></div>
+                  <div class="padre padre_85"></div>
+                  <div class="rubrica padre padre_86"></div>
+                  <div class="pueblo padre padre_87"></div>
+                  <div class="rubrica padre padre_88"></div>
+                  <div class="padre padre_89"></div>
+                  <div class="rubrica padre padre_90"></div>
+                  <div class="pueblo padre padre_91"></div>
+                  <div class="rubrica padre padre_92"></div>
+                  <div class="padre padre_93"></div>
+                  <div class="rubrica padre padre_94"></div>
+                  <div class="pueblo padre padre_95"></div>
+                </div>
+              </div>
+            </div>
+            <div class="rubrica padre padre_96"></div>
+            <div class="padre padre_97"></div>
+            <div class="texto_incluido">
+              <div id="bot_gloria" class="div-botones">
+                <div class="div-botones-row">
+                  <div
+                    class="div-botones-col bot_ord noactivo"
+                    ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'ord','gloria'); ">
+                    Ord
+                  </div>
+                  <div
+                    class="div-botones-col bot_tmp"
+                    ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'tmp','gloria'); ">
+                    Tmp
+                  </div>
+                  <div
+                    class="div-botones-col bot_snt"
+                    ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'snt','gloria'); ">
+                    Snt
+                  </div>
+                  <div
+                    class="div-botones-col bot_com"
+                    ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'com','gloria'); ">
+                    Com
+                  </div>
+                </div>
+              </div>
+              <div id="x_tmp_gloria" class="txt_tmp txt_gloria"></div>
+              <div id="x_snt_gloria" class="txt_snt txt_gloria"></div>
+              <div id="x_com_gloria" class="txt_com txt_gloria"></div>
+            </div>
+            <div id="x_ord_gloria" class="txt_ord txt_gloria"></div>
+            <div id="himno_gloria">
+              <div class="rubrica padre padre_98"></div>
+              <div class="oracionestodos">
+                    <div class="solodos">
+                      <span
+                        class="boton"
+                        id="botongloria"
+                        style="z-index: 100"
+                        ontouchend='event.stopPropagation();setTimeout( function() { resto=$("#gloria1").html(); $("#gloria0").append("<div></div>"+resto); $("#botongloria").css("display","none");}, 10);'>
+                        +
+                      </span>
+                    </div>
+                <div id="gloria0" class="padre padre_99">
+                </div>
+                <div id="gloria1" class="padre padre_100 novisibleb"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="solodos boton_mas visibleb" id="botonmas1">
+        <span
+          class="boton"
+          ontouchend='event.stopPropagation();setTimeout( function() { muestraono("ritos_iniciales",true); myScroll.scrollTo(0, 2, 2, true); muestraono("botonmas1",false); }, 10);'>
+          +
+        </span>
+      </div>
+      <div class="rubrica padre padre_101"></div>
+      <div class="padre padre_102"></div>
+      <div class="rubrica padre padre_103"></div>
+      <div class="rubrica padre padre_104"></div>
+      <div class="texto_incluido">
+        <div id="bot_colecta" class="div-botones">
+          <div class="div-botones-row">
+            <div
+              class="div-botones-col bot_ord noactivo"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'ord','colecta'); ">
+              Ord
+            </div>
+            <div
+              class="div-botones-col bot_tmp"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'tmp','colecta'); ">
+              Tmp
+            </div>
+            <div
+              class="div-botones-col bot_snt"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'snt','colecta'); ">
+              Snt
+            </div>
+            <div
+              class="div-botones-col bot_com"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'com','colecta'); ">
+              Com
+            </div>
+          </div>
+        </div>
+        <div id="x_tmp_colecta" class="txt_tmp txt_colecta"></div>
+        <div id="x_snt_colecta" class="txt_snt txt_colecta"></div>
+        <div id="x_com_colecta" class="txt_com txt_colecta"></div>
+      </div>
+      <div id="x_ord_colecta" class="txt_ord txt_colecta"></div>
+      <div class="rubrica padre padre_105"></div>
+      <div class="pueblo padre padre_106"></div>
+
+      <div class="padre padre_107"></div>
+      <div id="liturgia_palabra" class="novisibleb">
+        <div class="solodos boton_menos">
+          <span
+            class="boton"
+            ontouchend='setTimeout( function() { muestraono("liturgia_palabra",false); muestraono("botonmas2",true); }, 10);'>–</span>
+        </div>
+        <div class="texto_incluido" style="margin-top: 0.7em">
+          <div id="bot_prim_lect" class="div-botones">
+            <div class="div-botones-row">
+              <div
+                id="bot_prim_lect_ord"
+                class="div-botones-col bot_ord noactivo"
+                ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'ord','prim_lect');">
+                Ord
+              </div>
+              <div
+                id="bot_prim_lect_tmp"
+                class="div-botones-col bot_tmp_lct"
+                ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'tmp_lct','prim_lect'); if ($('#bot_salmo .bot_tmp_lct').hasClass('activo')) activa_bot('#bot_salmo .bot_tmp_lct','tmp_lct','salmo'); if ($('#bot_seg_lect .bot_tmp_lct').hasClass('activo')) activa_bot('#bot_seg_lect .bot_tmp_lct','tmp_lct','seg_lect'); if ($('#bot_aleluya .bot_tmp_lct').hasClass('activo')) activa_bot('#bot_aleluya .bot_tmp_lct','tmp_lct','aleluya'); if ($('#bot_evangelio .bot_tmp_lct').hasClass('activo')) activa_bot('#bot_evangelio .bot_tmp_lct','tmp_lct','evangelio');">
+                Tmp
+              </div>
+              <div
+                id="bot_prim_lect_snt"
+                class="div-botones-col bot_snt_lct"
+                ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'snt_lct','prim_lect'); if ($('#bot_salmo .bot_snt_lct').hasClass('activo')) activa_bot('#bot_salmo .bot_snt_lct','snt_lct','salmo'); if ($('#bot_seg_lect .bot_snt_lct').hasClass('activo')) activa_bot('#bot_seg_lect .bot_snt_lct','snt_lct','seg_lect'); if ($('#bot_aleluya .bot_snt_lct').hasClass('activo')) activa_bot('#bot_aleluya .bot_snt_lct','snt_lct','aleluya'); if ($('#bot_evangelio .bot_snt_lct').hasClass('activo')) activa_bot('#bot_evangelio .bot_snt_lct','snt_lct','evangelio');">
+                Snt
+              </div>
+              <div
+                id="bot_prim_lect_otr"
+                class="div-botones-col bot_otr_lct"
+                ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'otr_lct','prim_lect'); if ($('#bot_salmo .bot_otr_lct').hasClass('activo')) activa_bot('#bot_salmo .bot_otr_lct','otr_lct','salmo'); if ($('#bot_seg_lect .bot_otr_lct').hasClass('activo')) activa_bot('#bot_seg_lect .bot_otr_lct','otr_lct','seg_lect'); if ($('#bot_aleluya .bot_otr_lct').hasClass('activo')) activa_bot('#bot_aleluya .bot_otr_lct','otr_lct','aleluya'); if ($('#bot_evangelio .bot_otr_lct').hasClass('activo')) activa_bot('#bot_evangelio .bot_otr_lct','otr_lct','evangelio');">
+                Alia
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="x_otr_lct_prim_lect" class="txt_otr_lct txt_prim_lect"></div>
+        <div id="x_snt_lct_prim_lect" class="txt_snt_lct txt_prim_lect"></div>
+        <div id="x_tmp_lct_prim_lect" class="txt_tmp_lct txt_prim_lect"></div>
+        <div id="x_res_lct_prim_lect" class="txt_res_lct txt_prim_lect"></div>
+        <div id="x_ord_prim_lect" class="txt_ord txt_prim_lect">
+          <div class="rubrica padre padre_118"></div>
+          <div class="padre padre_119"></div>
+        </div>
+
+        <div id="x_tmp_lct_prim_lect" class="txt_tmp_lct txt_prim_lect"></div>
+        <div id="x_snt_lct_prim_lect" class="txt_snt_lct txt_prim_lect"></div>
+        <div id="x_otr_lct_prim_lect" class="txt_otr_lct txt_prim_lect"></div>
+
+        <div class="agrupado_ant">
+          <div class="rubrica padre padre_117"></div>
+          <div class="pueblo padre padre_116"></div>
+        </div>
+        <div class="texto_incluido">
+          <div id="bot_salmo" class="div-botones">
+            <div class="div-botones-row">
+              <div
+                id="bot_salmo_ord"
+                class="div-botones-col bot_ord noactivo"
+                ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'ord','salmo'); ">
+                Ord
+              </div>
+              <div
+                id="bot_salmo_tmp"
+                class="div-botones-col bot_tmp_lct"
+                ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'tmp_lct','salmo'); ">
+                Tmp
+              </div>
+              <div
+                id="bot_salmo_snt"
+                class="div-botones-col bot_snt_lct"
+                ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'snt_lct','salmo'); ">
+                Snt
+              </div>
+              <div
+                id="bot_salmo_alia"
+                class="div-botones-col5 bot_otr_lct"
+                ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'otr_lct','salmo'); ">
+                Alia
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="x_ord_salmo" class="txt_ord txt_salmo">
+          <div class="rubrica padre padre_115"></div>
+        </div>
+        <div id="x_otr_lct_salmo" class="txt_otr_lct txt_salmo"></div>
+        <div id="x_snt_lct_salmo" class="txt_snt_lct txt_salmo"></div>
+        <div id="x_tmp_lct_salmo" class="txt_tmp_lct txt_salmo"></div>
+        <div id="x_res_lct_salmo" class="txt_res_lct txt_salmo"></div>
+        <div class="texto_incluido">
+          <div id="bot_seg_lect" class="div-botones">
+            <div class="div-botones-row">
+              <div
+                id="bot_seg_lect_ord"
+                class="div-botones-col bot_ord noactivo"
+                ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'ord','seg_lect'); ">
+                Ord
+              </div>
+              <div
+                id="bot_seg_lect_tmp"
+                class="div-botones-col bot_tmp_lct"
+                ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'tmp_lct','seg_lect'); ">
+                Tmp
+              </div>
+              <div
+                id="bot_seg_lect_snt"
+                class="div-botones-col bot_snt_lct"
+                ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'snt_lct','seg_lect'); ">
+                Snt
+              </div>
+              <div
+                id="bot_seg_lect_otr"
+                class="div-botones-col bot_otr_lct"
+                ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'otr_lct','seg_lect'); ">
+                Alia
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="x_ord_seg_lect" class="txt_ord txt_seg_lect">
+          <div class="rubrica padre padre_113"></div>
+          <div class="padre padre_114"></div>
+        </div>
+        <div id="x_otr_lct_seg_lect" class="txt_otr_lct txt_seg_lect"></div>
+        <div id="x_snt_lct_seg_lect" class="txt_snt_lct txt_seg_lect"></div>
+        <div id="x_tmp_lct_seg_lect" class="txt_tmp_lct txt_seg_lect"></div>
+        <div id="x_res_lct_seg_lect" class="txt_res_lct txt_seg_lect"></div>
+        
+        <div class="agrupado_ant">
+          <div class="rubrica padre padre_112"></div>
+          <div class="pueblo padre padre_111"></div>
+          <div class="rubrica padre padre_110"></div>
+          <div class="texto_incluido">
+            <div id="bot_aleluya" class="div-botones">
+              <div class="div-botones-row">
+                <div
+                  id="bot_aleluya_ord"
+                  class="div-botones-col bot_ord noactivo"
+                  ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'ord','aleluya'); ">
+                  Ord
+                </div>
+                <div
+                  id="bot_aleluya_tmp"
+                  class="div-botones-col bot_tmp_lct"
+                  ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'tmp_lct','aleluya'); ">
+                  Tmp
+                </div>
+                <div
+                  id="bot_aleluya_snt"
+                  class="div-botones-col bot_snt_lct"
+                  ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'snt_lct','aleluya'); ">
+                  Snt
+                </div>
+                <div
+                  id="bot_aleluya_otr"
+                  class="div-botones-col bot_otr_lct"
+                  ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'otr_lct','aleluya'); ">
+                  Alia
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="x_ord_aleluya" class="txt_ord txt_aleluya"></div>
+          <div id="x_otr_lct_aleluya" class="txt_otr_lct txt_aleluya"></div>
+          <div id="x_snt_lct_aleluya" class="txt_snt_lct txt_aleluya"></div>
+          <div id="x_tmp_lct_aleluya" class="txt_tmp_lct txt_aleluya"></div>
+          <div id="x_res_lct_aleluya" class="txt_res_lct txt_aleluya"></div>
+          <div id="antes_evangelio"></div>
+          <div id="dialogo_evang" class="dialogo_evang novisibleb">
+            <div class="padre padre_108"></div>
+            <div class="pueblo padre padre_109"></div>
+          </div>
+
+          <div class="texto_incluido">
+            <div id="bot_evangelio" class="div-botones">
+              <div class="div-botones-row">
+                <div
+                  id="bot_evangelio_ord"
+                  class="div-botones-col bot_ord noactivo"
+                  ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'ord','evangelio'); ">
+                  Ord
+                </div>
+                <div
+                  id="bot_evangelio_tmp"
+                  class="div-botones-col bot_tmp_lct"
+                  ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'tmp_lct','evangelio'); ">
+                  Tmp
+                </div>
+                <div
+                  id="bot_evangelio_snt"
+                  class="div-botones-col bot_snt_lct"
+                  ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'snt_lct','evangelio'); ">
+                  Snt
+                </div>
+                <div
+                  id="bot_evangelio_otr"
+                  class="div-botones-col bot_otr_lct"
+                  ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'otr_lct','evangelio'); ">
+                  Alia
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="x_ord_evangelio" class="txt_ord txt_evangelio">
+            <div class="padre padre_125"></div>
+
+            <div class="padre padre_126"></div>
+            <div class="rubrica padre padre_127"></div>
+            <div class="padre padre_128"></div>
+            <div class="rubrica padre padre_129"></div>
+            <div class="padre padre_130"></div>
+            <div class="rubrica padre padre_131"></div>
+            <div class="padre padre_132"></div>
+            <div class="rubrica padre padre_133"></div>
+            <div class="padre padre_134"></div>
+            <div class="rubrica padre padre_135"></div>
+            <div class="pueblo padre padre_136"></div>
+            <div class="rubrica padre padre_137"></div>
+            <div class="padre padre_138"></div>
+            <div class="rubrica padre padre_139"></div>
+            <div class="rubrica padre padre_140"></div>
+            <div class="pueblo padre padre_141"></div>
+            <div class="rubrica padre padre_142"></div>
+            <div class="rubrica padre padre_143"></div>
+            <div class="padre padre_144"></div>
+          </div>
+          <div id="x_otr_lct_evangelio" class="txt_otr_lct txt_evangelio"></div>
+          <div id="x_snt_lct_evangelio" class="txt_snt_lct txt_evangelio"></div>
+          <div id="x_tmp_lct_evangelio" class="txt_tmp_lct txt_evangelio"></div>
+          <div id="x_res_lct_evangelio" class="txt_res_lct txt_evangelio"></div>
+          <div class="rubrica padre padre_124"></div>
+          <div class="pueblo padre padre_123"></div>
+          <div class="rubrica padre padre_122"></div>
+          <div class="padre padre_121"></div>
+          <div id="rub_homilia" class="rubrica padre padre_120"></div>
+          <div id="despues_homilia"></div>
+          <div id="bloque_credo_orfieles">
+            <div class="texto_incluido">
+              <div id="bot_credo" class="div-botones">
+                <div class="div-botones-row">
+                  <div
+                    class="div-botones-col bot_ord noactivo"
+                    ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'ord','credo'); ">
+                    Ord
+                  </div>
+                  <div
+                    class="div-botones-col bot_tmp"
+                    ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'tmp','credo'); ">
+                    Tmp
+                  </div>
+                  <div
+                    class="div-botones-col bot_snt"
+                    ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'snt','credo'); ">
+                    Snt
+                  </div>
+                  <div
+                    class="div-botones-col bot_com"
+                    ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'com','credo'); ">
+                    Com
+                  </div>
+                </div>
+              </div>
+              <div id="x_tmp_credo" class="txt_tmp txt_credo"></div>
+              <div id="x_snt_credo" class="txt_snt txt_credo"></div>
+              <div id="x_com_credo" class="txt_com txt_credo"></div>
+            </div>
+            <div id="x_ord_credo" class="txt_ord txt_credo"></div>
+            <div class="rubrica padre padre_158"></div>
+            <div class="oracionestodos">
+                  <div class="solodos">
+                    <span
+                      class="boton"
+                      id="botoncredo1"
+                      style="z-index: 100"
+                      ontouchend='event.stopPropagation();setTimeout( function() {resto=$("#credo1").html(); $("#credo0").append("<div></div>"+resto); $("#botoncredo1").css("display","none"); }, 10); '>
+                      +
+                    </span>
+                  </div>
+                  
+              <div id=credo0 class="padre padre_159">
+              </div>
+              <div id="credo1" class="padre padre_160 novisibleb"></div>
+            </div>
+            <div class="rubrica padre padre_161"></div>
+            <div class="oracionestodos">
+                  <div class="solodos">
+                    <span
+                      class="boton"
+                      id="botoncredo2"
+                      style="z-index: 100"
+                      ontouchend='event.stopPropagation();setTimeout( function() { resto=$("#credo2").html(); $("#credo00").append("<div></div>"+resto); $("#botoncredo2").css("display","none"); }, 10); '>
+                      +
+                    </span>
+                  </div>
+              <div id=credo00 class="padre padre_162">
+              </div>
+              <div id="credo2" class="padre padre_163 novisibleb"></div>
+            </div>
+            <div class="texto_incluido">
+              <div id="bot_antes_or_fieles" class="div-botones">
+                <div class="div-botones-row">
+                  <div
+                    class="div-botones-col bot_ord noactivo"
+                    ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'ord','antes_or_fieles'); ">
+                    Ord
+                  </div>
+                  <div
+                    class="div-botones-col bot_tmp"
+                    ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'tmp','antes_or_fieles'); ">
+                    Tmp
+                  </div>
+                  <div
+                    class="div-botones-col bot_snt"
+                    ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'snt','antes_or_fieles'); ">
+                    Snt
+                  </div>
+                  <div
+                    class="div-botones-col bot_com"
+                    ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'com','antes_or_fieles'); ">
+                    Com
+                  </div>
+                </div>
+              </div>
+              <div
+                id="x_tmp_antes_or_fieles"
+                class="txt_tmp txt_antes_or_fieles"></div>
+              <div
+                id="x_snt_antes_or_fieles"
+                class="txt_snt txt_antes_or_fieles"></div>
+              <div
+                id="x_com_antes_or_fieles"
+                class="txt_com txt_antes_or_fieles"></div>
+            </div>
+            <div
+              id="x_ord_antes_or_fieles"
+              class="txt_ord txt_antes_or_fieles"></div>
+            <!-- <div class=rubrica> 	<div class='port' ontouchend='cambialengua(this)'><span class='red'>Em seguida, faz-se a <a class='boton' href='oracion_fieles.html'>oração universal</a> ou dos fiéis. </span></div> 	<div class='cast' ontouchend='cambialengua(this)'><span class='red'>Después se hace la plegaria universal u <a class='boton' href='oracion_fieles.html'>oración de los fieles</a>. </span></div> 	<div class='ital' ontouchend='cambialengua(this)'><span class='red'>Segue la preghiera universale o <a class='boton' href='oracion_fieles.html'>PREGHIERA DEI FEDELI</a>.</span></div> 	<div class='engl' ontouchend='cambialengua(this)'><span class='red'>Then follow the Universal Prayer, that is, the <a class='boton' href='oracion_fieles.html'>Prayer</a> of the Faithful or Bidding Prayers.</span></div> 	<div class='germ' ontouchend='cambialengua(this)'><span class='red'>Es folgen die <a class='boton' href='oracion_fieles.html'>Fürbitten</a>.</span></div> 	<div class='latin' ontouchend='cambialengua(this)'><span class='red'>Deinde fit oratio universalis, seu <a class='boton' href='oracion_fieles.html' ontouchend='cambialengua(this)'>oratio fidelium</a>.</span></div> </div> -->
+            <div
+              class="incrustado padre padre_164"
+              style="margin-top: 1em"></div>
+            <div
+              class="noincrustado padre padre_165 novisibleb"
+              style="margin-top: 1em"></div>
+            <div id="bot_or_fieles" class="novisibleb" style="padding: 5px">
+              <div class="div-botones">
+                <div class="div-botones-row">
+                  <div
+                    id="tab_or_fieles_ind"
+                    class="div-botones-col noactivo"
+                    ontouchend='if ($(this).hasClass("activo")) { muestraono("indice_or_fieles",true); muestraono("texto_or_fieles",false); $("#tab_or_fieles_ind").removeClass("activo").addClass("noactivo"); ; $("#tab_or_fieles_txt").removeClass("noactivo").addClass("activo"); }'>
+                    Index
+                  </div>
+                  <div
+                    id="tab_or_fieles_txt"
+                    class="div-botones-col"
+                    ontouchend='if ($(this).hasClass("activo")) { muestraono("indice_or_fieles",false); muestraono("texto_or_fieles",true); $("#tab_or_fieles_txt").removeClass("activo").addClass("noactivo"); ; $("#tab_or_fieles_ind").removeClass("noactivo").addClass("activo"); }'>
+                    Or. F.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="agrupado_ant"></div>
+          </div>
+          <div id="indice_or_fieles" class="novisibleb">
+            <div class="padre padre_145"></div>
+            <div style="" class="padre padre_146"></div>
+            <div style="" class="padre padre_147">
+              <br />
+            </div>
+            <div style="" class="padre padre_148">
+              <br />
+            </div>
+            <div style="" class="padre padre_149">
+              <br />
+            </div>
+            <div style="" class="padre padre_150">
+              <br />
+            </div>
+            <div style="" class="padre padre_151">
+              <br />
+            </div>
+            <div style="" class="padre padre_152">
+              <br />
+            </div>
+            <div style="" class="padre padre_153">
+              <br />
+            </div>
+            <div style="" class="padre padre_154">
+              <br />
+            </div>
+            <div style="" class="padre padre_155">
+              <br />
+            </div>
+            <div style="" class="padre padre_156"></div>
+            <div style="" class="padre padre_157">
+              <br />
+            </div>
+          </div>
+          <div id="texto_or_fieles" class="novisibleb"></div>
+        </div>
+      </div>
+      <div class="solodos boton_mas visibleb" id="botonmas2">
+        <span
+          class="boton"
+          ontouchend='event.stopPropagation();setTimeout( function() { muestraono("liturgia_palabra",true); myScroll.scrollTo(0, 2, 2, true); muestraono("botonmas2",false); }, 10);'>
+          +
+        </span>
+      </div>
+    </div>
+
+    <div id="lit_euchar" class="padre padre_166"></div>
+    <div id="liturgia_eucaristica_1" class="novisibleb">
+      <div class="solodos boton_menos">
+        <span
+          class="boton"
+          ontouchend='event.stopPropagation();setTimeout( function() { muestraono("liturgia_eucaristica_1",false); muestraono("botonmas3",true);}, 10);'>–</span>
+      </div>
+      <div class="rubrica padre padre_167"></div>
+      <div class="rubrica padre padre_168"></div>
+      <div class="rubrica padre padre_169"></div>
+      <div class="padre padre_170"></div>
+      <div class="rubrica padre padre_171"></div>
+      <div class="rubrica padre padre_172"></div>
+      <div class="pueblo padre padre_173"></div>
+      <div class="rubrica padre padre_174"></div>
+      <div class="padre padre_175"></div>
+      <div class="rubrica padre padre_176"></div>
+      <div class="padre padre_177"></div>
+      <div class="rubrica padre padre_178"></div>
+      <div class="rubrica padre padre_179"></div>
+      <div class="pueblo padre padre_180"></div>
+      <div class="rubrica padre padre_181"></div>
+      <div class="padre padre_182"></div>
+      <div class="rubrica padre padre_183"></div>
+      <div class="rubrica padre padre_184"></div>
+      <div class="padre padre_185"></div>
+      <div class="rubrica padre padre_186"></div>
+      <div class="padre padre_187"></div>
+      <div class="rubrica padre padre_188"></div>
+      <div class="pueblo padre padre_189"></div>
+      <div class="rubrica padre padre_190"></div>
+      <div class="texto_incluido">
+        <div id="bot_or_ofrend" class="div-botones">
+          <div class="div-botones-row">
+            <div
+              class="div-botones-col bot_ord noactivo"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'ord','or_ofrend'); ">
+              Ord
+            </div>
+            <div
+              class="div-botones-col bot_tmp"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'tmp','or_ofrend'); ">
+              Tmp
+            </div>
+            <div
+              class="div-botones-col bot_snt"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'snt','or_ofrend'); ">
+              Snt
+            </div>
+            <div
+              class="div-botones-col bot_com"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'com','or_ofrend'); ">
+              Com
+            </div>
+          </div>
+        </div>
+        <div id="x_tmp_or_ofrend" class="txt_tmp txt_or_ofrend"></div>
+        <div id="x_snt_or_ofrend" class="txt_snt txt_or_ofrend"></div>
+        <div id="x_com_or_ofrend" class="txt_com txt_or_ofrend"></div>
+      </div>
+      <div id="x_ord_or_ofrend" class="txt_ord txt_or_ofrend"></div>
+      <div class="rubrica padre padre_191"></div>
+      <div class="pueblo padre padre_192"></div>
+    </div>
+    <div class="solodos boton_mas visibleb" id="botonmas3">
+      <span
+        class="boton"
+        ontouchend='event.stopPropagation();setTimeout( function() { muestraono("liturgia_eucaristica_1",true); myScroll.scrollTo(0, 2, 2, true); muestraono("botonmas3",false);}, 10);'>
+        +
+      </span>
+    </div>
+    <div class="padre padre_193"></div>
+    <div id="liturgia_eucaristica_2" class="novisibleb">
+      <div class="solodos boton_menos">
+        <span
+          class="boton"
+          ontouchend='event.stopPropagation();setTimeout( function() { muestraono("liturgia_eucaristica_2",false); muestraono("botonmas4",true); }, 10);'>–</span>
+      </div>
+      <div class="rubrica padre padre_194"></div>
+      <div class="rubrica padre padre_195"></div>
+      <div class="padre padre_196"></div>
+      <div class="rubrica padre padre_197"></div>
+      <div class="pueblo padre padre_198"></div>
+      <div class="rubrica padre padre_199"></div>
+      <div class="padre padre_200"></div>
+      <div class="rubrica padre padre_201"></div>
+      <div class="pueblo padre padre_202"></div>
+      <div class="rubrica padre padre_203"></div>
+      <div class="padre padre_204"></div>
+      <div class="rubrica padre padre_205"></div>
+      <div class="pueblo padre padre_206"></div>
+      <div class="rubrica padre padre_207"></div>
+      <div class="texto_incluido">
+        <div id="bot_prefacio" class="div-botones">
+          <div class="div-botones-row">
+            <div
+              class="prefacio div-botones-col bot_ord noactivo"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'ord','prefacio'); ">
+              Ord
+            </div>
+            <div
+              class="prefacio div-botones-col bot_tmp"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'tmp','prefacio'); ">
+              Tmp
+            </div>
+            <div
+              class="prefacio div-botones-col bot_snt"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'snt','prefacio'); ">
+              Snt
+            </div>
+            <div
+              class="prefacio div-botones-col bot_com"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'com','prefacio'); ">
+              Com
+            </div>
+            <div
+              class="prefacio div-botones-col bot_pf"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'pf','prefacio'); ">
+              Pf
+            </div>
+            <div
+              class="prefacio div-botones-col bot_pe"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'pe','prefacio'); ">
+              Pf PE
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="x_tmp_prefacio" class="txt_tmp txt_prefacio"></div>
+      <div id="x_snt_prefacio" class="txt_snt txt_prefacio"></div>
+      <div id="x_com_prefacio" class="txt_com txt_prefacio"></div>
+      <div id="x_pf_prefacio" class="txt_pf txt_prefacio"></div>
+      <div id="x_pe_prefacio" class="txt_pe txt_prefacio"></div>
+      <div id="x_ord_prefacio" class="txt_ord txt_prefacio">
+        <div class="incrustado padre padre_208"></div>
+        <div class="noincrustado padre padre_209 novisibleb"></div>
+      </div>
+      <div class="rubrica padre padre_210"></div>
+      <div class="oracionestodos">
+        <div class="padre padre_211"></div>
+      </div>
+      <div class="rubrica padre padre_212"></div>
+      <div class="texto_incluido">
+        <div id="bot_pleg" class="div-botones">
+          <div class="div-botones-row">
+            <div
+              class="div-botones-col bot_ord noactivo"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'ord','pleg'); ">
+              Ord
+            </div>
+            <div
+              class="div-botones-col bot_pe"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'pe','pleg'); ">
+              PE
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="x_pe_pleg" class="txt_pe txt_pleg"></div>
+      <div id="x_ord_pleg" class="txt_ord txt_pleg">
+        <div class="incrustado">
+          <div class="agrupado_ant padre padre_213"></div>
+          
+          <div class="agrupado_post">
+            <big class="red padre padre_214"> </big>
+          </div>
+        </div>
+        <div class="noincrustado novisibleb">
+          <div class="agrupado_ant padre padre_215"></div>
+          
+          <div class="agrupado_post">
+            <span class="red"><big class="padre padre_216"> </big> </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="solodos boton_mas visibleb" id="botonmas4">
+      <span
+        class="boton"
+        ontouchend='event.stopPropagation();setTimeout( function() { muestraono("liturgia_eucaristica_2",true); myScroll.scrollTo(0, 2, 2, true); muestraono("botonmas4",false);}, 10);'>
+        +
+      </span>
+    </div>
+    <div id="rito_comunion" class="padre padre_217"></div>
+    <div id="liturgia_eucaristica_3" class="novisibleb">
+      <div class="solodos boton_menos">
+        <span
+          class="boton"
+          ontouchend='event.stopPropagation();setTimeout( function() { muestraono("liturgia_eucaristica_3",false); muestraono("botonmas5",true);}, 10);'>–</span>
+      </div>
+      <div class="rubrica padre padre_218"></div>
+      <div class="padre padre_219"></div>
+      <div class="rubrica padre padre_220"></div>
+      <div class="oracionestodos">
+        <div class="padre padre_221"></div>
+      </div>
+      <div class="rubrica padre padre_222"></div>
+      <div class="padre padre_223"></div>
+      <div class="rubrica padre padre_224"></div>
+      <div class="rubrica padre padre_225"></div>
+      <div class="pueblo padre padre_226"></div>
+      <div class="rubrica padre padre_227"></div>
+      <div class="padre padre_228"></div>
+      <div class="rubrica padre padre_229"></div>
+      <div class="padre padre_230"></div>
+      <div class="rubrica padre padre_231"></div>
+      <div class="pueblo padre padre_232"></div>
+      <div class="rubrica padre padre_233"></div>
+      <div class="padre padre_234"></div>
+      <div class="rubrica padre padre_235"></div>
+      <div class="pueblo padre padre_236"></div>
+      <div class="rubrica padre padre_237"></div>
+      <div class="padre padre_238"></div>
+      <div class="rubrica padre padre_239"></div>
+      <div class="rubrica padre padre_240"></div>
+      <div class="padre padre_241"></div>
+      <div class="rubrica padre padre_242"></div>
+      <div class="oracionestodos">
+        <div class="padre padre_243"></div>
+      </div>
+      <div class="rubrica padre padre_244"></div>
+      <div class="rubrica padre padre_245"></div>
+      <div class="padre padre_246"></div>
+      <div class="padre padre_247"></div>
+      <div class="padre padre_248"></div>
+      <div class="rubrica padre padre_249"></div>
+      <div class="padre padre_250"></div>
+      <div class="rubrica padre padre_251"></div>
+      <div class="oracionestodos">
+        <div class="padre padre_252"></div>
+      </div>
+      <div class="rubrica padre padre_253"></div>
+      <div class="padre padre_254"></div>
+      <div class="rubrica padre padre_255"></div>
+      <div class="rubrica padre padre_256"></div>
+      <div class="padre padre_257"></div>
+      <div class="rubrica padre padre_258"></div>
+      <div class="rubrica padre padre_259"></div>
+      <div class="padre padre_260"></div>
+      <div class="rubrica padre padre_261"></div>
+      <div class="pueblo padre padre_262"></div>
+      <div class="rubrica padre padre_263"></div>
+      <div class="rubrica padre padre_264"></div>
+      <div class="rubrica padre padre_265"></div>
+      <div class="rubrica padre padre_266"></div>
+      <div class="texto_incluido">
+        <div id="bot_ant_com" class="div-botones">
+          <div class="div-botones-row">
+            <div
+              class="div-botones-col bot_ord noactivo"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'ord','ant_com'); ">
+              Ord
+            </div>
+            <div
+              class="div-botones-col bot_tmp"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'tmp','ant_com'); ">
+              Tmp
+            </div>
+            <div
+              class="div-botones-col bot_snt"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'snt','ant_com'); ">
+              Snt
+            </div>
+            <div
+              class="div-botones-col bot_com"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'com','ant_com'); ">
+              Com
+            </div>
+          </div>
+        </div>
+        <div id="x_tmp_ant_com" class="txt_tmp txt_ant_com"></div>
+        <div id="x_snt_ant_com" class="txt_snt txt_ant_com"></div>
+        <div id="x_com_ant_com" class="txt_com txt_ant_com"></div>
+      </div>
+      <div id="x_ord_ant_com" class="txt_ord txt_ant_com"></div>
+      <div class="rubrica padre padre_267"></div>
+      <div class="padre padre_268"></div>
+      <div class="rubrica padre padre_269"></div>
+      <div class="rubrica padre padre_270"></div>
+      <div class="padre padre_271"></div>
+      <div class="rubrica padre padre_272"></div>
+      <div class="texto_incluido">
+        <div id="bot_post_com" class="div-botones">
+          <div class="div-botones-row">
+            <div
+              class="div-botones-col bot_ord noactivo"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'ord','post_com'); ">
+              Ord
+            </div>
+            <div
+              class="div-botones-col bot_tmp"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'tmp','post_com'); ">
+              Tmp
+            </div>
+            <div
+              class="div-botones-col bot_snt"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'snt','post_com'); ">
+              Snt
+            </div>
+            <div
+              class="div-botones-col bot_com"
+              ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'com','post_com'); ">
+              Com
+            </div>
+          </div>
+        </div>
+        <div id="x_tmp_post_com" class="txt_tmp txt_post_com"></div>
+        <div id="x_snt_post_com" class="txt_snt txt_post_com"></div>
+        <div id="x_com_post_com" class="txt_com txt_post_com"></div>
+      </div>
+      <div id="x_ord_post_com" class="txt_ord txt_post_com"></div>
+      <div class="rubrica padre padre_273"></div>
+      <div class="pueblo padre padre_274"></div>
+    </div>
+    <div class="solodos boton_mas visibleb" id="botonmas5">
+      <span
+        class="boton"
+        ontouchend='event.stopPropagation();setTimeout( function() { muestraono("liturgia_eucaristica_3",true); myScroll.scrollTo(0, 2, 2, true); muestraono("botonmas5",false);}, 10);'>
+        +
+      </span>
+    </div>
+    <div class="padre padre_275"></div>
+    <div id="todo_desp_or_post_com">
+      <div id="liturgia_eucaristica_4" class="novisibleb">
+        <div class="solodos boton_menos">
+          <span
+            class="boton"
+            ontouchend='event.stopPropagation();setTimeout( function() {muestraono("liturgia_eucaristica_4",false); muestraono("botonmas6",true); }, 10);'>–</span>
+        </div>
+        <div class="rubrica padre padre_276"></div>
+        <div class="rubrica padre padre_277"></div>
+        <div class="padre padre_278"></div>
+        <div class="rubrica padre padre_279"></div>
+        <div class="pueblo padre padre_280"></div>
+        <div class="rubrica padre padre_281"></div>
+        <div class="texto_incluido">
+          <div id="bot_or_pueblo" class="div-botones">
+            <div class="div-botones-row">
+              <div
+                id="bot_or_pueblo_ord"
+                class="div-botones-col bot_ord noactivo"
+                ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'ord','or_pueblo'); ">
+                Ord
+              </div>
+              <div
+                class="div-botones-col bot_tmp"
+                ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'tmp','or_pueblo'); ">
+                Tmp
+              </div>
+              <div
+                class="div-botones-col bot_snt"
+                ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'snt','or_pueblo'); ">
+                Snt
+              </div>
+              <div
+                class="div-botones-col bot_com"
+                ontouchend="if ($(this).hasClass('activo')) activa_bot(this,'com','or_pueblo'); ">
+                Com
+              </div>
+            </div>
+          </div>
+          <div id="x_tmp_or_pueblo" class="txt_tmp txt_or_pueblo"></div>
+          <div id="x_snt_or_pueblo" class="txt_snt txt_or_pueblo"></div>
+          <div id="x_com_or_pueblo" class="txt_com txt_or_pueblo"></div>
+        </div>
+        <div id="x_ord_or_pueblo" class="txt_ord txt_or_pueblo"></div>
+
+        <div id="bendic_sacd">
+          <div style="text-align: center">
+            <span
+              class="boton"
+              ontouchend="muestraono('bendic_sacd',false); muestraono('bendic_obispo',true);">▶︎</span>
+          </div>
+          <div class="rubrica padre padre_282"></div>
+          <div class="padre padre_283"></div>
+          <div class="rubrica padre padre_284"></div>
+          <div class="pueblo padre padre_285"></div>
+        </div>
+        <div id="bendic_obispo" class="padre padre_286 novisibleb">
+          <div style="text-align: center" class="hijo hijo_286">
+            <span
+              class="boton"
+              ontouchend="muestraono('bendic_obispo',false); muestraono('bendic_sacd',true);">◀︎</span>
+          </div>
+        </div>
+        <div id="despedida_final">
+          <div id="fin_fin" class="rubrica padre padre_287"></div>
+          <div class="padre padre_288"></div>
+          <div class="rubrica padre padre_289"></div>
+          <div class="pueblo padre padre_290"></div>
+        </div>
+        <div class="rubrica padre padre_291"></div>
+        <div class="rubrica padre padre_292"></div>
+      </div>
+      <div class="solodos boton_mas visibleb" id="botonmas6">
+        <span
+          class="boton"
+          ontouchend='event.stopPropagation();setTimeout( function() { muestraono("liturgia_eucaristica_4",true); myScroll.scrollTo(0, 2, 2, true); muestraono("botonmas6",false);}, 10);'>
+          +
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Todo lo siguiente debe estar al final de todos los archivos -->

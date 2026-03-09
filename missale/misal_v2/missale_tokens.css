@@ -1,0 +1,71 @@
+/*
+  Missale Romanum – Design Tokens (Single Source of Truth)
+  All colors, spacing, typography, and theme values live here.
+*/
+
+:root {
+    /* Brand */
+    --brand: #7a0f12;
+    --brand-strong: #5e0b0d;
+    --rubric: #b50000;
+
+    /* Neutral palette (Zinc) */
+    --background: #ffffff;
+    --foreground: #09090b;
+    --card: #ffffff;
+    --card-foreground: #09090b;
+    --primary: #18181b;
+    --primary-foreground: #fafafa;
+    --secondary: #f4f4f5;
+    --secondary-foreground: #18181b;
+    --muted: #f4f4f5;
+    --muted-foreground: #71717a;
+    --accent: #f4f4f5;
+    --accent-foreground: #18181b;
+    --destructive: #ef4444;
+    --border: #e4e4e7;
+    --input: #e4e4e7;
+    --ring: #18181b;
+
+    /* Spacing & Shape */
+    --radius: 0.75rem;
+    --header-height: 60px;
+
+    /* Typography */
+    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+    /* Safe areas */
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+    /* Shadows */
+    --shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+    --shadow-soft: 0 6px 18px rgba(17, 24, 39, 0.10);
+}
+
+/* =========================================
+   DARK MODE
+   ========================================= */
+[data-theme="dark"],
+.noche {
+    --background: #0b0c10;
+    --foreground: #e5e7eb;
+    --card: #18181b;
+    --card-foreground: #e5e7eb;
+    --primary: #fafafa;
+    --primary-foreground: #18181b;
+    --secondary: #27272a;
+    --secondary-foreground: #e5e7eb;
+    --muted: #27272a;
+    --muted-foreground: #a1a1aa;
+    --accent: #27272a;
+    --accent-foreground: #e5e7eb;
+    --border: #3f3f46;
+    --input: #3f3f46;
+    --ring: #d4d4d8;
+    --brand: #c0393d;
+    --brand-strong: #e04549;
+    --rubric: #ef4444;
+    --shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    --shadow-soft: 0 6px 18px rgba(0, 0, 0, 0.3);
+}

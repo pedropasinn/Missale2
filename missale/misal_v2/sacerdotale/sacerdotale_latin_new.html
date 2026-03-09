@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text.html;" charset="utf-8" />
+        <meta name="viewport"
+            content="width=device-width, initial-scale=1, viewport-fit=cover">
+        <title>TEMPORA</title>
+
+        <link rel="stylesheet" href="../misal.css" type="text/css" />
+								<link rel="stylesheet" href="../devoc.css" type="text/css" />
+        <style>
+        html, body {
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #piedepantalla {
+                margin: 0;
+                text-align: center;
+                background-color: maroon;
+                color: white;
+                border:0px;
+                position: fixed;  /* Fijo en la pantalla */
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 1.9em;
+                display: table;
+                z-index: 30000;
+}
+
+            #contenedor {
+        position: absolute;
+        top: 2.1em;  /* Espacio debajo de la barra superior */
+        bottom: 1.9em; /* Espacio encima de la barra inferior */
+        left: 0;
+        width: 100vw;
+        overflow: auto; /* Evita que el contenedor haga scroll */
+        display: flex;
+        flex-direction: column;
+    }
+    #scroller {
+        flex: 1; /* Se expande para ocupar el espacio restante */
+        
+         /* 🔥 Habilita scroll táctil en iOS */
+        padding: 1em;
+        margin: 0;
+        width: 95%;
+        touch-action: pan-y;
+        position: absolute;
+        left:0;
+    }
+  /* Solo en iOS */
+  @supports (padding-bottom: env(safe-area-inset-bottom)) {
+      #piedepantalla {
+          padding-bottom: env(safe-area-inset-bottom);
+      }
+      body {
+          padding-bottom: env(safe-area-inset-bottom);
+      }
+                        #contenedor {
+                            bottom: -1.9em;
+  }
+    }
+  
+    @-moz-document url-prefix() {
+  #contenedor {
+    bottom: 2.1em;  /* Solo en Firefox */
+  }
+}
+body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+                 bottom: -1.9em;
+        }
+            #header {
+                background-color: maroon;
+                color: white;
+                position: fixed;
+                top: 0;
+                width: 100%;
+                z-index: 1000;
+                padding-bottom:0;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                                                    padding-top: env(safe-area-inset-top);
+            }
+
+            #header h1 {
+                margin: 0;
+                text-align: center;
+                background-color: maroon;
+                color: white;
+                border:0px;
+            }
+		</style>
+		<script type="text/javascript" charset="utf-8" src="../../jquery.js"></script>
+		<script type="text/javascript" charset="utf-8" src="../../cordova_loader.js"></script>
+		<script
+			type="text/javascript"
+			charset="utf-8"
+			src="../mis_funciones_devoc.js"></script>
+		<script>
+					$(document).ready(function () {
+    // Manejar clics en enlaces internos para cambiar de página
+    $('a').not('li a').on('click', function (event) {
+        event.preventDefault(); // Evitar comportamiento predeterminado del enlace
+        let targetPage = $(this).attr('href'); // Obtener el destino del enlace
+        
+        if (targetPage.startsWith('#')) {
+            // Mostrar la página correspondiente
+            $('.page').hide(); // Ocultar todas las páginas
+            $(targetPage).fadeIn(); // Mostrar la página seleccionada con animación
+        } else {
+            // Para enlaces externos o de descarga
+            window.location.href = targetPage;
+        }
+    });
+	//					$('#icono-sticky').css('top', (parseFloat(mipreferencia["margen_superior"]) + .3) + 'em');
+	//					$('#contenedor').css('top', (parseFloat(mipreferencia["margen_superior"]) + 7) + 'em');
+
+    // Mostrar la primera página al cargar
+    $('.page').hide(); // Ocultar todas las páginas
+    $(window.location.hash).show(); // Mostrar solo la página inicial
+
+				});
+				
+						function cambiaIdioma(idioma, num) {
+							pon_pref('idioma_dev_'+num,idioma)
+							window.location.reload()
+						}
+				</script>
+				<style>
+					div.page div {
+						margin-top: .5em;
+					}
+					.lengua1 {
+width: 48%;
+float: left;
+display: block;
+					}
+					.lengua2 {
+width: 48%;
+float: right;
+display: block;
+					}
+
+					function ejecutarCodigo(el) {
+    let codigo = el.getAttribute("data-url");
+    let funcion = new Function(codigo);
+    funcion(); // Ejecuta el código almacenado en data-url
+}
+				</style>
+	</head>
+	<body>
+		<div id="header" style="position: absolute; top: 0;">
+			<h1 style='width: 95%'>Missale Romanum</h1>
+			<div class="navbar">
+				<ul>
+					<li><a href="../feria_actual.html"
+							class="pestana"
+							id=tab_ind><img src="../../calendario_blanco.png"
+								style="height:1.3em;"></a></li>
+					<li><a
+							href="../devocionario.html#devotionarium"
+							class="pestana" id=tab_dev>Devotionarium</a></li>
+					<li><a href="../devocionario.html#sacerdotale"
+							class="pestana active" id=tab_sac>Sacerdotale</a></li>
+					<li><a
+						data-url="console.log('Ejecutando código antes de redirigir'); window.location='../igmr/igmr_'+dime_pref('id_igmr','cast')+'.html'"  onclick="ejecutarCodigo(this)"
+							class="pestana" id=tab_igmr>IGMR</a></li>
+					<li><a
+							href="../misal_todo.html"
+							class="pestana">MR</a></li>
+				</ul>
+			</div>
+		</div>
+		<div id=contenedor>
+			<div id=scroller style="position: absolute;">
+				<div class='page' id='confseip_latin'>
+
+					<div data-role='content'>
+
+						<div><h2>Oratio ante et post ipsius Confessionem</h2></div>
+
+						<div><p class=red>Ante Confessionem:</p>
+							<p>Súscipe confessiónem meam, piíssime ac clementíssime Dómine Iesu
+								Christe, única spes salútis ánimæ meæ; et da mihi, sacerdóti tuo,
+								óbsecro, contritiónem cordis et lácrimas óculis meis, ut défleam diébus
+								ac nóctibus omnes neglegéntias meas cum humilitáte et puritáte cordis,
+								Dómine, Deus meus, súscipe preces meas.</p>
+							<p>Salvátor mundi, Iesu bone, qui te crucis morti dedísti, ut peccatóres
+								salvos fáceres, réspice me míserum peccatórum invocántem nomen tuum, et
+								noli sic atténdere malum meum, ut obliviscáris bonum tuum; et si
+								commísi, unde me damnáre potes, tu nos amisísti, unde salváre soles.
+								Parce ergo mihi, qui es Salvátor meus, et miserére peccatríci ánimæ meæ.
+								Solve víncula eius, sana vúlnera.</p>
+							<p>Emítte ígitur, piíssime Dómine, méritis puríssimæ et immaculátæ semper
+								Vírginis Genetrícis tuæ Maríæ, quam tuis præsértim sacerdótibus in
+								matrem reliquísti, et Sanctórum tuórum, lucem tuam, veritátem tuam in
+								ánimam meam, quæ omnes deféctus meos in veritáte mihi osténdat, de
+								quibus confitéri me opórtet, atque iuvet et dóceat ipsos plene et
+								contríto corde explicáre: Qui vivis et regnas Deus per ómnia sǽcula
+								sæculórum. Amen.</p></div>
+
+						<div><p class=red>Post Confessionem:</p>
+							<p>Sit tibi, Dómine, óbsecro, méritis beátæ semper Vírginis Genetrícis
+								tuæ Maríæ et ómnium Sanctórum grata et accépta ista conféssio mea: et
+								quidquid mihi défuit nunc et álias de sufficiéntia contritiónis, de
+								puritáte et integritáte confessiónis, súppleat píetas et misericórdia
+								tua, et secúndum illam dignéris me habére plénius et perféctius
+								absolútum in cælo: Qui vivis et regnas Deus per ómnia sǽcula sæculórum.
+								Amen.</p></div>
+
+					</div>
+
+				</div>
+				<div class='page' id='confalt_latin'>
+
+					<div data-role='content'>
+
+						<div><h2>Oratio sacerdotis ante et post excipere Confessiones</h2></div>
+
+						<div><p class=red>Oratio sacerdotis antequam confessiones excipiat:</p>
+							<p>Da mihi, Dómine, sédium tuárum assistrícem sapiéntiam, ut sciam
+								iudicáre pópulum tuum in iustítia, et páuperes tuos in iudício. Fac me
+								ita tractáre claves regni cælórum, ut nulli apériam, cui claudéndum sit,
+								nulli cláudam, cui aperiéndum. Sit inténtio mea pura, zelus meus
+								sincérus, cáritas mea pátiens, labor meus fructuósus.</p>
+							<p>Sit in me lénitas non remíssa, aspéritas non sevéra; páuperem ne
+								despíciam, díviti ne adúler. Fac me ad alliciéndos peccatóres suávem, ad
+								interrogándos prudéntem, ad instruéndum perítum.</p>
+							<p>Tríbue, quæso, ad retrahéndos a malo sollértiam, ad confirmándos in
+								bono sedulitátem, ad promovéndos ad melióra indústriam: in respónsis
+								maturitátem, in consíliis rectitúdinem, in obscúris lumen, in impléxis
+								sagacitátem, in árduis victóriam: inutílibus collóquiis ne detínear,
+								pravis ne contáminer; álios salvem, me ipsum non perdam. Amen.</p></div>
+
+						<div><p class=red>Oratio sacerdotis postquam confessiones exceperit:</p>
+							<p>Dómine Iesu Christe, dulcis amátor et sanctificátor animárum,
+								purífica, óbsecro, per infusiónem Sancti Spíritus cor meum ab omni
+								affectióne et cogitatióne vitiósa, et quidquid a me in meo múnere sive
+								per neglegéntiam, sive per ignorántiam peccátum est, tua infiníta
+								pietáte et misericórdia supplére dignéris. Comméndo in tuis
+								amabilíssimis vulnéribus omnes ánimas, quas ad pæniténtiam traxísti, et
+								tuo pretiosíssimo Sánguine sanctificásti, ut eas a peccátis ómnibus
+								custódias et in tuo timóre et amóre consérves, in virtútibus in dies
+								magis promóveas, atque ad vitam perdúcas ætérnam: Qui cum Patre et
+								Spíritu Sancto vivis et regnas in sǽcula sæculórum. Amen.</p>
+							<p>Dómine Iesu Christe, Fili Dei vivi, súscipe hoc obséquii mei
+								ministérium in amóre illo superdigníssimo, quo beátam Maríam Magdalénam
+								omnésque ad te confugiéntes peccatóres absolvísti, et quidquid in
+								sacraménti huius administratione neglegénter minúsque digne perféci, tu
+								per te supplére et satisfácere dignéris. Omnes et síngulos, qui mihi
+								modo conféssi sunt, comméndo dulcíssimo Cordi tuo rogans, ut eósdem
+								custódias et a recidíva præsérves atque post huius vitæ misériam mecum
+								ad gáudia perdúcas ætérna. Amen.</p></div>
+
+					</div>
+
+				</div>
+				<div class='page' id='penit_latin'>
+
+					<div data-role='content'>
+
+						<div><h2>ORDO PÆNITENTIÆ</h2></div>
+						<div class=red>Pænitens dicit solitam salutationem et signo Crucis se
+							signat. Sacerdos dicit:</div>
+						<div><span class=red>V/. </span>Dóminus sit in corde tuo, ut ánimo
+							contríto confiteáris peccáta tua.</div>
+						<div class=red>Sacerdos vel pænitens possunt legere vel memoriter dicere
+							quædam verba Sacræ Scripturæ circa Dei misericordiam et pænitentiam, ex.
+							gr.</div>
+						<div><span class=red>R/. </span>Dómine, tu omnia nosti; tu scis quia amo
+							te. <span class=red>(Io 21,17)</span></div>
+						<div class=red>Pænitens suorum peccatorum se accusat. Sacerdos opportuna
+							dat consilia, pænitentiam imponit et eum invitat ad contritionem
+							manifestandam. Pænitens dicere potest, ex.gr.:</div>
+						<div><span class=red>R/. </span>Dómine Iesu, Fili Dei, miserére mei
+							peccatóris.</div>
+						<div><span class=red>V/. </span>Deus, Pater misericordiárum, qui per
+							mortem et resurrectiónem Filii sui mundum sibi reconciliávit et Spíritum
+							Sanctum effúdit in remissiónem peccatórum, per ministérium Ecclésiæ
+							indulgéntiam tibi tríbuat et pacem.<br>ET EGO TE ABSOLVO A PECCATIS TUIS
+							IN NOMINE PATRIS ET FILII <span class='cruzroja'>&#10016;</span> ET
+							SPIRITUS SANCTI.</div>
+						<div><span class=red>R/. </span>Amen.</div>
+						<div><span class=red>V/. </span>Pássio Dómini nostri Iesu Christi,
+							intercéssio Beátæ Maríæ Vírginis et ómnium Sanctórum, quidquid boni
+							féceris et mali sustinúeris, sint tibi in remédium peccatórum, augméntum
+							grátiæ et prǽmium vitæ ætérnæ. Vade in pace.</div>
+
+					</div>
+
+				</div>
+				<div class='page' id='cfm_latin'>
+
+					<div data-role='content'>
+
+						<div><h2>COMMUNIO EXTRA MISSAM</h2></div>
+						<div class=red>Ritus Initiales</div>
+						<div><span class=red>V/. </span>Dóminus vobiscum.</div>
+						<div><span class=red>R/. </span>Et cum spíritu tuo.</div>
+						<div><span class=red>V/. </span>Fratres, agnoscamus peccata nostra, ut
+							apti simus ad hanc sacram celebrationem participandam.</div>
+						<div class=red>Et fit brevis pausa silentii. Postea omnes simul faciunt
+							confessionem:</div>
+						<div>Confíteor Deo omnipotenti et vobis, fratres, quia peccavi nimis
+							cogitatione, verbo, ópere et omissione: mea culpa, mea culpa, mea máxima
+							culpa. Ideo precor beatam Mariam simper Vírginem, omnes Angelos et
+							Sanctos, et vos, fratres, orare pro me ad Dóminum Deum nostrum.</div>
+						<div class=red>Et sacerdos concludit:</div>
+						<div><span class=red>V/. </span>Misereatur nostri omnipotens Deus et,
+							dimissis peccatis nostris, perducat nos ad vitam æternam.</div>
+						<div><span class=red>R/. </span>Amen.</div>
+						<div class=red>Lectio Brevior Verbi Dei<br>Legatur a ministro brevis
+							textus Sacræ Scripturæ, in quo sermo sit de pane vitæ.</div>
+						<div><p>Lectio sancti Evangélii secundum Ioánnem.<span
+									class=alin_dcha></span></p><p>Ego sum panis vivus, qui de cælo
+								descendi. Si quis manducáverit ex hoc pane, vivet in æternum; panis
+								autem, quem ego dabo, caro mea est pro mundi vita.</p><p>Verbum
+								Dómini.</p></div>
+
+						<div class=red>Sacra Communio<br>Minister accipit vasculum vel pyxidem cum
+							Corpore Dómini, illud super altare deponit et genuflectit. Deinde
+							orationem dominicam his vel similibus verbis introducit:</div>
+						<div>Præceptis salutáribus moniti, et divina institutione formati, audemus
+							dicere.</div>
+						<div class=red>Et omnes simul pergunt:</div>
+						<div>Pater noster...</div>
+
+						<div class=red>His peractis, minister genuflectit, accipit hostiam, eamque
+							parum elevatam super vasculum vel pyxidem tenens, ad communicandos
+							versus, dicit:</div>
+						<div><span class=red>V/. </span>Ecce Agnus Dei, ecce qui tollit peccata
+							mundi. Beati qui as cenam Agni vocati sunt.</div>
+						<div><span class=red>R/. </span>Dómine, non sum dignus ut intres sub
+							tectum meum: sed tantum dic verbo, et sanábitur anima mea.</div>
+
+						<div class=red>Postea accipit vasculum vel pyxidem, accedes ad
+							communicandos, et hostiam parum elevatam unicuique eorum ostendit,
+							dicens:</div>
+
+						<div><span class=red>V/. </span>Corpus Christi.</div>
+						<div><span class=red>R/. </span>Amen.</div>
+						<div class=red>Distributionis Communionis expleta, fragmenta quæ super
+							patina forte inveniantur, minister in pyxidem immittit, itemque pro
+							oportunitate manus abluit. Sacramentum autem, si particulæ superfuerint,
+							in tabernaculo recondite, et genuflectit. Tunc pro opportunitate sacrum
+							silentium per aliquod temporis spatium servari vel psalmus aut canticum
+							laudis proferri potest.<br>Deinde sacerdos dicit orationem
+							conclusivam:</div>
+
+						<div><span class=red>V/. </span>Oremus.<br>Deus qui nobis sub sacramento
+							mirabilis passionis tuæ memoriam reliquisti, tríbue, quǽsumus, ita nos
+							Córporis et Sánguinis tui sacra mystéria venerari, ut redemptionis tuæ
+							fructum in nobis iúgiter sentiamus. Qui vivis et regnas in sǽcula
+							sæculorum.</div>
+						<div><span class=red>R/. </span>Amen.</div>
+						<div class=red>Tempore Paschale dicitur:</div>
+
+						<div><span class=red>V/. </span>Oremus.<br>Spíritum nobis, Dómine, tuæ
+							caritatis indunde, ut quos Sacramentis paschálibus satiasti, tua facias
+							pietate concordes. Per Christum Dóminum nostrum.</div>
+						<div><span class=red>R/. </span>Amen.</div>
+
+						<div class=red>Ritus Conclusionis<br>Deinde minister, si est sacerdos vel
+							diaconus, versus ad populum, extendens manus dicit:</div>
+
+						<div><span class=red>V/. </span>Dóminus vobiscum.</div>
+						<div><span class=red>R/. </span>Et cum spíritu tuo.</div>
+						<div class=red>Et benedicit populum, dicens:</div>
+						<div><span class=red>V/. </span>Benedicat vos omnípotens Deus Pater, et
+							Fílius, <span class='cruzroja'>&#10016;</span> et Spíritus Sanctus.</div>
+						<div><span class=red>R/. </span>Amen.</div>
+
+						<div><span class=red>V/. </span>Ite in pace.</div>
+						<div><span class=red>R/. </span>Deo gratias.</div>
+
+					</div>
+
+				</div>
+				<div class='page' id='cenf_latin'>
+
+					<div data-role='content'>
+
+						<div><h2>ORDO MINISTRANDI COMMUNIONEM INFIRMORUM</h2></div>
+						<div class=red>Salutatio</div>
+						<div><span class=red>V/. </span>Pax huic dómui et ómnibus habitántibus in
+							ea.</div>
+						<div class=red><p>Tunc, deposito Sacramento super mensam, ipsum cum
+								astantibus adorat.</p><p>Aspersio<br>Tunc acepta aqua Benedicto,
+								aspergit infirmum et cubiculum, dicens:</p></div>
+						<div><span class=red>V/. </span>Sit hæc aqua suscepti baptísmatis memória
+							et Christum récolat, qui Passione et Resurrectione sua nos redemit.</div>
+						<div class=red>Actus Pænitentialis</div>
+						<div><span class=red>V/. </span>Fratres, agnoscamus peccata nostra, ut
+							apti simus ad hanc sacram celebrationem participandam.</div>
+						<div class=red>Et fit brevis pausa silentii. Postea omnes simul faciunt
+							confessionem:</div>
+						<div>Confíteor Deo omnipotenti et vobis, fratres, quia peccavi nimis
+							cogitatione, verbo, ópere et omissione: mea culpa, mea culpa, mea máxima
+							culpa. Ideo precor beatam Mariam simper Vírginem, omnes Angelos et
+							Sanctos, et vos, fratres, orare pro me ad Dóminum Deum nostrum.</div>
+						<div class=red>Et sacerdos concludit:</div>
+						<div><span class=red>V/. </span>Misereatur nostri omnipotens Deus et,
+							dimissis peccatis nostris, perducat nos ad vitam æternam.</div>
+						<div><span class=red>R/. </span>Amen.</div>
+						<div class=red>Lectio S. Scripturæ<br>Legi potest a sacerdote textus Sacræ
+							Scripturæ, v. g.</div>
+						<div><p>Lectio sancti Evangélii secundum Ioánnem.<span
+									class=alin_dcha></span></p><p>Ego sum panis vivus, qui de cælo
+								descendi. Si quis manducáverit ex hoc pane, vivet in æternum; panis
+								autem, quem ego dabo, caro mea est pro mundi vita.</p><p>Verbum
+								Dómini.</p></div>
+
+						<div class=red>Oratio Dominica<br>Tunc sacerdos his vel similibus verbis
+							recitationem orationis dominicæ introducit:</div>
+						<div>Nunc autem una simul Deum deprecémur, sicut Dóminus noster Iesus
+							Christus nos dócuit orare.</div>
+						<div class=red>Et omnes simul pergunt:</div>
+						<div>Pater noster...</div>
+
+						<div class=red>Communio<br>Tunc sacerdos ostendit Ss.mum Sacramentum,
+							dicens:</div>
+						<div><span class=red>V/. </span>Ecce Agnus Dei, ecce qui tollit peccata
+							mundi. Beati qui as cenam Agni vocati sunt.</div>
+						<div><span class=red>R/. </span>Dómine, non sum dignus ut intres sub
+							tectum meum: sed tantum dic verbo, et sanábitur anima mea.</div>
+
+						<div><span class=red>V/. </span>Corpus Christi.</div>
+						<div><span class=red>R/. </span>Amen.</div>
+
+						<div class=red>Distributionis Communionis expleta, minister de more
+							purificationem peragit. Tunc pro opportunitate sacrum silentium per
+							aliquod temporis spatium servari potest.
+							Deinde sacerdos dicit orationem conclusivam:</div>
+
+						<div><span class=red>V/. </span>Oremus.<br>Dómine, sancte Pater, omípotens
+							ætérne Deus te fidénter deprecámur, ut sacrosánctum Corpus Dómini nostri
+							Iesu Christi Fílii tui, accipiénti fratri nostro <span
+								class='red'>(</span>soróri nostræ<span class='red'>)</span> tam córpori
+							quam ánimæ prosit remédium sempitérnum. Per Christum Dóminum
+							nostrum.</div>
+						<div><span class=red>R/. </span>Amen.</div>
+
+						<div class=red>Ritus Conclusionis<br>Benedictio<br>Deinde infirmo et
+							astantibus benedicit, vel super ipsos signum cruces faciendo (silentio)
+							cum pyxide, si Sacramentum superfuerit, vel formula sequens
+							usurpando:</div>
+
+						<div class=red>Et benedicit populum, dicens:</div>
+						<div><span class=red>V/. </span>Benedíctio Dei Omnipoténtis, Patris, et
+							Fílii, <span class='cruzroja'>&#10016;</span> et Spíritus Sancti,
+							decéndat super vos et máneat semper.</div>
+						<div><span class=red>R/. </span>Amen.</div>
+
+					</div>
+
+				</div>
+				<div class='page' id='bendag_latin'>
+
+					<div data-role='content'>
+
+						<div><h2>Benedictio aquæ extra Missam</h2></div>
+
+						<div class=red>Ritus initiales</div>
+
+						<div class=red>Celebrans incipit dicens:</div>
+
+						<div>In nómine Patris, et Fílii, et Spíritus Sancti.</div>
+						<div><span class=red>R/. </span>Amen.</div>
+
+						<div class=red>Deinde celebrans adstantes salutat, dicens:</div>
+
+						<div>Deus, qui ex aqua et Spíritu Sancto nos regenerávit in Christo, sit
+							cum ómnibus vobis.</div>
+						<div><span class=red>R/. </span>Et cum spíritu tuo.</div>
+
+						<div class=red>Tum celebrans, pro oppotunitate, adstantes ad benedictionis
+							celebrationem disponit his vel similibus verbis:</div>
+
+						<div>Hac aquæ benedictióne, Christum aquam vivam ac Baptísmatis recólimus
+							sacraméntum, in quo ex aqua et Spíritu Sancto renáti sumus. Quóties ergo
+							hac aqua aspergémur, vel ea tum intrántes in ecclésiam tum domi manéntes
+							cum signo crucis utémur, grátias Deo agémus pro inenarrábili dono eius,
+							eiúsque implorábimus auxílium, ut sacraméntum vivéndo teneámus, quod fide
+							percépimus.</div>
+
+						<div class=red>Lectio verbi Dei</div>
+
+						<div class=red>Deinde fit ab uno ex adstantibus vel ab ipso celebrante
+							brevis lectio Sacræ Scripturæ (Jn 7, 37-39).</div>
+
+						<div><p>Audíte, fratres, verba sancti Evangélii secúndum Ioánnem.</p>
+							<p>In novísimo die magno festivitátis stabat Iesus et clamávit
+								dicens:</p>
+							<p>–“Si quis sitit, véniat ad me et bibat, qui credit in me. Sicut dixit
+								Scriptúra, flúmina de ventre eius fluent aquæ vivæ”.</p>
+							<p>Hoc autem dixit de Spíritu, quem acceptúri erant qui credidérant in
+								eum.</p>
+							<p>Verbum Dómini.</p></div>
+						<div><span class=red>R/. </span>Laus tibi, Christi.</div>
+
+						<div class=red>Oratio Benedictionis</div>
+
+						<div class=red>Deinde celebrans dicit:</div>
+
+						<div>Orémus.</div>
+
+						<div class=red>Post brevem silentii pausam, celebrans, manibus extensis,
+							dicit orationem benedictionis:</div>
+
+						<div>Benedíctus es, Dómine, Deus omnípotens,<br>qui nos in Christo, aqua
+							viva salútis nostræ,<br>benedícere dignátus es et intus
+							reformáre:<br>concéde ut qui huius aquæ aspersióne vel usu
+							munímur,<br>renováta ánimæ iuventúte per virtútem Sancti Spíritus<br>in
+							novitáte vitæ iúgiter ambulémus.<br>Per Christum Dóminum nostrum.</div>
+						<div><span class=red>R/. </span>Amen.</div>
+
+						<div class=red>Post orationem benedictionis, celebrans adstantes aqua
+							benedicta aspergit, dicens, pro opportunitate:</div>
+
+						<div>Sit hæc aqua suscépti Baptismátis memória, et Christum récolat, qui
+							Passióne et Resurrectióne sua nos redémit.</div>
+						<div><span class=red>R/. </span>Amen.</div>
+
+					</div>
+
+				</div>
+				<div class='page' id='recom_latin'>
+
+					<div data-role='content'>
+
+						<div><h2>Ordo Commendationis Animæ</h2></div>
+						<div>
+							<p><span class=red>V/. </span>Pax huic domui.<br><span class=red>R/.
+								</span>Et omnibus habitantibus in ea.</p>
+							<p class=red>Deinde aspergit ægrotum, lectum, et circumstantes aqua
+								benedicta, dicens:</p>
+							<p>Asperges me, Domine, hyssopo, et, mundabor: lavabis me, et super
+								nivem dealbabor.</p>
+							<p class=red>Postea Salvatoris nostri crucifixi imaginem ægroto
+								osculandam præbet, verbis efficacibus eum ad spem æternæ salutis
+								erigens,
+								ipsamque imaginem coram eo ponit, ut illam aspiciens, salutis suæ spem
+								sumat.</p>
+							<p class=red>Deinde, accensa candela, genibus flexis, cum omnibus
+								circumstantibus breves Litanias devote recitat in hunc modum:</p>
+
+							<p>Kyrie, eleison.<br>Christe, eleison.<br>Kyrie, eleison.</p>
+
+							<div>Sancta Maria, <span style='float: right;'><span class=red>R/.
+									</span>ora pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Omnes sancti Angeli et Archangeli, <span style='float: right;'><span
+										class=red>R/. </span>orate pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Sancte Abel, <span style='float: right;'><span class=red>R/.
+									</span>ora pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Omnis chorus Iustorum, <span style='float: right;'><span
+										class=red>R/. </span>orate pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Sancte Abraham, <span style='float: right;'><span class=red>R/.
+									</span>ora pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Sancte Ioannes Baptista, <span style='float: right;'><span
+										class=red>R/. </span>ora pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Sancte Ioseph, <span style='float: right;'><span class=red>R/.
+									</span>ora pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Omnes sancti Patriarchæ et Prophetæ, <span
+									style='float: right;'><span class=red>R/. </span>ora pro eo <span
+										class=red>(</span>ea<span class=red>)</span>.</span></div>
+							<div>Sancte Petre, <span style='float: right;'><span class=red>R/.
+									</span>ora pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Sancte Paule, <span style='float: right;'><span class=red>R/.
+									</span>ora pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Sancte Andrea, <span style='float: right;'><span class=red>R/.
+									</span>ora pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Sancte Ioannes, <span style='float: right;'><span class=red>R/.
+									</span>ora pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+
+							<div>Omnes sancti Apostoli et Evangelistæ, <span
+									style='float: right;'><span class=red>R/. </span>orate pro eo <span
+										class=red>(</span>ea<span class=red>)</span>.</span></div>
+							<div>Omnes sancti Discipuli Domini, <span style='float: right;'><span
+										class=red>R/. </span>orate pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Omnes sancti Innocentes, <span style='float: right;'><span
+										class=red>R/. </span>orate pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Sancte Stephane, <span style='float: right;'><span class=red>R/.
+									</span>ora pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Sancte Laurenti, <span style='float: right;'><span class=red>R/.
+									</span>ora pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Omnes sancti Martyres, <span style='float: right;'><span
+										class=red>R/. </span>orate pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Sancte Silvester, <span style='float: right;'><span class=red>R/.
+									</span>ora pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Sancte Gregori, <span style='float: right;'><span class=red>R/.
+									</span>ora pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Sancte Augustine, <span style='float: right;'><span class=red>R/.
+									</span>ora pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Omnes sancti Pontifices et Confessores, <span
+									style='float: right;'><span class=red>R/. </span>orate pro eo <span
+										class=red>(</span>ea<span class=red>)</span>.</span></div>
+							<div>Sancte Benedicte, <span style='float: right;'><span class=red>R/.
+									</span>ora pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Sancte Francisce, <span style='float: right;'><span class=red>R/.
+									</span>ora pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Sancte Camille, <span style='float: right;'><span class=red>R/.
+									</span>ora pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Sancte Ioannes de Deo, <span style='float: right;'><span
+										class=red>R/. </span>ora pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Omnes sancti Monachi et Eremitæ, <span style='float: right;'><span
+										class=red>R/. </span>orate pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Sancta Maria Magdalena, <span style='float: right;'><span
+										class=red>R/. </span>ora pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Sancta Lucia, <span style='float: right;'><span class=red>R/.
+									</span>ora pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Omnes sanctæ Virgines et Viduæ, <span style='float: right;'><span
+										class=red>R/. </span>orate pro eo <span class=red>(</span>ea<span
+										class=red>)</span>.</span></div>
+							<div>Omnes Sancti et Sanctæ Dei, <span style='float: right;'>intercedite
+									pro eo <span class=red>(</span>ea<span class=red>)</span>.</span></div>
+							<div>Propitius esto, <span style='float: right;'>parce ei,
+									Domine.</span></div>
+							<div>Propitius esto, <span style='float: right;'><span class=red>R/.
+									</span>libera eum <span class=red>(</span>eam<span class=red>)</span>,
+									Domine.</span></div>
+							<div>Propitius esto, <span style='float: right;'><span class=red>R/.
+									</span>libera eum <span class=red>(</span>eam<span class=red>)</span>,
+									Domine.</span></div>
+							<div>Ab ira tua, <span style='float: right;'><span class=red>R/.
+									</span>libera eum <span class=red>(</span>eam<span class=red>)</span>,
+									Domine.</span></div>
+							<div>A periculo mortis, <span style='float: right;'><span class=red>R/.
+									</span>libera eum <span class=red>(</span>eam<span class=red>)</span>,
+									Domine.</span></div>
+							<div>A mala morte, <span style='float: right;'><span class=red>R/.
+									</span>libera eum <span class=red>(</span>eam<span class=red>)</span>,
+									Domine.</span></div>
+							<div>A poenis inferni, <span style='float: right;'><span class=red>R/.
+									</span>libera eum <span class=red>(</span>eam<span class=red>)</span>,
+									Domine.</span></div>
+							<div>Ab omni malo, <span style='float: right;'><span class=red>R/.
+									</span>libera eum <span class=red>(</span>eam<span class=red>)</span>,
+									Domine.</span></div>
+							<div>A potestate diaboli, <span style='float: right;'><span class=red>R/.
+									</span>libera eum <span class=red>(</span>eam<span class=red>)</span>,
+									Domine.</span></div>
+							<div>Per nativitatem tuam, <span style='float: right;'><span
+										class=red>R/.
+									</span>libera eum <span class=red>(</span>eam<span class=red>)</span>,
+									Domine.</span></div>
+							<div>Per crucem et passionem tuam, <span style='float: right;'><span
+										class=red>R/. </span>libera eum <span class=red>(</span>eam<span
+										class=red>)</span>, Domine.</span></div>
+							<div>Per mortem et sepulturam tuam, <span style='float: right;'><span
+										class=red>R/. </span>libera eum <span class=red>(</span>eam<span
+										class=red>)</span>, Domine.</span></div>
+							<div>Per gloriosam resurrectionem tuam, <span style='float: right;'><span
+										class=red>R/. </span>libera eum <span class=red>(</span>eam<span
+										class=red>)</span>, Domine.</span></div>
+							<div>Per admirabilem ascensionem tuam, <span style='float: right;'><span
+										class=red>R/. </span>libera eum <span class=red>(</span>eam<span
+										class=red>)</span>, Domine.</span></div>
+							<div>Per gratiam Spiritus Sancti Paracliti,<span
+									style='float: right;'><span class=red>R/. </span>libera eum <span
+										class=red>(</span>eam<span class=red>)</span>, Domine.</span></div>
+							<div>In die iudicii,<span style='float: right;'><span class=red>R/.
+									</span>libera eum <span class=red>(</span>eam<span class=red>)</span>,
+									Domine.</span></div>
+							<div>Peccatores,<span style='float: right;'><span class=red>R/. </span>te
+									rogamus, audi nos.</span></div>
+							<div>Ut ei parcas,<span style='float: right;'><span class=red>R/.
+									</span>te rogamus, audi nos.</span></div>
+							<div> <p>Kyrie, eleison.<br>Christe, eleison.<br>Kyrie, eleison.</p>
+								<p class=red>Deinde, cum in agone sui exitus anima anxiatur, dicuntur
+									sequentes Orationes:</p>
+
+								<p>Oratio:<br>Proficiscere, anima christiana, de hoc mundo, in nomine
+									Dei Patris omnipotentis, qui te creavit: in nomine Iesu Christi, Filii
+									Dei vivi, qui pro te passus est: in nomine Spiritus Sancti, qui in te
+									effusus est: in nomine gloriosæ et sanctæ Dei Genetricis Virginis
+									Maríæ:
+									in nomine beati Ioseph, inclyti eiusdem Virginis Sponsi: in nomine
+									Angelorum et Archangelorum: in nomine Thronorum et Dominationum: in
+									nomine Principatuum et Potestatum: in nomine Virtutum, Cherubim et
+									Seraphim: in nomine Patriarcharum et Prophetarum: in nomine sanctorum
+									Apostolorum et Evangelistarum: in nomine sanctorum Martyrum et
+									Confessorum: in nomine sanctorum Monachorum et Eremitarum: in nomine
+									sanctarum Virginum, et omnium Sanctorum et Sanctarum Dei. Hodie sit in
+									pace locus tuus, et habitatio tua in sancta Sion. Per eundem Christum
+									Dominum nostrum. <br><span class=red>R/. </span>Amen.</p>
+
+								<p>Oratio:<br>Deus misericors, Deus clemens, Deus qui secundum
+									multitudinem miserationum tuarum peccata pænitentium deles, et
+									prǽteritorum criminum culpas venia remissionis evacuas: respice
+									propitius
+									super hunc famulum tuum <span class='red'>N. (</span>hanc famulam tuam
+									<span class=red>N.)</span>, et remissionem ominum peccatorum suorum
+									tota
+									cordis confessione poscentem deprecatus exaudi. Renova in eo <span
+										class=red>(</span>ea<span class=red>)</span>, piissime Pater, quidquid
+									terrena fragilitate corruptum, vel quidquid diabolica fraude violatum
+									est; et unitati corporis Ecclesiæ membrum redemptionis annecte
+									Miserere,
+									Domine, gemituum, miserere lacrimarum eius; et, non habentem fiduciam,
+									nisi in tua misericordia, ad tuæ sacramentum reconciliationis admitte.
+									Per Christum Dominum nostrum. <br><span class=red>R/. </span>Amen.</p>
+
+								<p>Commendo te omnipotenti Deo, carissime frater <span
+										class='red'>(</span>carissima soror<span class='red'>)</span>, et ei,
+									cuius es creatura, committo ; ut, cum humanitatis debitum morte
+									interveniente persolveris, ad auctorem tuum qui te de limo terræ
+									formaverat, revertaris. Egredienti itaque animæ tuæ de corpore
+									splendidus
+									Angelorum coetus occurrat: iudex Apostolorum tibi senatus adveniat:
+									candidatorum tibi Martyrum triumphator exercitus obviet: liliata
+									rutilantium te Confessorum turma circumdet: iubilantium te Virginum
+									chorus excipiat: et beatæ quietis in sinu Patriarcharum te complexus
+									astringat: sanctus Ioseph, morientium Patronus dulcissimus, in magnam
+									spem te erigat: sancta Dei Genetrix Virgo Maria suos benigna oculos ad
+									te
+									convertat: mitis atque festivus Christi Iesu tibi aspectus appareat,
+									qui
+									te inter assistentes sibi iugiter interesse decernat. Ignores omne quod
+									horret in tenebris, quod stridet in flammis, quod cruciat in tormentis.
+									Cedat tibi tæterrimus satanas cum satellitibus suis: in adventu tuo, te
+									comitantibus Angelis, contremiscat, atque in æternæ noctis chaos immane
+									diffugiat. Exsurgat Deus, et dissipentur inimici eius, et fugiant qui
+									oderunt eum, a facie eius. Sicut deficit fumus, deficiant: sicut fluit
+									cera a facie ignis, sic pereant peccatores a facie Dei: et iusti
+									epulentur, et exsultent in conspectu Dei. Confundantur igitur et
+									erubescant omnes tartareæ legiones, et ministri satanæ iter tuum
+									impedire
+									non audeant. Liberet te a cruciatu Christus, qui pro te crucifixus est.
+									Liberet te ab æterna morte Christus, qui pro te mori dignatus est.
+									Constituat te Christus, Filius Dei vivi, intra paradisi sui semper
+									amoena
+									virentia, et inter oves suas te verus ille Pastor agnoscat. Ille ab
+									omnibus peccatis tuis te absolvat, atque ad dexteram suam in electorum
+									suorum te sorte constituat. Redemptorem tuum facie ad faciem videas,
+									et,
+									præsens semper assistens, manifestissimam beatis oculis aspicias
+									veritatem. Constitutus <span class=red>(</span>-a<span
+										class=red>)</span>
+									igitur inter agmina Beatorum, contemplationis divinæ dulcedine potiaris
+									in sǽcula sæculorum. <br><span class=red>R/. </span>Amen.</p>
+
+								<p>Oratio:<br>Suscipe, Domine, servum tuum <span
+										class='red'>(</span>ancillam tuam<span class='red'>)</span> in locum
+									sperandæ sibi salvationis a misericordia tua. <br><span class=red>R/.
+									</span>Amen.</p>
+
+								<p>Libera, Domine, animam servi tui <span class='red'>(</span>ancillæ
+									tuæ<span class='red'>)</span> ex omnibus periculis inferni, et de
+									laqueis
+									poenarum, et ex omnibus tribulationibus. <br><span class=red>R/.
+									</span>Amen.</p>
+								<p>Libera, Domine, animam servi tui <span class='red'>(</span>ancillæ
+									tuæ<span class='red'>)</span>, sicut liberasti Henoch et Eliam de
+									communi
+									morte mundi. <br><span class=red>R/. </span>Amen.</p>
+								<p>Libera, Domine, animam servi tui <span class='red'>(</span>ancillæ
+									tuæ<span class='red'>)</span>, sicut liberasti Noe de diluvio.
+									<br><span
+										class=red>R/. </span>Amen.</p>
+								<p>Libera, Domine, animam servi tui <span class='red'>(</span>ancillæ
+									tuæ<span class='red'>)</span>, sicut liberasti Abraham de Ur
+									Chaldæorum.
+									<br><span class=red>R/. </span>Amen.</p>
+								<p>Libera, Domine, animam servi tui <span class='red'>(</span>ancillæ
+									tuæ<span class='red'>)</span>, sicut liberasti Iob de passionibus suis.
+									<br><span class=red>R/. </span>Amen.</p>
+								<p>Libera, Domine, animam servi tui <span class='red'>(</span>ancillæ
+									tuæ<span class='red'>)</span>, sicut liberasti Isaac de hostia, et de
+									manu patris sui Abrahæ. <br><span class=red>R/. </span>Amen.</p>
+								<p>Libera, Domine, animam servi tui <span class='red'>(</span>ancillæ
+									tuæ<span class='red'>)</span>, sicut liberasti Lot de Sodomis, et de
+									flamma ignis. <br><span class=red>R/. </span>Amen.</p>
+								<p>Libera, Domine, animam servi tui <span class='red'>(</span>ancillæ
+									tuæ<span class='red'>)</span>, sicut liberasti Moysen de manu pharaonis
+									regis Ægyptiorum. <br><span class=red>R/. </span>Amen.</p>
+								<p>Libera, Domine, animam servi tui <span class='red'>(</span>ancillæ
+									tuæ<span class='red'>)</span>, sicut liberasti Danielem de lacu leonum.
+									<br><span class=red>R/. </span>Amen.</p>
+								<p>Libera, Domine, animam servi tui <span class='red'>(</span>ancillæ
+									tuæ<span class='red'>)</span>, sicut liberasti tres pueros de camino
+									ignis ardentis, et de manu regis iniqui. <br><span class=red>R/.
+									</span>Amen.</p>
+								<p>Libera, Domine, animam servi tui <span class='red'>(</span>ancillæ
+									tuæ<span class='red'>)</span>, sicut liberasti Susannam de falso
+									crimine.
+									<br><span class=red>R/. </span>Amen.</p>
+								<p>Libera, Domine, animam servi tui <span class='red'>(</span>ancillæ
+									tuæ<span class='red'>)</span>, sicut liberasti David de manu regis
+									Saul,
+									et de manu Goliæ. <br><span class=red>R/. </span>Amen.</p>
+								<p>Libera, Domine, animam servi tui <span class='red'>(</span>ancillæ
+									tuæ<span class='red'>)</span>, sicut liberasti Petrum et Paulum de
+									carceribus. <br><span class=red>R/. </span>Amen.</p>
+								<p>Et sicut beatissimam Theclam Virginem et Martyrem tuam de tribus
+									atrocissimis tormentis liberasti, sic liberare digneris animam huius
+									servi tui ( ancillæ tuæ), et tecum facias in bonis congaudere
+									cælestibus.
+									<br><span class=red>R/. </span>Amen.</p>
+
+								<p>Oratio:<br>Commendamus tibi, Domine, animam famuli tui <span
+										class=red>N. (</span>famulæ tuæ <span class=red>N.)</span>,
+									precamurque
+									te, Domine Iesu Christe, Salvator mundi, ut, propter quam ad terram
+									misericorditer descendisti, Patriarcharum tuorum sinibus insinuare non
+									renuas. Agnosce, Domine, creaturam tuam, non a diis alienis creatam,
+									sed
+									a te, solo Deo vivo et vero; quia non est alius Deus præter te, et non
+									est secundum opera tua. Lætifica, Domine, animam eius in conspectu tuo;
+									et ne memineris iniquitatum eius antiquarum et ebrietatum, quas
+									suscitavit furor sive fervor mali desiderii. Licet enim peccaverit,
+									tamen
+									Patrem, et Filium, et Spiritum Sanctum non negavit, sed credidit; et
+									zelum Dei in se habuit, et Deum, qui fecit omnia, fideliter
+									adoravit.</p>
+
+								<p>Oratio:<br>Delicta iuventutis et ignorantias eius, quǽsumus, ne
+									memineris, Domine; sed secundum magnam misericordiam tuam memor esto
+									illius in gloria claritatis tuæ. Aperiantur ei cæli, collætentur illi
+									Angeli. In regnum tuum, Domine, servum tuum <span
+										class='red'>(</span>(ancillam tuam<span class='red'>)</span> suscipe.
+									Suscipiat eum <span class=red>(</span>eam<span class=red>)</span>
+									sanctus
+									Michæl Archangelus Dei, qui militiæ cælestis meruit principatum.
+									Veniant
+									illi obviam sancti Angeli Dei, et perducant eum <span
+										class=red>(</span>eam<span class=red>)</span> in civitatem cælestem,
+									Ierusalem. Suscipiat eum <span class=red>(</span>eam<span
+										class=red>)</span> beatus Petrus Apostolus, cui a Deo claves regni
+									cælestis traditæ sunt. Adiuvet eum <span class=red>(</span>eam<span
+										class=red>)</span> sanctus Paulus Apostolus, qui dignus fuit esse vas
+									electionis. Intercedat pro eo <span class=red>(</span>ea<span
+										class=red>)</span>, Sanctus Ioannes, electus Dei Apostolus, cui
+									revelata
+									sunt secreta cælestia. Orent pro eo <span class=red>(</span>ea<span
+										class=red>)</span> omnes sancti Apostoli, quibus a Domino data est
+									potestas ligandi atque solvendi. Intercedant pro eo <span
+										class=red>(</span>ea<span class=red>)</span> omnes Sancti et Electi
+									Dei,
+									qui pro Christi nomine tormenta in hoc sæculo sustinuerunt; ut,
+									vinculis
+									carnis exutus <span class=red>(</span>-a<span class=red>)</span>,
+									pervenire mereatur ad gloriam regni cælestis, præstante Domino nostro
+									Iesu Christo: Qui cum Patre et Spiritu Sancto vivit et regnat in sǽcula
+									sæculorum. <br><span class=red>R/. </span>Amen.</p>
+
+								<p>Oratio:<br>Clementissima Virgo Dei Genetrix, Maria, mærentium
+									piissima consolatrix, famuli <span class=red>(</span>-æ<span
+										class=red>)
+										N.</span> spiritum Filio suo commendet: ut, hoc materno interventu,
+									terrores mortis non timeat; sed desideratam cælestis patriæ mansionem,
+									ea
+									comite, lætus <span class=red>(</span>-a<span class=red>)</span> adeat.
+									<br><span class=red>R/. </span>Amen.</p>
+
+								<p>Oratio:<br>Ad te confugio, sancte Ioseph, Patrone morientium,
+									tibique, in cuius beato transitu vigiles adstiterunt Iesus et Maria,
+									per
+									hoc utrumque carissimum pignus, animam huius famuli <span
+										class=red>(</span>-æ<span class=red>) N.</span> in extremo agone
+									laborantem enixe commendo, ut ab insidiis diaboli, et a morte perpetua,
+									te progente, liberetur, et ad gaudia æterna pervenire mereatur. Per
+									eundem Christum Dominum nostrum.<br> <span class=red>R/.
+									</span>Amen.</p>
+
+								<p class="red">IN EXSPIRATIONE.</p>
+
+								<p class=red>Moriens, si potest, dicat vel si non potest, assistens sive
+									Sacerdos pro eo clara voce pronuntiet: Iesu, Iesu, Iesu.</p>
+
+								<p class=red>Quod et ea quæ sequuntur, ad illius aures, si videbitur,
+									etiam sǽpius repetat:</p>
+
+								<p>In manus tuas, Domine, commendo spiritum meum.<br>Domine Iesu
+									Christe, suscipe spiritum meum.<br>Sancta Maria, ora pro me.<br>Maria,
+									mater gratiæ, mater misericordiæ, tu me ab hoste protege, et hora
+									mortis
+									suscipe.<br>Sancte Ioseph, ora pro me.<br>Sancte Ioseph, cum Virgine
+									Sponsa tua, aperi mihi divinæ misericordiæ sinum.<br>Iesu, Maria,
+									Ioseph,
+									vobis cor et animam meam dono.<br>Iesu, Maria, Ioseph, adstate mihi in
+									extremo agone.<br>Iesu, Maria, Ioseph, in pace vobiscum dormiam et
+									requiescam.<br></p>
+
+								<p class=red>Egressa autem anima, dicitur hoc:</p>
+
+								<p><span class=red>R/. </span>Subvenite, Sancti Dei, occurrite, Angeli
+									Domini, * Suscipientes animam eius, * Offerentes eam in conspectu
+									Altissimi.</p>
+
+								<p><span class=red>V/. </span>Suscipiat te Christus, qui vocavit te, et
+									in sinum Abrahæ Angeli deducant te.<br><span class=red>R/.
+									</span>Suscipientes animam eius, * Offerentes eam in conspectu
+									Altissimi.</p>
+
+								<p><span class=red>V/. </span>Requiem æternam dona ei, Domine: et lux
+									perpetua luceat ei. Offerentes eam in conspectu Altissimi.</p>
+
+								<p>Kyrie, eleison.<br>Christe, eleison.<br>Kyrie, eleison.</p>
+
+								<p>Pater noster... <span class='red'>(</span>in secreto usque ad:<span
+										class='red'>)</span></p>
+
+								<p><span class=red>V/. </span>Et ne nos inducas in tentationem.<br><span
+										class=red>R/. </span>Sed libera nos a malo.</p>
+								<p><span class=red>V/. </span>Requiem æternam dona ei, Domine.<br><span
+										class=red>R/. </span>Et lux perpetua luceat ei.</p>
+								<p><span class=red>V/. </span>A porta inferi.<br><span class=red>R/.
+									</span>Erue, Domine, animam eius.</p>
+								<p><span class=red>V/. </span>Requiescat in pace.<br><span class=red>R/.
+									</span>Amen.</p>
+								<p><span class=red>V/. </span>Domine, exaudi orationem meam.<br><span
+										class=red>R/. </span>Et clamor meus ad te veniat.</p>
+								<p><span class=red>V/. </span>Dominus vobiscum.<br><span class=red>R/.
+									</span>Et cum spiritu tuo.</p>
+
+								<p>Oratio:<br>Oremus. Tibi, Domine, commendamus animam famuli tui <span
+										class='red'>N. (</span>famulæ tuæ <span class=red>N.)</span> ut
+									defunctus <span class=red>(</span>-a<span class=red>)</span> sæculo,
+									tibi
+									vivat, et, quæ per fragilitatem humanæ conversationis peccata commisit,
+									tu venia misericordissimæ pietatis absterge. Per Christum Dominum
+									nostrum. <br><span class=red>R/. </span>Amen. Si defunctus fuerit
+									sacerdos,
+									post nomen proprium addatur vox sacerdotis.</p>
+							</div>
+							<div class="red">FORMULA AD IMPERTIENDAM INDULGENTIAM PLENARIAM IN
+								ARTICULO
+								MORTIS.</div>
+							<div>
+								<p><span class=red>V/. </span>Adiutorium nostrum in nomine Domini.
+									<br><span
+										class=red>R/. </span>Qui fecit cælum et terram.</p>
+								<p><b class="red">Ant.</b> Ne reminiscaris, Domine, delicta famuli tui
+									<span
+										class='red'>(</span>famulæ tuæ<span class='red'>)</span>, neque
+									vindictam sumas de peccatis eius.</p>
+
+								<p>Kyrie, eleison.<br>Christe, eleison.<br>Kyrie, eleison.</p>
+
+								<p>Pater noster... <span class='red'>(</span>in secreto usque ad:<span
+										class='red'>)</span></p>
+
+								<p><span class=red>V/. </span>Et ne nos inducas in
+									tentationem.<br><span
+										class=red>R/. </span>Sed libera nos a malo.</p>
+								<p><span class=red>V/. </span>Salvum <span class='red'>(</span>-am<span
+										class='red'>)</span> fac servum tuum <span
+										class='red'>(</span>ancillam
+									tuam<span class='red'>)</span>.<br><span class=red>R/. </span>Deus
+									meus,
+									sperantem in te.</p>
+								<p><span class=red>V/. </span>Domine, exaudi orationem meam.<br><span
+										class=red>R/. </span>Et clamor meus ad te veniat.</p>
+								<p><span class=red>V/. </span>Dominus vobiscum.<br><span class=red>R/.
+									</span>Et cum spiritu tuo.</p>
+
+								<p>Oratio:<br>Oremus. Clementissime Deus, Pater misericordiarum et Deus
+									totius consolationis, qui neminem vis perire in te credentem atque
+									sperantem: secundum multitudinem miserationum tuarum respice propitius
+									famulum tuum <span class='red'>N.</span>, quem <span
+										class=red>(</span>famulam tuam <span class='red'>N.</span>, quam<span
+										class=red>)</span> tibi vera fides et spes christiana commendant.<br>
+									Visita eum <span class=red>(</span>eam<span class=red>)</span> in
+									salutari tuo, et, per Unigeniti tui passionem et mortem, omnium ei
+									delictorum suorum remissionem et veniam clementer indulge; ut eius
+									anima
+									in hora exitus sui te iudicem propitiatum inveniat, et in sanguine
+									eiusdem Filii tui ab omni macula abluta, transire ad vitam mereatur
+									perpetuam. <br>Per eundem Christum Dominum nostrum. <br><span
+										class=red>R/.
+									</span>Amen.</p>
+
+								<p class="red">Tunc, dicto ab uno e Clericis astantibus Confiteor,
+									Sacerdos dicat
+									Misereatur et Indulgentiam, ac deinde:</p>
+
+								<p>Dominus noster Iesus Christus,
+									Filius Dei vivi, qui beato Petro Apostolo suo dedit potestatem ligandi
+									atque solvendi, per suam piissimam misericordiam recipiat confessionem
+									tuam, et restituat tibi stolam primam, quam in Baptismate recepisti:
+									et
+									ego facultate mihi ab Apostolica Sede tributa, indulgentiam plenariam
+									et
+									remissionem omnium peccatorum tibi concedo. <br>In nomine Patris, et
+									Filii
+									<span class='cruzroja'>&#10016;</span>, et Spiritus Sancti.<br> <span
+										class=red>R/. </span>Amen.</p>
+
+								<p>Per sacrosancta humanæ reparationis mysteria, remittat tibi
+									omnipotens
+									Deus omnes præsentis et futuræ vitæ poenas, paradisi portas aperiat et
+									ad gaudia sempiterna perducat. <br><span class=red>R/.
+									</span>Amen.</p>
+
+								<p>Benedicat te omnipotens Deus, Pater, Filius <span
+										class='cruzroja'>&#10016;</span>, et Spiritus Sanctus. <br><span
+										class=red>R/. </span>Amen.</p>
+
+								<p class="red">Si vero infirmus sit adeo morti proximus, ut neque
+									confessionis
+									generalis faciendæ, neque præmissarum precum recitandarum suppetat
+									tempus, statim Sacerdos benedictionem ei impertiatur, dicendo: </p>
+
+								<p>Ego,
+									facultate mihi ab Apostolica Sede tributa, et remissionem omnium
+									peccatorum tibi concedo. In nomine Patris, et Filii <span
+										class='cruzroja'>&#10016;</span>, et Spiritus Sancti. <br><span
+										class=red>R/. </span>Amen.</p>
+
+								<p>Per sacrosancta humanæ reparationis mysteria, remittat tibi
+									omnipotens
+									Deus omnes præsentis et futuræ vitæ poenas, paradisi portas aperiat et
+									ad gaudia sempiterna perducat. <br><span class=red>R/.
+									</span>Amen.</p>
+
+								<p>Benedicat te omnipotens Deus, Pater, Filius <span
+										class='cruzroja'>&#10016;</span>, et Spiritus Sanctus. <br><span
+										class=red>R/. </span>Amen.</p>
+
+								<p class="red">In casu vero necessitatis sufficit dicere:</p>
+
+								<p>Ego, facultate mihi ab
+									Apostolica Sede tributa indulgentiam plenariam et remissionem omnium
+									peccatorum tibi concedo, et benedico te. In nomine Patris, et Filii
+									<span class='cruzroja'>&#10016;</span>, et Spiritus Sancti.<br><span
+										class=red>R/. </span>Amen.</p>
+
+								<p class="red">Quando huiusmodi Benedictio Apostolica pluribus simul
+									infirmus
+									impertitur, omnia dicuntur semel ut supra, singulari tantum numero in
+									pluralem immutato.
+								</p>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div id="menu_diamante"
+		style="  position: absolute;  bottom: 2em;  left: 50%;  transform: translateX(-50%);  width: auto;  font-weight: bold;  display: none;  z-index: 30000;  text-align: left;">
+		<ul
+			class="ul_normal" id="tab_diamante">
+			<li  id="exitBtn" ontouchend="navigator.app.exitApp()">
+				<img src="../../exit.png" alt="Icono"	style="height: 1.2em;" /></li>
+			<li ontouchend="event.stopPropagation();cambia_vista('menu_diamante'); window.location='../preferencias.html'; return false"> <img src="../../gear.png" alt="Icono"
+					style="height: 1.2em;"
+					ontouchend="$('#mis_intenciones0').toggle()" /></li>
+			<!-- <li
+				ontouchend=" cambia_idiomas(nuevoidioma1,nuevoidioma2);">
+				<img src="../../dos_colum.png" alt="Icono"
+					style="height: 1.2em;"> &nbsp;<=>&nbsp; <img src="../../una_colum.png"
+					alt="Icono"
+					style="height: 1.2em;"></li> -->
+			<li
+				ontouchend="event.stopPropagation();cambia_vista('menu_diamante'); window.location='../ayuda.html'; return false"><img
+					src="../../interrogacion_rojo.png" style="height:1.3em;"></li>
+			<li
+				id="menunoche"
+				ontouchend="event.stopPropagation();cambia_vista('menu_diamante'); pon_noche();"><img
+					style="height: 1em;" id="bot_noche" src="../../noche.png"></li>
+			<li
+				ontouchend="cambia_pref('tipoletra', nuevaletra ); cambia_fuente(); "><span
+					style=" font-family: Times New Roman; ">ABC</span> &nbsp;<=>&nbsp; <span
+					style=" font-family: Arial; ">ABC</span></li>
+			<li id="titulo002"
+				ontouchend="cambia_pref('tamanotexto', masgrande ); cambia_tamanoletra(masgrande);">12&nbsp;=>&nbsp;<span
+					style=" font-size: 13pt; ">13</span></li>
+			<li id="titulo003"
+				ontouchend="cambia_pref('tamanotexto', maspeq ); cambia_tamanoletra(maspeq); ">12&nbsp;=>&nbsp;<span
+					style=" font-size: 11pt; ">11</span></li>
+			<!-- <li
+				ontouchend="modocopia = ! modocopia ; if (modocopia) { $(this).css('background-color','green'); } else {$(this).css('background-color','maroon'); }; cambia_vista('menu_diamante'); "><img
+					style="height: 1em;" id="bot_copy" src="../../copy-icon.png"></li> -->
+		</ul>
+	</div>
+			<div id="piedepantalla" class="navbar">
+				<ol
+					id="menupie">
+					<li class="botonabajo" ontouchend="botonPantArriba();"><img
+							id="bot_arriba" src="../../angle-double-up2.png" style=" height: 1.6em;"
+							border="0"></li>
+					<li class="botonabajo"
+						ontouchend="cambia_titulos(); cambia_vista('menu_grabar');" '=""><img
+							id="bot_grabar" src="../../bookmark-o2.png"
+							style="height: 1.6em; display: none;"></li>
+					<li
+						ontouchend="event.stopPropagation();cambia_vista('menu_diamante');"><img id="bot_indice"
+							src="../../asterisk2.png" style=" height: 1.6em;"></li>
+					<li class="botonabajo"
+						ontouchend="botonPantAbajo();"><img id="bot_abajo"
+							src="../../angle-double-down2.png" style=" height: 1.6em;"></li>
+				</ol>
+			</div>
+		</body>
+		<script>
+
+
+if (!estoymac) {
+$('.solo_android').css('display', 'block');
+$('.solo_mac').css('display', 'none');
+} else {
+$('.solo_android').css('display', 'none');
+$('.solo_mac').css('display', 'block');
+}
+
+function getUrlParameter(name) {
+				name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+				var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+				var results = regex.exec(location.search);
+				return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+		}
+		
+$(function($) {
+var input = $('#micampo');
+input.keyup(function(e) {
+	pon_pref("misintenciones", $("#micampo").val().replace(/\n/g, "<br>"));
+});
+});
+$('#titulo002').html(mipreferencia['tamanotexto'] + "&nbsp;&#9654;&#xFE0E;&nbsp;<span style=' font-size: 120%; '>" + masgrande + "</span>");
+$('#titulo003').html(mipreferencia['tamanotexto'] + "&nbsp;&#9654;&#xFE0E;&nbsp;<span style=' font-size: 80%; '>" + maspeq + "</span>");
+
+document.addEventListener('DOMContentLoaded', function () { 
+if (esDispositivoMovil) {
+
+if (mipreferencia['presentaciontexto'] == 2) $(" .cast , .engl , .latin , .germ, .port, .ital  , .fran ").each(function() {
+	$(this).touchend(function() {
+		cambialengua(this);
+		return false;
+	});
+});
+} else {
+
+if (mipreferencia['presentaciontexto'] == 2) $(" .cast , .engl , .latin , .germ, .port, .ital  , .fran ").each(function() {
+	$(this).click(function() {
+		cambialengua(this);
+		return false;
+	});
+
+});
+}
+
+$('#idioma_1').val(dime_pref('idioma_dev_1',idiomas[mipreferencia['misal_pral']]))
+$('#idioma_2').val(dime_pref('idioma_dev_2',idiomas[mipreferencia['segundoidioma']]))
+});
+var ajuste = dime_pref("ajuste", 10);
+function getUrlParameter(name) {
+				name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+				var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+				var results = regex.exec(location.search);
+				return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+		}
+window.addEventListener("DOMContentLoaded", loaded, false);
+//document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, ajuste*100); }, false);
+</script>
+	</html>

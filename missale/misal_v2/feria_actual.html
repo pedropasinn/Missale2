@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+    <title>TEMPORA</title>
+
+    <!-- Design System -->
+    <link rel="stylesheet" href="missale_tokens.css" type="text/css" />
+    <link rel="stylesheet" href="missale_base.css" type="text/css" />
+
+    <!-- Scripts Originais (Lógica Intacta) -->
+    <script type="text/javascript" charset="utf-8" src="../jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../cordova_loader.js"></script>
+    <script type="text/javascript" charset="utf-8" src="mis_funciones_devoc.js"></script>
+    <script type="text/javascript" charset="utf-8" src="feria_liturgica.js"></script>
+
+    <style>
+        /* Page-specific: feria_actual.html only */
+        html, body {
+            overflow: hidden;
+            background-color: var(--background) !important;
+            background-image: none !important;
+        }
+        .app-shell {
+            background-color: var(--background) !important;
+            background-image: none !important;
+        }
+        .app-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        .btn-icon .dots {
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 1;
+            letter-spacing: 2px;
+            display: inline-block;
+            transform: translateY(-1px);
+        }
+
+        /* Calendar */
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .month-label {
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-transform: capitalize;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+        }
+        .weekday-label {
+            font-size: 0.65rem;
+            color: var(--muted-foreground);
+            font-weight: 500;
+            padding-bottom: 0.25rem;
+            text-transform: uppercase;
+        }
+        .day-cell {
+            aspect-ratio: 1.25;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: background 0.15s;
+            position: relative;
+        }
+        .day-cell:active { background-color: var(--accent); }
+        .day-cell.is-today::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            width: 4px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 50%;
+        }
+        .day-cell.is-selected {
+            background-color: var(--primary);
+            color: var(--primary-foreground);
+            font-weight: 600;
+        }
+
+        /* Liturgy info */
+        .liturgy-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .liturgy-info > * { margin-top: 0; }
+
+        .section-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--muted-foreground);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        #pintar_aqui { font-size: 1.05rem; line-height: 1.6; }
+        #pintar_aqui .red, .red { color: var(--rubric) !important; font-weight: 600; }
+        #pintar_aqui br { display: block; margin-top: 0.25rem; content: ""; }
+        #rotulo { font-size: 1.25rem; font-weight: 700; color: var(--foreground); text-align: center; }
+
+        /* Legacy select overrides */
+        .select-wrapper {
+            float: none !important; width: 100% !important;
+            display: block !important; margin-bottom: 1rem !important;
+            position: relative;
+        }
+        .select-wrapper select, #cuadro select {
+            width: 100%; appearance: none; -webkit-appearance: none;
+            background-color: var(--secondary); border: 1px solid transparent;
+            border-radius: 0.5rem; padding: 0.75rem 1rem;
+            font-size: 0.95rem; color: var(--foreground);
+            font-family: inherit; box-shadow: none;
+        }
+        .select-wrapper select:focus, #cuadro select:focus {
+            outline: none; border-color: var(--border);
+            background-color: var(--background); box-shadow: 0 0 0 2px var(--input);
+        }
+        .select-wrapper::after, #cuadro::after {
+            content: ""; font-size: 0.7rem; position: absolute;
+            right: 1rem; top: 50%; transform: translateY(-50%);
+            color: var(--muted-foreground); pointer-events: none;
+        }
+        .select-wrapper span { display: none !important; }
+        #cuadro { position: relative; }
+
+        .nav-item {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; padding: 0.5rem;
+            color: var(--muted-foreground); background: none; border: none; cursor: pointer;
+        }
+        .nav-item:active { color: var(--foreground); }
+        .nav-item svg { width: 24px; height: 24px; stroke-width: 2px; }
+
+        /* Legacy hide */
+        #header, #piedepantalla, .navbar, .calendario { display: none !important; }
+
+        .hodie-text {
+            display: inline-block; font-size: 0.75rem; text-transform: uppercase;
+            letter-spacing: 0.05em; color: var(--muted-foreground);
+            font-weight: 600; margin-bottom: 0.5rem;
+        }
+
+        /* Kindle fallbacks */
+        .calendar-grid {
+            display: -webkit-flex; display: flex;
+            -webkit-flex-wrap: wrap; flex-wrap: wrap;
+        }
+        .calendar-grid .weekday-label, .calendar-grid .day-cell { width: 14.2857%; }
+        .day-cell { height: 2.4rem; line-height: 2.4rem; }
+
+        @supports (display: grid) {
+            .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
+            .calendar-grid .weekday-label, .calendar-grid .day-cell { width: auto; }
+        }
+        @supports (aspect-ratio: 1 / 1) {
+            .day-cell { height: auto; line-height: normal; aspect-ratio: 1.25; }
+        }
+    </style>
+</head>
+
+<body onload="document.addEventListener('deviceready', onDeviceReady, false);">
+
+    <!-- APP SHELL -->
+    <div class="app-shell">
+
+        <!-- 1. Header Fixo -->
+        <header class="app-header">
+            <div class="app-title">Missale Romanum</div>
+            <div class="header-actions">
+                <button id="btnToday" class="btn-icon" aria-label="Hoje">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M8 14h.01"></path><path d="M12 14h.01"></path><path d="M16 14h.01"></path><path d="M8 18h.01"></path><path d="M12 18h.01"></path><path d="M16 18h.01"></path></svg>
+                </button>
+                <button id="btnSettings" class="btn-icon" aria-label="Configurações">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.09a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                </button>
+                <button
+                    id="btnSettings"
+                    class="btn-icon"
+                    type="button"
+                    aria-label="Configurações"
+                    onclick="window.location.href='oracoes.html'"
+                    >
+                    <span class="dots">...</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- 2. Conteúdo Principal -->
+        <main id="scroller" class="app-content">
+            <div class="content-container">
+
+                <!-- Calendário -->
+                <section class="card">
+                    <div class="calendar-nav">
+                        <button id="prevMonth" class="btn-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                        </button>
+                        <span id="monthYearDisplay" class="month-label">Dezembro 2025</span>
+                        <button id="nextMonth" class="btn-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                        </button>
+                    </div>
+                    <div id="calendarGrid" class="calendar-grid">
+                        <!-- JS Render -->
+                    </div>
+                </section>
+
+                <!-- Informações Litúrgicas (Dinâmico) -->
+                <section class="card liturgy-info">
+
+                    <!-- Elementos Legados Invisíveis (Formulários) -->
+                    <form name="formulario" style="display: none;">
+                        <input type="hidden" name="lect_elegida" value="0" />
+                        <input type="hidden" name="misa_elegida" value="0" />
+                        <input type="hidden" name="santo_elegido" value="0" />
+                    </form>
+
+                    <!-- Onde o JS original injeta os selects de Santos/Missas -->
+                    <div id="cuadro"></div>
+
+                    <!-- Container para conteúdo litúrgico -->
+                    <div id="cabecera">
+                        <div class="hodie-text">Hodie</div>
+                        <span id="pintar_aqui">
+                            <!-- Conteúdo litúrgico será injetado aqui -->
+                        </span>
+                        <script>
+                            if (typeof llegueaqui !== 'undefined' && llegueaqui.resolve) {
+                                llegueaqui.resolve();
+                            }
+                        </script>
+                    </div>
+                </section>
+
+                <!-- Ação Principal -->
+                <button id="boton_fiat" class="btn-primary" type="button">
+                    FIAT
+                </button>
+
+            </div>
+
+            <!-- Áreas de Buffer Ocultas (Requeridas pelo JS original) -->
+            <div style="display: none">
+                <div id="mibuffer1"></div>
+                <div id="mibuffer2"></div>
+                <div id="mibuffer3"></div>
+                <div id="mibuffer4"></div>
+                <div id="mibuffer5"></div>
+                <div id="mibuffer6"></div>
+                <div id="mi_estr"></div>
+                <div id="mi_idiom1"></div>
+                <div id="mi_idiom2"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- SCRIPT DE INTERFACE (UI LOGIC) -->
+    <script>
+        // Estado do Calendário
+        let currDate = new Date();
+        let selectedDate = new Date();
+        const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            setupTodayBadge();
+            renderCalendar();
+            // Simular clique no dia de hoje para carregar dados iniciais
+            handleDateClick(currDate.getDate(), currDate.getMonth(), currDate.getFullYear());
+
+            // Configurar event listeners
+            document.getElementById('prevMonth').addEventListener('click', () => changeMonth(-1));
+            document.getElementById('nextMonth').addEventListener('click', () => changeMonth(1));
+            document.getElementById('btnToday').addEventListener('click', goToToday);
+            document.getElementById('btnSettings').addEventListener('click', () => {
+                window.location = 'preferencias.html';
+            });
+
+            // Hack para limpar estilos inline agressivos do JS original se existirem
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.type === 'childList') {
+                        // Se algo for injetado no #cuadro (selects), remover floats
+                        document.querySelectorAll('.select-wrapper').forEach(el => {
+                            el.classList.remove('float-left');
+                            el.style.float = 'none';
+                        });
+                    }
+                });
+            });
+
+            const cuadroNode = document.getElementById('cuadro');
+            if(cuadroNode) observer.observe(cuadroNode, { childList: true, subtree: true });
+        });
+
+        function setupTodayBadge() {
+            const badge = document.getElementById('todayBadge');
+            if (badge) {
+                badge.textContent = new Date().getDate();
+            }
+        }
+
+        function renderCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            const display = document.getElementById('monthYearDisplay');
+
+            if(!grid || !display) return;
+
+            display.textContent = `${monthNames[currDate.getMonth()]} ${currDate.getFullYear()}`;
+            grid.innerHTML = '';
+
+            // Dias da Semana Headers
+            const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+            weekDays.forEach(day => {
+                const el = document.createElement('div');
+                el.className = 'weekday-label';
+                el.textContent = day;
+                grid.appendChild(el);
+            });
+
+            const firstDayIndex = new Date(currDate.getFullYear(), currDate.getMonth(), 1).getDay();
+            const lastDay = new Date(currDate.getFullYear(), currDate.getMonth() + 1, 0).getDate();
+            const today = new Date();
+
+            // Espaços vazios antes do dia 1
+            for (let i = 0; i < firstDayIndex; i++) {
+                const empty = document.createElement('div');
+                grid.appendChild(empty);
+            }
+
+            // Dias do mês
+            for (let i = 1; i <= lastDay; i++) {
+                const dayCell = document.createElement('div');
+                dayCell.className = 'day-cell';
+                dayCell.textContent = i;
+
+                // Verifica se é hoje
+                if (i === today.getDate() && currDate.getMonth() === today.getMonth() && currDate.getFullYear() === today.getFullYear()) {
+                    dayCell.classList.add('is-today');
+                }
+
+                // Verifica se está selecionado
+                if (i === selectedDate.getDate() && currDate.getMonth() === selectedDate.getMonth() && currDate.getFullYear() === selectedDate.getFullYear()) {
+                    dayCell.classList.add('is-selected');
+                }
+
+                // Evento de clique
+                dayCell.onclick = () => handleDateClick(i, currDate.getMonth(), currDate.getFullYear());
+
+                grid.appendChild(dayCell);
+            }
+        }
+
+        function handleDateClick(day, month, year) {
+            selectedDate = new Date(year, month, day);
+            renderCalendar(); // Re-render para atualizar seleção visual
+
+            // Lógica Legada de Data
+            // Formato esperado pelo JS original: D.M.YYYY (sem zeros à esquerda)
+            const dateString = `${day}.${month + 1}.${year}`;
+
+            // Chama a função pesada do JS original
+            if (typeof window.dia_liturgico === 'function') {
+                try {
+                    // O JS original retorna HTML string
+                    const htmlResult = window.dia_liturgico(dateString);
+
+                    // Injeta no container moderno
+                    const container = document.getElementById('pintar_aqui');
+                    if(container) {
+                        container.innerHTML = htmlResult;
+                        // Força estilos modernos no conteúdo injetado
+                        fixInjectedContent();
+                    }
+
+                    // Chama função secundária original que cria os dropdowns
+                    if (typeof window.pintacuadro === 'function') {
+                        window.pintacuadro();
+                    }
+
+                    // Reseta variáveis globais do sistema antigo
+                    if (window.mienlace_santo) window.mienlace_santo = [];
+                    if (window.mienlace_lecturas) window.mienlace_lecturas = [];
+                    if (window.mienlace_misa) window.mienlace_misa = [];
+                    if (window.mienlace_texto) window.mienlace_texto = [];
+
+                } catch (e) {
+                    console.error("Erro na lógica litúrgica:", e);
+                }
+            }
+        }
+
+        function changeMonth(delta) {
+            currDate.setMonth(currDate.getMonth() + delta);
+            renderCalendar();
+        }
+
+        function goToToday() {
+            currDate = new Date();
+            selectedDate = new Date();
+            renderCalendar();
+            handleDateClick(currDate.getDate(), currDate.getMonth(), currDate.getFullYear());
+        }
+
+        function scrollToTop() {
+            document.querySelector('.app-content').scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Helper para corrigir estilos do HTML injetado pelo sistema antigo
+        function fixInjectedContent() {
+            const container = document.getElementById('pintar_aqui');
+            if(!container) return;
+
+            // Remove estilos inline de divs antigas
+            container.querySelectorAll('div').forEach(div => {
+                div.style.width = '100%';
+                div.style.textAlign = 'left';
+            });
+
+            // Ajusta o "Rótulo" (data em latim)
+            const rotulo = document.getElementById('rotulo');
+            if(rotulo) {
+                rotulo.style.marginTop = '0';
+                rotulo.style.color = 'var(--foreground)';
+            }
+        }
+
+        // Compatibilidade com Cordova
+        function onDeviceReady_UI() {
+            if (window.plugins && window.plugins.insomnia) {
+                window.plugins.insomnia.keepAwake();
+            }
+            document.addEventListener("backbutton", function() { navigator.app.exitApp(); }, true);
+        }
+
+        // Adiciona listener ao botão FIAT (click + touch, com proteção contra duplo disparo)
+        document.addEventListener('DOMContentLoaded', () => {
+            const fiatBtn = document.getElementById('boton_fiat');
+            if (!fiatBtn) return;
+
+            let lock = false;
+            const run = (ev) => {
+                try {
+                    if (ev) {
+                        ev.preventDefault();
+                        ev.stopPropagation();
+                    }
+                } catch (_) {}
+                if (lock) return;
+                lock = true;
+                setTimeout(() => { lock = false; }, 350);
+
+                if (typeof window.ejecuta_fiat === 'function') {
+                    window.ejecuta_fiat();
+                } else {
+                    console.error('ejecuta_fiat() não está disponível.');
+                }
+            };
+
+            // iOS / touch-first
+            fiatBtn.addEventListener('touchend', run, { passive: false });
+            // fallback
+            fiatBtn.addEventListener('click', run);
+        });
+    </script>
+</body>
+</html>

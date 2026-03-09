@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+    <title>Preferências - TEMPORA</title>
+
+    <link rel="stylesheet" href="missale_tokens.css" type="text/css" />
+    <link rel="stylesheet" href="missale_base.css" type="text/css" />
+
+    <script type="text/javascript" charset="utf-8" src="../jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../cordova_loader.js"></script>
+    <script type="text/javascript" charset="utf-8" src="mis_funciones_devoc.js"></script>
+
+    <style>
+        /* Page-specific: preferencias.html */
+        html, body {
+            overflow: hidden;
+        }
+
+        /* Header */
+        .app-header {
+            height: var(--header-height);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.25rem;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            z-index: 50;
+            padding-top: env(safe-area-inset-top);
+        }
+
+        .app-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .btn-icon {
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--foreground);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-icon:active { background-color: var(--secondary); transform: scale(0.96); }
+
+        /* Conteúdo com Scroll */
+        .app-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            padding-bottom: 5rem;
+        }
+
+        /* Cards e Seções */
+        .card {
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        h2 { font-size: 1.1rem; margin: 0 0 1rem 0; font-weight: 700; color: var(--foreground); border-bottom: 1px solid var(--secondary); padding-bottom: 0.5rem; }
+        
+        /* Estilo para Itens de Configuração (Lista em vez de Tabela) */
+        .setting-item {
+            display: flex;
+            flex-direction: column;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .setting-item:last-child { border-bottom: none; }
+
+        .setting-label {
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--foreground);
+        }
+        .setting-desc {
+            font-size: 0.8rem;
+            color: var(--muted-foreground);
+            margin-top: -0.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Selects Modernos */
+        .select-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        select {
+            width: 100%;
+            appearance: none;
+            -webkit-appearance: none;
+            background-color: var(--secondary);
+            border: 1px solid transparent;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            color: var(--foreground);
+            font-family: inherit;
+        }
+        select:focus { outline: none; border-color: var(--primary); }
+        
+        .select-wrapper::after {
+            content: "▼";
+            font-size: 0.7rem;
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted-foreground);
+            pointer-events: none;
+        }
+
+        /* Controles Numéricos (+ / -) */
+        .number-control {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--secondary);
+            border-radius: 0.5rem;
+            padding: 0.25rem;
+        }
+        .number-display { font-weight: 600; min-width: 2em; text-align: center; }
+        .btn-small { width: 40px; height: 36px; border: none; background: #fff; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); font-weight: bold; font-size: 1.2rem; color: var(--primary); }
+        .btn-small:active { background: var(--secondary); }
+
+        /* Esconder elementos legados */
+        #piedepantalla, #header, #menu_diamante { display: none !important; }
+        
+        .lang-selector-container { margin-bottom: 0.5rem; background-color: var(--secondary); border: none;}
+    </style>
+</head>
+<body>
+
+    <div class="app-shell">
+        <header class="app-header">
+            <button class="btn-icon" onclick="window.history.back();" aria-label="Voltar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <div class="app-title">Preferências</div>
+            <div style="width: 40px;"></div>
+        </header>
+
+        <main class="app-content">
+            
+            <div class="card lang-selector-container">
+                <div class="setting-label">Idioma do Menu</div>
+                <div class="select-wrapper">
+                    <select id="idioma_pref" 
+                        onchange="pon_pref('id_pref', this.value); $('.page').hide(); $('#pref_'+this.value).fadeIn();">
+                        <option value="cast">Español</option>
+                        <option value="engl">English</option>
+                        <option value="ital">Italiano</option>
+                        <option value="germ">Deutsch</option>
+                        <option value="port">Português</option>
+                        <option value="fran">Français</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="page" id="pref_port">
+                <div class="card">
+                    <h2>Idiomas</h2>
+                    <div class="setting-item">
+                        <div class="setting-label">Idioma principal</div>
+                        <div class="select-wrapper"><select class="misal_pral" onchange="pon_pref('misal_pral_defecto',this.value);"><option value=0>Latim</option><option value=1>Espanhol</option><option value=2>Inglês</option><option value=3>Alemão</option><option value=4>Italiano</option><option value=5>Português</option><option value=6>Francês</option></select></div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-label">Segundo idioma</div>
+                        <div class="select-wrapper"><select class="segundoidioma" onchange="pon_pref('segundoidioma_defecto',this.value);"><option value=0>Latim</option><option value=1>Espanhol</option><option value=2>Inglês</option><option value=3>Alemão</option><option value=4>Italiano</option><option value=5>Português</option><option value=6>Francês</option></select></div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-label">Método de tradução</div>
+                        <div class="select-wrapper"><select class="presentaciontexto" onchange="pon_pref('presentaciontexto_defecto',this.value);"><option value=0>Sem tradução</option><option value=1>2 colunas</option><option value=2>Troca ao tocar no texto</option></select></div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-label">Respostas nas leituras</div>
+                        <div class="select-wrapper"><select class="presentacionrespuestas" onchange="pon_pref('presentacionrespuestas_defecto',this.value);"><option value=1>Idioma do missal</option><option value=2>2º idioma</option><option value=3>Ambos (linhas)</option><option value=4>Ambos (colunas)</option><option value=5>Troca ao tocar no texto</option></select></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Apresentação</h2>
+                    <div class="setting-item">
+                        <div class="setting-label">Cor de fundo</div>
+                        <div class="select-wrapper"><select class="fondo" onchange="pon_pref('fondo_defecto',this.value);"><option value=0>Branco</option><option value=1>Sépia</option></select></div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-label">Tipo de fonte</div>
+                        <div class="select-wrapper"><select class="tipoletra" onchange="pon_pref('tipoletra_defecto',this.value);"><option value=0>Arial sans serif</option><option value=1>Times New Roman</option></select></div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-label">Tamanho do texto</div>
+                        <div class="number-control"><button class="btn-small" onclick="baja('tamanotexto')">-</button><span class="tamanotexto number-display"></span><button class="btn-small" onclick="sube('tamanotexto')">+</button></div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-label">Tamanho das rubricas</div>
+                        <div class="select-wrapper"><select class="tamanorubrica" onchange="pon_pref('tamanorubrica_defecto',this.value);"><option value=100>Grande</option><option value=90 selected>Normal</option><option value=60>Pequeno</option></select></div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-label">Tamanho das abas</div>
+                        <div class="number-control"><button class="btn-small" onclick="baja('tamanomenus')">-</button><span class="tamanomenus number-display"></span><button class="btn-small" onclick="sube('tamanomenus')">+</button></div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-label">Estilo (Orações Sacerdote/Povo)</div>
+                        <div class="select-wrapper"><select class="oracionestodos_defecto" onchange="pon_pref('oracionestodos_defecto',this.value);"><option value=0>Normal</option><option value=1>Itálico</option><option value=2>Negrito</option></select></div>
+                    </div>
+                     <div class="setting-item">
+                        <div class="setting-label">Posição botões cima/baixo</div>
+                        <div class="select-wrapper"><select class="botoneszurdos" onchange="pon_pref('botoneszurdos_defecto',this.value);"><option value=0>Cima-esquerda, Baixo-direita</option><option value=1>Cima-direita, Baixo-esquerda</option></select></div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-label">Margem Superior</div>
+                        <div class="number-control"><button class="btn-small" onclick="baja('margen_superior',0)">-</button><span class="margen_superior number-display"></span><button class="btn-small" onclick="sube('margen_superior')">+</button></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Navegação</h2>
+                    <div class="setting-item">
+                        <div class="setting-label">Gesto de virar página</div>
+                        <div class="select-wrapper"><select class="pasarpagina" onchange="pon_pref('pasarpagina_defecto',this.value);"><option value=1>Sim</option><option value=0>Não</option></select></div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-label">Ver botão de intenções</div>
+                        <div class="select-wrapper"><select class="ver_bot_int" onchange="pon_pref('ver_bot_int_defecto',this.value);"><option value=1>Sim</option><option value=0>Não</option></select></div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-label">Aba "Ord" mostra variáveis</div>
+                        <div class="select-wrapper"><select class="ordinarionormal" onchange="pon_pref('ordinarionormal_defecto',this.value);"><option value=0>Sim</option><option value=1>Não</option></select></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page" id="pref_cast" style="display:none;">
+                <div class="card">
+                    <h2>Idiomas</h2>
+                    <div class="setting-item"><div class="setting-label">Idioma principal</div><div class="select-wrapper"><select class="misal_pral" onchange="pon_pref('misal_pral_defecto',this.value);"><option value=0>Latín</option><option value=1>Español</option><option value=2>English</option><option value=3>Deutsch</option><option value=4>Italiano</option><option value=5>Português</option><option value=6>Français</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Segundo idioma</div><div class="select-wrapper"><select class="segundoidioma" onchange="pon_pref('segundoidioma_defecto',this.value);"><option value=0>Latín</option><option value=1>Español</option><option value=2>English</option><option value=3>Deutsch</option><option value=4>Italiano</option><option value=5>Português</option><option value=6>Français</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Método de Traducción</div><div class="select-wrapper"><select class="presentaciontexto" onchange="pon_pref('presentaciontexto_defecto',this.value);"><option value=0>Sin traducción</option><option value=1>2 columnas</option><option value=2>cambio tocando texto</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Respuestas en lecturas</div><div class="select-wrapper"><select class="presentacionrespuestas" onchange="pon_pref('presentacionrespuestas_defecto',this.value);"><option value=1>Idioma misal</option><option value=2>2º idioma</option><option value=3>Ambas (filas)</option><option value=4>Ambas (columnas)</option><option value=5>cambio tocando texto</option></select></div></div>
+                </div>
+                <div class="card">
+                    <h2>Presentación</h2>
+                    <div class="setting-item"><div class="setting-label">Color de fondo</div><div class="select-wrapper"><select class="fondo" onchange="pon_pref('fondo_defecto',this.value);"><option value=0>Blanco</option><option value=1>Sepia</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Tipo de letra</div><div class="select-wrapper"><select class="tipoletra" onchange="pon_pref('tipoletra_defecto',this.value);"><option value=0>Arial sans serif</option><option value=1>Times New Roman</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Tamaño fuente texto</div><div class="number-control"><button class="btn-small" onclick="baja('tamanotexto')">-</button><span class="tamanotexto number-display"></span><button class="btn-small" onclick="sube('tamanotexto')">+</button></div></div>
+                    <div class="setting-item"><div class="setting-label">Tamaño fuente rúbricas</div><div class="select-wrapper"><select class="tamanorubrica" onchange="pon_pref('tamanorubrica_defecto',this.value);"><option value=100>Grande</option><option value=90 selected>Normal</option><option value=60>Pequeño</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Tamaño fuente pestañas</div><div class="number-control"><button class="btn-small" onclick="baja('tamanomenus')">-</button><span class="tamanomenus number-display"></span><button class="btn-small" onclick="sube('tamanomenus')">+</button></div></div>
+                    <div class="setting-item"><div class="setting-label">Estilo Oraciones</div><div class="select-wrapper"><select class="oracionestodos_defecto" onchange="pon_pref('oracionestodos_defecto',this.value);"><option value=0>Normal</option><option value=1>Cursiva</option><option value=2>Negrita</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Margen Superior</div><div class="number-control"><button class="btn-small" onclick="baja('margen_superior',0)">-</button><span class="margen_superior number-display"></span><button class="btn-small" onclick="sube('margen_superior')">+</button></div></div>
+                </div>
+                <div class="card">
+                    <h2>Navegación</h2>
+                    <div class="setting-item"><div class="setting-label">Gesto de pasar página</div><div class="select-wrapper"><select class="pasarpagina" onchange="pon_pref('pasarpagina_defecto',this.value);"><option value=1>Sí</option><option value=0>No</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Ver botón de intenciones</div><div class="select-wrapper"><select class="ver_bot_int" onchange="pon_pref('ver_bot_int_defecto',this.value);"><option value=1>Sí</option><option value=0>No</option></select></div></div>
+                </div>
+            </div>
+
+            <div class="page" id="pref_engl" style="display:none;">
+                <div class="card">
+                    <h2>Languages</h2>
+                    <div class="setting-item"><div class="setting-label">Main language</div><div class="select-wrapper"><select class="misal_pral" onchange="pon_pref('misal_pral_defecto',this.value);"><option value=0>Latin</option><option value=1>Spanish</option><option value=2>English</option><option value=3>German</option><option value=4>Italian</option><option value=5>Portuguese</option><option value=6>French</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Second language</div><div class="select-wrapper"><select class="segundoidioma" onchange="pon_pref('segundoidioma_defecto',this.value);"><option value=0>Latin</option><option value=1>Spanish</option><option value=2>English</option><option value=3>German</option><option value=4>Italian</option><option value=5>Portuguese</option><option value=6>French</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Translation method</div><div class="select-wrapper"><select class="presentaciontexto" onchange="pon_pref('presentaciontexto_defecto',this.value);"><option value=0>No translation</option><option value=1>2 columns</option><option value=2>Switch by tapping text</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Responses in readings</div><div class="select-wrapper"><select class="presentacionrespuestas" onchange="pon_pref('presentacionrespuestas_defecto',this.value);"><option value=1>Missal language</option><option value=2>2nd language</option><option value=3>Both (rows)</option><option value=4>Both (columns)</option><option value=5>Switch by tapping text</option></select></div></div>
+                </div>
+                <div class="card">
+                    <h2>Presentation</h2>
+                    <div class="setting-item"><div class="setting-label">Background color</div><div class="select-wrapper"><select class="fondo" onchange="pon_pref('fondo_defecto',this.value);"><option value=0>White</option><option value=1>Sepia</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Font type</div><div class="select-wrapper"><select class="tipoletra" onchange="pon_pref('tipoletra_defecto',this.value);"><option value=0>Arial sans serif</option><option value=1>Times New Roman</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Text font size</div><div class="number-control"><button class="btn-small" onclick="baja('tamanotexto')">-</button><span class="tamanotexto number-display"></span><button class="btn-small" onclick="sube('tamanotexto')">+</button></div></div>
+                    <div class="setting-item"><div class="setting-label">Rubrics font size</div><div class="select-wrapper"><select class="tamanorubrica" onchange="pon_pref('tamanorubrica_defecto',this.value);"><option value=100>Large</option><option value=90 selected>Normal</option><option value=60>Small</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Tabs font size</div><div class="number-control"><button class="btn-small" onclick="baja('tamanomenus')">-</button><span class="tamanomenus number-display"></span><button class="btn-small" onclick="sube('tamanomenus')">+</button></div></div>
+                     <div class="setting-item"><div class="setting-label">Prayer Style</div><div class="select-wrapper"><select class="oracionestodos_defecto" onchange="pon_pref('oracionestodos_defecto',this.value);"><option value=0>Normal</option><option value=1>Italic</option><option value=2>Bold</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Top Margin</div><div class="number-control"><button class="btn-small" onclick="baja('margen_superior',0)">-</button><span class="margen_superior number-display"></span><button class="btn-small" onclick="sube('margen_superior')">+</button></div></div>
+                </div>
+                <div class="card">
+                    <h2>Navigation</h2>
+                    <div class="setting-item"><div class="setting-label">Enable page-turn gesture</div><div class="select-wrapper"><select class="pasarpagina" onchange="pon_pref('pasarpagina_defecto',this.value);"><option value=1>Yes</option><option value=0>No</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">See intentions button</div><div class="select-wrapper"><select class="ver_bot_int" onchange="pon_pref('ver_bot_int_defecto',this.value);"><option value=1>Yes</option><option value=0>No</option></select></div></div>
+                </div>
+            </div>
+
+            <div class="page" id="pref_ital" style="display:none;">
+                <div class="card">
+                    <h2>Lingue</h2>
+                    <div class="setting-item"><div class="setting-label">Lingua principale</div><div class="select-wrapper"><select class="misal_pral" onchange="pon_pref('misal_pral_defecto',this.value);"><option value=0>Latino</option><option value=1>Spagnolo</option><option value=2>Inglese</option><option value=3>Tedesco</option><option value=4>Italiano</option><option value=5>Portoghese</option><option value=6>Francese</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Seconda lingua</div><div class="select-wrapper"><select class="segundoidioma" onchange="pon_pref('segundoidioma_defecto',this.value);"><option value=0>Latino</option><option value=1>Spagnolo</option><option value=2>Inglese</option><option value=3>Tedesco</option><option value=4>Italiano</option><option value=5>Portoghese</option><option value=6>Francese</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Metodo di traduzione</div><div class="select-wrapper"><select class="presentaciontexto" onchange="pon_pref('presentaciontexto_defecto',this.value);"><option value=0>Senza traduzione</option><option value=1>2 colonne</option><option value=2>Cambio toccando il testo</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Risposte nelle letture</div><div class="select-wrapper"><select class="presentacionrespuestas" onchange="pon_pref('presentacionrespuestas_defecto',this.value);"><option value=1>Lingua del messale</option><option value=2>2ª lingua</option><option value=3>Entrambe (righe)</option><option value=4>Entrambe (colonne)</option><option value=5>Cambio toccando il testo</option></select></div></div>
+                </div>
+                <div class="card">
+                    <h2>Presentazione</h2>
+                    <div class="setting-item"><div class="setting-label">Colore dello sfondo</div><div class="select-wrapper"><select class="fondo" onchange="pon_pref('fondo_defecto',this.value);"><option value=0>Bianco</option><option value=1>Seppia</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Tipo di carattere</div><div class="select-wrapper"><select class="tipoletra" onchange="pon_pref('tipoletra_defecto',this.value);"><option value=0>Arial sans serif</option><option value=1>Times New Roman</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Dimensione testo</div><div class="number-control"><button class="btn-small" onclick="baja('tamanotexto')">-</button><span class="tamanotexto number-display"></span><button class="btn-small" onclick="sube('tamanotexto')">+</button></div></div>
+                    <div class="setting-item"><div class="setting-label">Dimensione rubriche</div><div class="select-wrapper"><select class="tamanorubrica" onchange="pon_pref('tamanorubrica_defecto',this.value);"><option value=100>Grande</option><option value=90 selected>Normale</option><option value=60>Piccolo</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Dimensione schede</div><div class="number-control"><button class="btn-small" onclick="baja('tamanomenus')">-</button><span class="tamanomenus number-display"></span><button class="btn-small" onclick="sube('tamanomenus')">+</button></div></div>
+                    <div class="setting-item"><div class="setting-label">Stile Preghiere</div><div class="select-wrapper"><select class="oracionestodos_defecto" onchange="pon_pref('oracionestodos_defecto',this.value);"><option value=0>Normale</option><option value=1>Corsivo</option><option value=2>Grassetto</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Margine superiore</div><div class="number-control"><button class="btn-small" onclick="baja('margen_superior',0)">-</button><span class="margen_superior number-display"></span><button class="btn-small" onclick="sube('margen_superior')">+</button></div></div>
+                </div>
+                 <div class="card">
+                    <h2>Navigazione</h2>
+                    <div class="setting-item"><div class="setting-label">Gesto cambia pagina</div><div class="select-wrapper"><select class="pasarpagina" onchange="pon_pref('pasarpagina_defecto',this.value);"><option value=1>Sì</option><option value=0>No</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Pulsante intenzioni</div><div class="select-wrapper"><select class="ver_bot_int" onchange="pon_pref('ver_bot_int_defecto',this.value);"><option value=1>Sì</option><option value=0>No</option></select></div></div>
+                </div>
+            </div>
+
+            <div class="page" id="pref_germ" style="display:none;">
+                <div class="card">
+                    <h2>Sprachen</h2>
+                    <div class="setting-item"><div class="setting-label">Hauptsprache</div><div class="select-wrapper"><select class="misal_pral" onchange="pon_pref('misal_pral_defecto',this.value);"><option value=0>Latein</option><option value=1>Spanisch</option><option value=2>Englisch</option><option value=3>Deutsch</option><option value=4>Italienisch</option><option value=5>Portugiesisch</option><option value=6>Französisch</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Zweitsprache</div><div class="select-wrapper"><select class="segundoidioma" onchange="pon_pref('segundoidioma_defecto',this.value);"><option value=0>Latein</option><option value=1>Spanisch</option><option value=2>Englisch</option><option value=3>Deutsch</option><option value=4>Italienisch</option><option value=5>Portugiesisch</option><option value=6>Französisch</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Übersetzungsmethode</div><div class="select-wrapper"><select class="presentaciontexto" onchange="pon_pref('presentaciontexto_defecto',this.value);"><option value=0>Keine Übersetzung</option><option value=1>2 Spalten</option><option value=2>Wechsel durch Antippen</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Antworten in Lesungen</div><div class="select-wrapper"><select class="presentacionrespuestas" onchange="pon_pref('presentacionrespuestas_defecto',this.value);"><option value=1>Missalsprache</option><option value=2>2. Sprache</option><option value=3>Beide (Zeilen)</option><option value=4>Beide (Spalten)</option><option value=5>Wechsel durch Antippen</option></select></div></div>
+                </div>
+                <div class="card">
+                    <h2>Präsentation</h2>
+                    <div class="setting-item"><div class="setting-label">Hintergrundfarbe</div><div class="select-wrapper"><select class="fondo" onchange="pon_pref('fondo_defecto',this.value);"><option value=0>Weiß</option><option value=1>Sepia</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Schriftart</div><div class="select-wrapper"><select class="tipoletra" onchange="pon_pref('tipoletra_defecto',this.value);"><option value=0>Arial sans serif</option><option value=1>Times New Roman</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Textschriftgröße</div><div class="number-control"><button class="btn-small" onclick="baja('tamanotexto')">-</button><span class="tamanotexto number-display"></span><button class="btn-small" onclick="sube('tamanotexto')">+</button></div></div>
+                    <div class="setting-item"><div class="setting-label">Schriftgröße Rubriken</div><div class="select-wrapper"><select class="tamanorubrica" onchange="pon_pref('tamanorubrica_defecto',this.value);"><option value=100>Groß</option><option value=90 selected>Normal</option><option value=60>Klein</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Schriftgröße Tabs</div><div class="number-control"><button class="btn-small" onclick="baja('tamanomenus')">-</button><span class="tamanomenus number-display"></span><button class="btn-small" onclick="sube('tamanomenus')">+</button></div></div>
+                     <div class="setting-item"><div class="setting-label">Gebetsstil</div><div class="select-wrapper"><select class="oracionestodos_defecto" onchange="pon_pref('oracionestodos_defecto',this.value);"><option value=0>Normal</option><option value=1>Kursiv</option><option value=2>Fett</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Oberer Rand</div><div class="number-control"><button class="btn-small" onclick="baja('margen_superior',0)">-</button><span class="margen_superior number-display"></span><button class="btn-small" onclick="sube('margen_superior')">+</button></div></div>
+                </div>
+                <div class="card">
+                    <h2>Navigation</h2>
+                    <div class="setting-item"><div class="setting-label">Seitenwisch-Geste</div><div class="select-wrapper"><select class="pasarpagina" onchange="pon_pref('pasarpagina_defecto',this.value);"><option value=1>Ja</option><option value=0>Nein</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Intentionen-Button</div><div class="select-wrapper"><select class="ver_bot_int" onchange="pon_pref('ver_bot_int_defecto',this.value);"><option value=1>Ja</option><option value=0>Nein</option></select></div></div>
+                </div>
+            </div>
+
+            <div class="page" id="pref_fran" style="display:none;">
+                <div class="card">
+                    <h2>Langues</h2>
+                    <div class="setting-item"><div class="setting-label">Langue principale</div><div class="select-wrapper"><select class="misal_pral" onchange="pon_pref('misal_pral_defecto',this.value);"><option value=0>Latin</option><option value=1>Espagnol</option><option value=2>Anglais</option><option value=3>Allemand</option><option value=4>Italien</option><option value=5>Portugais</option><option value=6>Français</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Deuxième langue</div><div class="select-wrapper"><select class="segundoidioma" onchange="pon_pref('segundoidioma_defecto',this.value);"><option value=0>Latin</option><option value=1>Espagnol</option><option value=2>Anglais</option><option value=3>Allemand</option><option value=4>Italien</option><option value=5>Portugais</option><option value=6>Français</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Méthode de traduction</div><div class="select-wrapper"><select class="presentaciontexto" onchange="pon_pref('presentaciontexto_defecto',this.value);"><option value=0>Sans traduction</option><option value=1>2 colonnes</option><option value=2>Changement en touchant</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Réponses dans les lectures</div><div class="select-wrapper"><select class="presentacionrespuestas" onchange="pon_pref('presentacionrespuestas_defecto',this.value);"><option value=1>Langue du missel</option><option value=2>2ᵉ langue</option><option value=3>Les deux (lignes)</option><option value=4>Les deux (colonnes)</option><option value=5>Changement en touchant</option></select></div></div>
+                </div>
+                <div class="card">
+                    <h2>Présentation</h2>
+                    <div class="setting-item"><div class="setting-label">Couleur de fond</div><div class="select-wrapper"><select class="fondo" onchange="pon_pref('fondo_defecto',this.value);"><option value=0>Blanc</option><option value=1>Sépia</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Type de police</div><div class="select-wrapper"><select class="tipoletra" onchange="pon_pref('tipoletra_defecto',this.value);"><option value=0>Arial sans serif</option><option value=1>Times New Roman</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Taille de police du texte</div><div class="number-control"><button class="btn-small" onclick="baja('tamanotexto')">-</button><span class="tamanotexto number-display"></span><button class="btn-small" onclick="sube('tamanotexto')">+</button></div></div>
+                    <div class="setting-item"><div class="setting-label">Taille de police rubriques</div><div class="select-wrapper"><select class="tamanorubrica" onchange="pon_pref('tamanorubrica_defecto',this.value);"><option value=100>Grande</option><option value=90 selected>Normale</option><option value=60>Petite</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Taille de police onglets</div><div class="number-control"><button class="btn-small" onclick="baja('tamanomenus')">-</button><span class="tamanomenus number-display"></span><button class="btn-small" onclick="sube('tamanomenus')">+</button></div></div>
+                    <div class="setting-item"><div class="setting-label">Style de police prières</div><div class="select-wrapper"><select class="oracionestodos_defecto" onchange="pon_pref('oracionestodos_defecto',this.value);"><option value=0>Normal</option><option value=1>Italique</option><option value=2>Gras</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Marge supérieure</div><div class="number-control"><button class="btn-small" onclick="baja('margen_superior',0)">-</button><span class="margen_superior number-display"></span><button class="btn-small" onclick="sube('margen_superior')">+</button></div></div>
+                </div>
+                <div class="card">
+                    <h2>Navigation</h2>
+                    <div class="setting-item"><div class="setting-label">Geste pour tourner la page</div><div class="select-wrapper"><select class="pasarpagina" onchange="pon_pref('pasarpagina_defecto',this.value);"><option value=1>Oui</option><option value=0>Non</option></select></div></div>
+                    <div class="setting-item"><div class="setting-label">Voir bouton intentions</div><div class="select-wrapper"><select class="ver_bot_int" onchange="pon_pref('ver_bot_int_defecto',this.value);"><option value=1>Oui</option><option value=0>Non</option></select></div></div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Lógica para detectar idioma inicial e exibir o bloco correto
+            // Se o usuário já tiver uma preferencia salva, respeita. Se não, usa PORT (Português).
+            let userLang = dime_pref('id_pref', 'port');
+            $('#idioma_pref').val(userLang); 
+            
+            // Esconde todas as páginas e mostra só a selecionada
+            $('.page').hide();
+            if($('#pref_'+userLang).length) {
+                $('#pref_'+userLang).show();
+            } else {
+                $('#pref_port').show(); // Fallback
+            }
+
+            // Corrige comportamento de cliques em botões (legado)
+            if (!esDispositivoMovil) {
+                var elementos = document.querySelectorAll("[ontouchend]")
+                elementos.forEach(function (elemento) {
+                    var contenido = elemento.getAttribute("ontouchend")
+                    elemento.removeAttribute("ontouchend")
+                    elemento.setAttribute("onclick", contenido)
+                })
+            }
+        });
+
+        // Configurações Padrão ao Carregar (Suas preferências solicitadas)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Idioma principal: 0 (Latim)
+            $('.misal_pral').val(dime_pref("misal_pral_defecto", 0));
+            // Segundo idioma: 0 (Latim)
+            $('.segundoidioma').val(dime_pref("segundoidioma_defecto", 0));
+            // Tradução: 1 (2 Colunas)
+            $('.presentaciontexto').val(dime_pref("presentaciontexto_defecto", 1));
+
+            // Resto das configs
+            $('.presentacionrespuestas').val(dime_pref("presentacionrespuestas_defecto",5));
+            $('.fondo').val(dime_pref("fondo_defecto", 1));
+            $('.tipoletra').val(dime_pref("tipoletra_defecto", 1));
+            $('.tamanotexto').html(dime_pref("tamanotexto_defecto",12));
+            $('.tamanorubrica').val(dime_pref("tamanorubrica_defecto",90));
+            $('.tamanomenus').html(dime_pref("tamanomenus_defecto",10));
+            $('.oracionestodos').val(dime_pref("oracionestodos_defecto",0));
+            $('.pasarpagina').val(dime_pref("pasarpagina_defecto",1));
+            $('.ver_bot_int').val(dime_pref("ver_bot_int_defecto",1));
+            $('.ordinarionormal').val(dime_pref("ordinarionormal_defecto",0));
+            $('.margen_superior').html(dime_pref("margen_superior_defecto", 16));
+            
+            arregla_top();
+            arregla_bottom();
+        });
+
+        function baja(preferencia, minimo = 8) {
+            if (preferencia=='tamanotexto'|| preferencia=='tamanomenus') { defecto=12; } else defecto=0;
+            var valor = parseInt(dime_pref(preferencia + '_defecto', defecto));
+            if (valor > minimo) {
+                valor = valor - 1;
+                pon_pref(preferencia + '_defecto', valor);
+                $('.' + preferencia).html(valor);
+                if (preferencia=='tamanotexto') cambia_tamanoletra(valor);
+                if (preferencia=='margen_superior') arregla_top()
+                if (preferencia=='margen_inferior') arregla_bottom()
+            }
+        }
+        function sube(preferencia){	
+            if (preferencia=='tamanotexto'|| preferencia=='tamanomenus') { defecto=12; } else defecto=0;
+            var valor = parseInt(dime_pref(preferencia+'_defecto',defecto));
+            valor = valor + 1;
+            pon_pref(preferencia+'_defecto',valor);
+            $('.'+preferencia).html(valor);
+            if (preferencia=='tamanotexto') cambia_tamanoletra(valor);
+            if (preferencia=='margen_superior') arregla_top()
+            if (preferencia=='margen_inferior') arregla_bottom()
+        }
+    </script>
+</body>
+</html>

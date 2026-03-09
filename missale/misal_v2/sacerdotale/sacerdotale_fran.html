@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text.html;" charset="utf-8" />
+        <meta name="viewport"
+            content="width=device-width, initial-scale=1, viewport-fit=cover">
+        <title>TEMPORA</title>
+
+        <link rel="stylesheet" href="../misal.css" type="text/css" />
+								<link rel="stylesheet" href="../devoc.css" type="text/css" />
+        <style>
+        html, body {
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #piedepantalla {
+                margin: 0;
+                text-align: center;
+                background-color: maroon;
+                color: white;
+                border:0px;
+                position: fixed;  /* Fijo en la pantalla */
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 1.9em;
+                display: table;
+                z-index: 30000;
+}
+
+            #contenedor {
+        position: absolute;
+        top: 2.1em;  /* Espacio debajo de la barra superior */
+        bottom: 1.9em; /* Espacio encima de la barra inferior */
+        left: 0;
+        width: 100vw;
+        overflow: auto; /* Evita que el contenedor haga scroll */
+        display: flex;
+        flex-direction: column;
+    }
+    #scroller {
+        flex: 1; /* Se expande para ocupar el espacio restante */
+        
+         /* 🔥 Habilita scroll táctil en iOS */
+        padding: 1em;
+        margin: 0;
+        width: 95%;
+        touch-action: pan-y;
+        position: absolute;
+        left:0;
+    }
+  /* Solo en iOS */
+  @supports (padding-bottom: env(safe-area-inset-bottom)) {
+      #piedepantalla {
+          padding-bottom: env(safe-area-inset-bottom);
+      }
+      body {
+          padding-bottom: env(safe-area-inset-bottom);
+      }
+                        #contenedor {
+                            bottom: -1.9em;
+  }
+    }
+  
+    @-moz-document url-prefix() {
+  #contenedor {
+    bottom: 2.1em;  /* Solo en Firefox */
+  }
+}
+body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+                 bottom: -1.9em;
+        }
+            #header {
+                background-color: maroon;
+                color: white;
+                position: fixed;
+                top: 0;
+                width: 100%;
+                z-index: 1000;
+                padding-bottom:0;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                                                    padding-top: env(safe-area-inset-top);
+            }
+
+            #header h1 {
+                margin: 0;
+                text-align: center;
+                background-color: maroon;
+                color: white;
+                border:0px;
+            }
+		</style>
+		<script type="text/javascript" charset="utf-8" src="../../jquery.js"></script>
+		<script type="text/javascript" charset="utf-8" src="../../cordova_loader.js"></script>
+		<script
+			type="text/javascript"
+			charset="utf-8"
+			src="../mis_funciones_devoc.js"></script>
+		<script>
+					$(document).ready(function () {
+    // Manejar clics en enlaces internos para cambiar de página
+    $('a').not('li a').on('click', function (event) {
+        event.preventDefault(); // Evitar comportamiento predeterminado del enlace
+        let targetPage = $(this).attr('href'); // Obtener el destino del enlace
+        
+        if (targetPage.startsWith('#')) {
+            // Mostrar la página correspondiente
+            $('.page').hide(); // Ocultar todas las páginas
+            $(targetPage).fadeIn(); // Mostrar la página seleccionada con animación
+        } else {
+            // Para enlaces externos o de descarga
+            window.location.href = targetPage;
+        }
+    });
+	//					$('#icono-sticky').css('top', (parseFloat(mipreferencia["margen_superior"]) + .3) + 'em');
+	//					$('#contenedor').css('top', (parseFloat(mipreferencia["margen_superior"]) + 7) + 'em');
+
+    // Mostrar la primera página al cargar
+    $('.page').hide(); // Ocultar todas las páginas
+    $(window.location.hash).show(); // Mostrar solo la página inicial
+
+				});
+				
+						function cambiaIdioma(idioma, num) {
+							pon_pref('idioma_dev_'+num,idioma)
+							window.location.reload()
+						}
+				</script>
+				<style>
+					div.page div {
+						margin-top: .5em;
+					}
+					.lengua1 {
+width: 48%;
+float: left;
+display: block;
+					}
+					.lengua2 {
+width: 48%;
+float: right;
+display: block;
+					}
+
+					function ejecutarCodigo(el) {
+    let codigo = el.getAttribute("data-url");
+    let funcion = new Function(codigo);
+    funcion(); // Ejecuta el código almacenado en data-url
+}
+				</style>
+	</head>
+	<body>
+		<div id="header" style="position: absolute; top: 0;">
+			<h1 style='width: 95%'>Missale Romanum</h1>
+			<div class="navbar">
+				<ul>
+					<li><a href="../feria_actual.html"
+							class="pestana"
+							id=tab_ind><img src="../../calendario_blanco.png"
+								style="height:1.3em;"></a></li>
+					<li><a
+							href="../devocionario.html#devotionarium"
+							class="pestana" id=tab_dev>Devotionarium</a></li>
+					<li><a href="../devocionario.html#sacerdotale"
+							class="pestana active" id=tab_sac>Sacerdotale</a></li>
+					<li><a
+						data-url="console.log('Ejecutando código antes de redirigir'); window.location='../igmr/igmr_'+dime_pref('id_igmr','cast')+'.html'"  onclick="ejecutarCodigo(this)"
+							class="pestana" id=tab_igmr>IGMR</a></li>
+					<li><a
+							href="../misal_todo.html"
+							class="pestana">MR</a></li>
+				</ul>
+			</div>
+		</div>
+		<div id=contenedor>
+			<div id=scroller style="position: absolute;">
+				<style>
+					div.page div {
+						margin-top: .5em;
+					}
+				</style>
+				<div class='page' id='exp_fran'>
+					<div data-role='content'>
+
+						<div><h2>Exposition et Bénédiction Eucharistique</h2></div>
+
+						<div>
+							<div class='lengua1'><p>Pange, lingua, gloriósi<br>Córporis
+									mystérium,<br>Sanguinísque pretiósi,<br>quem in mundi
+									prétium<br>fructus
+									ventris generósi<br>Rex effúdit géntium.</p></div>
+							<div class='lengua2'><p>Chante, ô ma langue, le mystère<br>
+									de ce corps très glorieux<br>
+									et de ce sang si précieux<br>
+									que le Roi de nations<br>
+									issu d'une noble lignée<br>
+									versa pour le prix de ce monde.</p></div>
+						</div>
+						<div class=red style='text-align: center;  clear: both; '>* *
+							*</div>
+						<div>
+							<div class='lengua1'><p>Tantum ergo sacraméntum<br>venerémur
+									cérnui,<br>et
+									antiquum documéntum<br>novo cedat rítui;<br>præstet fides
+									suppleméntum<br>sénsuum deféctui.</p></div>
+							<div class='lengua2'><p>Adorons donc, prosternés<br>
+									Un si grand Sacrement ;<br>
+									Que l'ancien rite<br>
+									cède la place à ce nouveau mystère :<br>
+									que la foi supplée à la faiblesse de nos sens.</p></div>
+						</div>
+
+						<div style='clear: both; '>
+							<div class='lengua1'><p>Genitóri Genitóque<br>laus et
+									iubilátio,<br>salus,
+									honor, virtus quoque<br>sit et benedíctio;<br>procedénti ab
+									utróque<br>compar sit laudátio.</p></div>
+							<div class='lengua2'><p>Qu'au Père et au Fils<br>
+									soient honneur et louange, salut,<br>
+									gloire, puissance et bénédiction :<br>
+									même hommage à Celui qui<br>
+									procède de l'un et de l'autre.
+									Amén.</p></div>
+						</div>
+
+						<div style='clear: both; '>
+							<div class='lengua1'><span class=red>V/. </span>Panem de cælo præstitísti
+								eis <span class=red>(T. P. </span>Allelúia<span
+									class=red>)</span>.</div>
+							<div class='lengua2'><span class=red>V/. </span>Vous leur avez donné un
+								pain descendu du ciel
+								<span class=red>(T. P. </span>Alléluia<span class=red>)</span>.</div>
+						</div>
+						<div style='clear: both; '>
+							<div class='lengua1'><span class=red>R/. </span>Omne delectamén­tum in se
+								habéntem <span class=red>(T. P. </span>Allelúia<span
+									class=red>)</span>.</div>
+							<div class='lengua2'><span class=red>R/. </span>Un pain délicieux <span
+									class=red>(T. P. </span>Alléluia<span
+									class=red>)</span>.</div>
+						</div>
+
+						<div style='clear: both; '>
+							<div class='lengua2'>Oraison</div>
+							<div class='lengua1'>ORÉMUS</div>
+							<div></div>
+							<div class='lengua1'>Deus, qui nobis sub sacraménto mirábili passiónis
+								tuæ
+								memóriam Reliquísti, tríbue, quǽsumus, ita nos Córporis et Sánguinis tui
+								sacra mystéria venerári, ut redemptiónis tuæ fructum in nobis iúgiter
+								sentiámus. Qui vivís et regnas in sǽcula sǽculórum.
+							</div>
+							<div class='lengua2'>Dieu, dans cet admirable sacrement<br>
+								tu nous as laissé le mémorial de ta passion ;<br>
+								donne-nous de vénérer d'un si grand amour<br>
+								les mystères de ton corps et de ton sang,<br>
+								que nous puissions recueillir sans cesse<br>
+								le fruit de la rédemption.<br>
+								Toi qui vis et règnes pour les siècles des siècles.</div>
+						</div>
+						<div style='clear: both; '>
+							<div class='lengua1'><span class=red>R/ . </span>Amen.</div>
+							<div class='lengua2'><span class=red>R/ . </span>Amen.</div>
+						</div>
+						<div class=red style='text-align: center; clear: both; '>* *
+							*</div>
+						<div style='clear: both; '>
+
+							<p class="s68">Dieu soit béni.<br>
+								Béni soit son saint Nom.<br>
+								Béni soit Jésus Christ, vrai Dieu et vrai homme.<br>
+								Béni soit le nom de Jésus.<br>
+								Béni soit son Cœur sacré.<br>
+								Béni soit son très précieux Sang.<br>
+								Béni soit Jésus dans le très saint sacrement de l'autel.<br>
+								Béni soit l'Esprit Saint consolateur.<br>
+								Bénie soit l'auguste Mère de Dieu, la très sainte Vierge Marie.<br>
+								Bénie soit sa sainte et immaculée Conception.<br>
+								Bénie soit sa glorieuse Assomption.<br>
+								Béni soit le nom de Marie, Vierge et Mère.<br>
+								Béni soit saint Joseph, son très chaste époux.<br>
+								Béni soit Dieu en ses anges et en ses saints.<br>
+								Amen.</p>
+						</div>
+						<div class=red style='clear: both;  text-align: center; '>* *
+							*</div>
+
+						<div style='clear: both; '>
+							<div class='lengua1'>Laudáte Dóminum omnes gentes:<br>laudáte eum, omnes
+								pópuli.<br>Quóniam confirmáta est super nos misericórdia eius,<br>et
+								véritas Dómini manet in ætérnum.<br>Glória Patri, et Fílio, et Spirítui
+								Sancto.<br>Sicut erat in princípio, et nunc, et semper, et in sǽcula
+								sæculórum. Amen.</div>
+							<div class='lengua2'>Louez le Seigneur tous les peuples,<br>
+								louez le Seigneur toutes les nations,<br>
+								sa miséricorde pour nous a été confirmée<br>
+								et la fidélité du Seigneur demeure à jamais.<br>
+								Gloire au Père, et au Fils, et au Saint-Esprit.<br>
+								Comme il était au commencement, maintenant et toujours,<br>
+								pour les siècles des siècles.<br>
+								Amen.</div>
+						</div>
+
+					</div>
+
+				</div>
+				<div class='page' id='penit_fran'>
+
+					<div data-role='content'>
+						<div><h2>RITE DE LA PÉNITENCE</h2></div>
+						<div class=red>Le pénitent fait la salutation habituelle :</div>
+						<div>
+						<span class=red>R/. </span> Bénissez-moi, mon Père, parce que j’ai péché.</div>
+						<div class=red>Ou bien, commencer par le Je confesse à Dieu.</div>
+
+						<div class=red>Le pénitent fait le signe de la Croix, en disant :</div>
+
+						<div>Au nom du Père, et du Fils, et du Saint-Esprit. Amen.</div>
+
+						<div class=red>Le prêtre peut inviter à la confiance en Dieu, en disant
+							par exemple :</div>
+
+						<div>
+							Que le Seigneur vous inspire les paroles justes et les sentiments vrais
+							pour confesser avec contrition vos péchés.</div>
+						<div class=red>Le prêtre, ou le pénitent lui-même, dit quelques mots de la
+							Sainte
+							Écriture ayant trait à la miséricorde de Dieu et au repentir, par exemple
+							:</div>
+							<div>
+							<span class=red>R/. </span> Seigneur, tu sais tout, tu sais bien que je
+							t’aime.</div>
+						<div class=red>ou bien :</div>
+
+						<div>Je confesse à Dieu tout-puissant,<br>
+							je reconnais devant vous, frères et sœurs,<br>
+							que j'ai péché<br>
+							en pensée, en parole,<br>
+							par action et par omission<br>
+							<span class=red>en se frappant la poitrine</span><br>
+							oui, j'ai vraiment péché.<br>
+							C'est pourquoi je supplie la bienheureuse Vierge Marie,<br>
+							les anges et tous les saints,<br>
+							et vous aussi, frères et sœurs,<br>
+							de prier pour moi le Seigneur notre Dieu.<br>
+							<span class=red>Le pénitent s’accuse de ses péchés.</span>
+						</div>
+
+						<div class=red>Le prêtre lui donne les conseils opportuns et lui impose la
+							pénitence.<br>
+							Puis le prêtre invite le pénitent à manifester sa contrition.<br>Le
+							pénitent
+							peut dire par exemple :</div>
+							<div>
+							<span class=red>R/. </span> Mon Dieu, j’ai un très grand regret de
+							t’avoir offensé, parce que tu
+							es infiniment bon, infiniment aimable et que le péché te déplaît.<br>Je
+							prends la ferme résolution, avec le secours de ta sainte grâce, de ne
+							plus
+							t’offenser et de faire pénitence. Amen.</div>
+						<div class=red>ou bien :</div>
+						<div>
+							<span class=red>R/. </span> Jésus, Fils de Dieu Sauveur, prends pitié de
+							moi pécheur.</div>
+						<div class=red>Le prêtre, étendant les mains (ou au moins la main droite)
+							vers le
+							pénitent, lui donne l’absolution :</div>
+
+						<div>
+							Que Dieu notre Père vous montre sa miséricorde ; par la mort et la
+							résurrection de son Fils, Il a réconcilié le monde avec Lui et Il a
+							envoyé
+							l’Esprit Saint pour la rémission des péchés ; par le ministère de
+							l’Église
+							qu’Il vous donne le pardon et la paix.<br>
+							ET MOI, AU NOM DU PÈRE ET DU FILS <span class='cruzroja'>&#10016;</span>
+							ET DU
+							SAINT-ESPRIT, JE VOUS PARDONNE TOUS VOS PÉCHÉS.<br>
+							<span class=red>R/. </span> Amen.</div>
+						<div class=red>Après avoir donné l’absolution, le prêtre invite le
+							pénitent à l’action de
+							grâce, en disant :</div>
+
+						<div>
+							Que la Passion de Jésus Christ, notre Seigneur, l’intercession de la
+							Vierge Marie et de tous les saints, tout ce que vous ferez de bon et
+							supporterez de pénible, contribue au pardon de vos péchés, augmente en
+							vous la grâce pour que vous viviez avec Dieu.<br>
+							Allez en paix.<br>
+							<span class=red>R/. </span> Nous rendons grâce à Dieu.</div>
+
+					</div>
+
+				</div>
+				<div class='page' id='cenf_fran'>
+					<div data-role='content'>
+						<div><h2>RITE DE LA COMMUNION DES MALADES</h2></div>
+						<div class=red>Lorsqu’il arrive auprès du malade, le prêtre le salue ainsi
+							que les personnes qui l’entourent. Il le fait d'une manière simple et
+							amicale. Il peut aussi employer pour cela telle salutaion tirée de
+							l'Écriture.</div>
+						<div><span class=red>V/. </span>Paix à cette maison et à tous ceux qui
+							l’habitent.</div>
+						<div><span class=red>R/. </span>Et avec votre esprit.</div>
+						<div class=red>Puis il dépose sur la table le pain consacré et tous
+							observent un temps de silence qui favorise le recueillement et
+							l’adoration.
+							<br> On peut faire usage de l'eau bénite. Le prêtre présente l'eau en
+							disant par exemple :</div>
+						<div>Cette eau nous rappelle notre baptême :<br>
+							elle nous fait souvenir du Christ<br>
+							qui nous sauve par sa croix et sa résurrection.</div>
+						<div class=red><p>Successivement, le prêtre, puis le malade s'il le peut,
+								et les assistants prennent de l'eau pour se signer. Cette manière de
+								faire semble préférable à l'aspersion toujours possible, mais qui évoque
+								les rites funéraires.</p>
+							<p>Le ministre invite à la pénitence le malade et les personnes
+								présentes, par exemple en ces termes :</p></div>
+						<div><span class=red>V/. </span>En présence du Seigneur,<br>
+							nous qui croyons en lui,<br>
+							reconnaissons que nous sommes pécheurs.</div>
+						<div class=red>On fait une brève pause en silence. Vient ensuite la
+							confession :</div>
+						<div>Je confesse à Dieu tout-puissant, <br>
+							je reconnais devant vous, frères et sœurs, <br>
+							que j'ai péché <br>
+							en pensée, en parole, <br>
+							par action et par omission <br>
+							oui, j'ai vraiment péché. <br>
+							C'est pourquoi je supplie la bienheureuse Vierge Marie, <br>
+							les anges et tous les saints, <br>
+							et vous aussi, frères et sœurs, <br>
+							de prier pour moi le Seigneur notre Dieu.</div>
+						<div><p class=red>Le ministre dit la prière pour le pardon : :</p>
+							<p>Que Dieu tout-puissant<br>
+								nous fasse miséricorde ;<br>
+								qu’il nous pardonne nos péchés<br>
+								et nous conduise à la vie éternelle.</p></div>
+						<div><span class=red>R/. </span>Amen.</div>
+
+						<div class=red> <p>COURTE LECTURE DE LA PAROLE DE DIEU</p>
+							<p>Le ministre, s’il est prêtre ou diacre, dit :</p></div>
+
+						<div><span class=red>V/. </span>Le Seigneur soit avec vous.</div>
+						<div><span class=red>R/. </span>Et avec votre esprit.</div>
+
+						<div class=red> Le ministre continue :</div>
+						<div><p>Après avoir multiplié les pains,<br>
+								Jésus disait à la foule :</p>
+							<p>« Je suis le pain vivant,<br>
+								qui est descendu du ciel :<br>
+								si quelqu'un mange de ce pain,<br>
+								il vivra éternellement.<br>
+								Le pain que je donnerai, c'est ma chair,<br>
+								donnée pour que le monde ait la vie. »
+							</p>
+							<p><span class=red>V/. </span>Parole du Seigneur.</p><p><span
+									class=red>R/. </span>Louange à toi, Seigneur Jésus.
+							</p></div>
+
+						<div class=red>Ensuite le ministre introduit le Notre Père, en ces termes
+							ou d'autres semblables :</div>
+						<div>Comme nous l'avons appris du Seigneur,<br>
+							et selon son commandement,<br>
+							nous osons dire :</div>
+						<div class=red>Tous continuent :</div>
+						<div>Notre Père, qui es aux cieux, <br>que ton nom soit sanctifié, <br>que
+							ton règne vienne, <br>que ta volonté soit faite sur la terre comme au
+							ciel. <br>Donne-nous aujourd’hui <br>notre pain de ce jour.
+							<br>Pardonne-nous nos offenses, <br>comme nous pardonnons aussi <br>à
+							ceux qui nous ont offensés. <br>Et ne nous laisse pas entrer en
+							tentation, <br>mais délivre-nous du Mal. Amen.</div>
+
+						<div class=red>Puis le ministre montre le pain (le vin) consacré en disant
+							:</div>
+						<div><span class=red>V/. </span>Heureux les invités au repas du Seigneur
+							!<br>
+							Voici l’Agneau de Dieu<br>
+							qui enlève le péché du monde.</div>
+						<div><span class=red>R/. </span>Seigneur, je ne suis pas digne de te
+							recevoir, <br>mais dis seulement une parole <br>et je serai guéri.</div>
+
+						<div class=red>Le ministre s’approche du malade et lui montrant le pain
+							(le vin) consacré il dit :</div>
+
+						<div><span class=red>V/. </span>Le Corps du Christ (ou Le Sang du
+							Christ).</div>
+						<div><span class=red>R/. </span>Amen.</div>
+						<div class=red><p>Et il communie.<br>
+								Les autres personnes présentes qui désirent communier reçoivent ensuite
+								la communion de la manière habituelle.</p>
+							<p>La distribution de la communion achevée, le prêtre, s'il ne doit pas
+								porter la communion ailleurs, fait discrètement les purifications
+								d’usage, s’il y a lieu. On peut alors prier un moment en silence. Le
+								prêtre peut inviter à cette prière en disant, par exemple :</p></div>
+
+						<div><span class=red>V/. </span>Prions le Seigneur.<br>Père très saint,
+							Dieu éternel et tout-puissant,
+							nous te supplions de prendre soin de notre frère <span
+								class=red>(</span>sœur<span class=red>)</span> :<br>
+							Pour le bien de son corps et de son âme,<br>
+							donne-lui de trouver un remède éternel<br>
+							dans cette communion au Corps <span class=red>(</span>au sang<span
+								class=red>)</span> de Jésus Christ.<br>
+							Lui qui règne avec toi et le Saint-Esprit,<br>
+							maintenant et pour les siècles des siècles.</div>
+						<div><span class=red>R/. </span>Amen.</div>
+						<div class=red>Ou bien, en temps pascal :</div>
+
+						<div><span class=red>V/. </span>Prions. Répands, Seigneur, sur nous ton
+							Esprit de charité, afin que ceux qui ont participé au même Sacrement
+							pascal demeurent toujours unis dans ton amour. Par Jésus-Christ notre
+							Seigneur.</div>
+						<div><span class=red>R/. </span>Amen.</div>
+
+						<div class=red>RITE DE CONCLUSION</div>
+
+						<div><span class=red>V/. </span>Le Seigneur soit avec vous.</div>
+						<div><span class=red>R/. </span>Et avec votre esprit.</div>
+
+						<div><span class=red>V/. </span>Que la bénédiction de Dieu tout-puissant,
+							Père, Fils, <span class='cruzroja'>&#10016;</span> et Saint-Esprit,
+							descende sur vous et y demeure à jamais.</div>
+						<div><span class=red>R/. </span>Amen.</div>
+
+					</div>
+
+				</div>
+				<div class='page' id='bendag_fran'>
+					<div data-role='content'>
+
+						<div><h2>Bénédiction de l'eau en dehors de la Messe</h2></div>
+
+						<div class=red>Rites initiaux</div>
+
+						<div class=red>Le célébrant commence en disant :</div>
+
+						<div>Au nom du Père, et du Fils, et du Saint-Esprit.</div>
+						<div><span class=red>R/. </span>Amen.</div>
+
+						<div class=red>Le célébrant salue les personnes présentes, en disant par
+							exemple :</div>
+
+						<div> Que Dieu notre Père,<br>
+							qui nous fait renaître dans le Christ<br>
+							par l’eau et l’Esprit Saint,<br>
+							soit toujours avec vous,</div>
+						<div><span class=red>R/. </span>Et avec votre esprit.</div>
+
+						<div class=red>Il peut préparer les fidèles à la célébration, en disant
+							par exemple :</div>
+
+						<div>Par cette bénédiction de l’eau, nous nous souvenons que le Christ est
+							l’eau vive, nous nous souvenons de notre propre baptême, où nous sommes
+							renés de l’eau et de l’Esprit-Saint. Chaque fois que nous prenons cette
+							eau en faisant le signe de la croix, soit en entrant dans l’église, soit
+							à la maison, nous rendons grâce à Dieu pour son don ineffable, nous
+							implorons son secours pour garder dans notre vie le sacrement que nous
+							avons reçu dans la foi.
+						</div>
+
+						<div class=red>Lecture de la Parole de Dieu</div>
+
+						<div class=red>Une des personnes présentes (ou le célébrant lui-même) lit
+							un court passage de la Bible :</div>
+
+						<div><p>Écoutons la Parole du Seigneur dans l’Évangile selon saint Jean
+								:</p>
+							<p>Au jour solennel où se terminait la fête, Jésus, debout, s'écria :
+							</p>
+							<p>« Si quelqu'un a soif, qu'il vienne à moi, et qu'il boive, celui qui
+								croit en moi ! Comme dit l'Écriture : Des fleuves d'eau vive jailliront
+								de son cœur. » </p>
+							<p>En disant cela, il parlait de l'Esprit Saint, l'Esprit que devaient
+								recevoir ceux qui croiraient en Jésus. En effet, l'Esprit Saint n'avait
+								pas encore été donné, parce que Jésus n'avait pas encore été glorifié
+								par le Père.</p>
+						</div>
+
+						<div> Prière de bénédiction</div>
+
+						<div class=red>Le célébrant invite à la prière.<br>
+							Tous prient quelques instants en silence. Puis le célébrant dit la prière
+							de bénédiction, les mains étendues :</div>
+
+						<div>Prions.</div>
+
+						<div>Tu es béni, Seigneur tout-puissant,<br>
+							car tu nous as bénis dans le Christ,<br>
+							Tu nous as recréés en lui,<br>
+							qui est l’eau vive de notre salut ;<br>
+							Accorde à ceux qui seront aspergés de cette eau<br>
+							de retrouver la jeunesse de l’âme<br>
+							par la puissance du Saint-Esprit<br>
+							et d’avancer sur le chemin de la vie nouvelle.<br>
+							Par Jésus le Christ, notre Seigneur.</div>
+						<div><span class=red>R/. </span>Amen.</div>
+
+						<div class=red>Ou bien :</div>
+
+						<div>Seigneur, Père saint,<br>
+							toi qui nous as rachetés par ton Fils<br>
+							et qui nous as fait renaître<br>
+							par le baptême d’eau et d’Esprit-Saint,<br>
+							regarde vers nous, nous t’en prions :<br>
+							accorde à ceux qui seront aspergés de cette eau<br>
+							d’être renouvelés dans leur corps et leur esprit<br>
+							et de te servir avec un cœur pur.<br>
+							Par Jésus, le Christ, notre Seigneur.</div>
+						<div><span class=red>R/. </span>Amen.</div>
+
+						<div class=red>Le célébrant asperge ensuite les personnes présentes en
+							disant, s'il le juge bon :</div>
+
+						<div>Que cette eau vous rappelle votre baptême dans le Christ,<br>
+							lui qui nous a rachetés par sa passion et sa résurrection.</div>
+						<div><span class=red>R/. </span>Amen.</div>
+
+					</div>
+
+				</div>
+				<div class='page' id='absol_cens'>
+
+					<div data-role='content'>
+						<div><h2>Absolution des censures</h2></div>
+						<div class=red>Lorsque le prêtre, conformément au droit, absout un
+							pénitent d'une censure en dehors du sacrement de la pénitence, il utilise
+							la formule suivante :</div>
+						<div>En vertu du pouvoir qui m'a été accordé, je vous absous
+							d'excommunication <span class='red'>(</span>ou de suspense, ou
+							d'interdit<span class='red'>)</span>, Au nom du Père, et du Fils, <span
+								class='cruzroja'>&#10016;</span> et du Saint-Esprit.<br><span
+								class=red>R/. </span>Amen.</div>
+
+					</div>
+
+				</div>
+				<div class='page' id='bend_pers'>
+
+					<div data-role='content'>
+
+						<div><h2>BÉNÉDICTION DES PERSONNES</h2></div>
+						<div class=red>En toute circonstance, le prêtre ou le diacre peut bénir
+							une ou
+							plusieurs personnes, en disant, les mains étendues au dessus d'elles
+							:</div>
+						<div><br>
+							Que le Seigneur vous bénisse et vous garde.
+							<br><span class=red>R/. </span>Amen.<br>
+							Que le Seigneur tourne vers vous son visage
+							et vous accorde sa grâce.
+							<br><span class=red>R/. </span>Amen.<br>
+							Que le Seigneur tourne vers vous son visage
+							et vous apporte la paix.
+							<br><span class=red>R/. </span>Amen.<br>
+							Et que Dieu tout-puissant vous bénisse,<br>
+							le Père, le Fils <span
+								class='cruzroja'>&#10016;</span>, et le Saint Esprit.
+							<br><span class=red>R/. </span>Amen.</div>
+						<div class=red><br>Ou bien :</div>
+						<div>
+							Que la paix de Dieu,<br>
+							qui dépasse tout ce qu'on peut imaginer,<br>
+							garde vos cœurs et vos pensées<br>
+							dans le Christ Jésus, notre Seigneur.
+							<br><span class=red>R/. </span>Amen.<br>
+							Et que Dieu tout-puissant vous bénisse,<br>
+							le Père, le Fils <span
+								class='cruzroja'>&#10016;</span>, et le Saint Esprit.
+							<br><span class=red>R/. </span>Amen.</div>
+						<div class=red><br>Ou bien :</div>
+						<div>
+							Que Dieu le Père vous remplisse<br>
+							de joie et d'espérance, dans votre foi.
+							<br><span class=red>R/. </span>Amen.<br>
+							Que la paix du Christ exulte dans votre coeur.
+							<br><span class=red>R/. </span>Amen.<br>
+							Que la puissance de l'Esprit Saint<br>
+							développe en vous tous ses dons.
+							<br><span class=red>R/. </span>Amen.<br>
+							Et que Dieu tout-puissant vous bénisse,<br>
+							le Père, le Fils <span
+								class='cruzroja'>&#10016;</span>, et le Saint Esprit.
+							<br><span class=red>R/. </span>Amen.</div>
+						<div class=red><br>Ou bien :</div>
+						<div>
+							La grâce de Jésus, notre Seigneur,<br>
+							l'amour de Dieu le Père<br>
+							et la communion de l'Esprit Saint<br>
+							soient toujours avec vous.
+							<br><span class=red>R/. </span>Et avec votre esprit.<br>
+							Et que Dieu tout-puissant vous bénisse,<br>
+							le Père, le Fils <span
+								class='cruzroja'>&#10016;</span>, et le Saint Esprit.
+							<br><span class=red>R/. </span>Amen.</div>
+						<div class=red><br>Ou bien :</div>
+						<div>
+							Que Dieu notre Père comble tous vos besoins
+							selon la richesse de sa grâce
+							dans le Christ Jésus, notre Seigneur.
+							<br><span class=red>R/. </span>Amen.<br>
+							Et que Dieu tout-puissant vous bénisse,<br>
+							le Père, le Fils <span
+								class='cruzroja'>&#10016;</span>, et le Saint Esprit.
+							<br><span class=red>R/. </span>Amen.</div>
+
+					</div>
+
+				</div>
+				<div class='page' id='unc_cond'>
+
+					<div data-role='content'>
+
+						<div><h2>L’Onction lorsque l’on doute si le malade est encore
+								vivant</h2></div>
+						<div class=red>i l'on doute vraiment que le malade soit mort, on donnera
+							le
+							sacrement. Mais le doute doit être réel et fondé. On pourrait sur ce
+							point
+							prendre en considération l'attitude pratique du médecin ou du corps
+							hospitalier. Donner systématiquement l'Onction sous condition
+							contredirait
+							l'effort d'éducation à ce sacrement.<br><br>
+							Si le prêtre doute vraiment que le malade vive encore, il lui donnera
+							l'Onction de cette manière :<br><br>
+							En arrivant auprès du malade, s’il croit en avoir le temps, il dit
+							d’abord
+							aux personnes présentes :</div>
+						<div>Prions pour notre frère <span class='red'>N.</span> avec toute notre
+							foi.
+							Demandons que l’amour de Dieu vienne à son secours
+							et que l’Onction sainte
+							le fortifie dans son passage vers le Père.</div>
+						<div><span class=red>R/. </span>Ô Seigneur, écoute et prends pitié.</div>
+						<div class=red>Et aussitôt, il donne l’Onction, en disant :</div>
+						<div><span class='red'>N.</span> par cette onction sainte,<br>
+							que le Seigneur, en sa grande bonté,<br>
+							vous réconforte par la grâce de l’Esprit Saint.<br><span
+								class=red>R/. </span>Amen.<br>
+							Ainsi, vous voyant libéré de tous péchés,<br>
+							qu’il vous sauve et vous relève.<br><span
+								class=red>R/. </span>Amen.<br></div>
+						<div class=red>Selon les circonstances, il peut ajouter une prière parmi
+							celles proposées
+							dans le rituel de l’Onction des malades.</div>
+
+					</div>
+
+				</div>
+				<div class='page' id='uncion'>
+
+					<div data-role='content'>
+
+						<div><h2>L’ONCTION DES MALADES EN CAS DE PÉRIL PROCHAIN DE MORT ET EN CAS
+								D’URGENCE</h2></div>
+						<div class=red>
+							En cas de péril prochain de mort, si l'on doit donner seulement
+							l'Onction des malades, on se servira du rituel ci-dessous.</div>
+						<div class=red>
+							En cas d'urgance ou d'extrême urgence, le rite peut alors se limiter à
+							l'imposition des mains, et à l'Onction d'huile suivie d'une prière. (Un
+							encadrement spécial signale ces actions importantes). Dans ce cas
+							spécialement, le prêtre aura soin que sa présence et les quelques gestes
+							qu'il accomplira soient signes de tout ce qu'il ne peut exprimer
+							autrement.</div>
+						<div class=red>
+							ENTRÉE EN CÉLÉBRATION</div>
+						<div class=red>
+							En fonction des circonstances, le prêtre saura trouver les mots
+							simples pour entrer en relation avec le malade et son entourage. S’il
+							doit
+							entendre le malade en confession, il le fera à ce moment.</div>
+						<div class=red>Il introduit ensuite la célébration soit par une
+							intervention libre,
+							soit par une formule telle que :</div>
+						<div>
+							Paix à cette maison et à ceux qui l’habitent.</div>
+						<div class=red>
+							Là où c’est la coutume, il peut user de l’eau bénite (cf. rituel
+							Onction des malades).</div>
+						<div class=red>
+							Puis, s’il en est besoin, il prépare le malade à recevoir l’Onction
+							des malades. Il le fait d’une manière fraternelle, soit par des
+							suggestions, soit à partir de textes de l’Écriture. Mais il peut
+							également
+							employer la monition suivante ou une autre davantage adaptée à ce qu’il
+							sait du malade (autre) :</div>
+						<div>
+							Frères bien-aimés, le Seigneur Jésus Christ nous a recommandé par son
+							Apôtre saint Jacques : « Si l'un de vous est malade, qu'il appelle les
+							prêtres de l'Église : ils prieront sur lui après lui avoir fait une
+							onction d'huile au nom du Seigneur. Cette prière inspirée par la foi
+							sauvera le malade : le Seigneur le relèvera et, s'il a commis des péchés,
+							il recevra le pardon. »<br>
+							Nous allons recommander notre frère qui est malade à la grâce et à la
+							puissance du Christ en demandant pour lui soulagement et salut.</div>
+						<div class=red>
+							Préparation pénitentielle ou encore en s’adressant au malade :</div>
+						<div><span class='red'>N.</span> (frère), nous sommes près de vous au nom de notre amitié pour
+							vous,
+							et aussi pour répondre aux paroles d’espérance de l’Apôtre saint Jacques
+							:
+							« Si l'un de vous est malade, qu'il appelle les prêtres de l'Église : ils
+							prieront sur lui après lui avoir fait une onction d'huile au nom du
+							Seigneur. Cette prière inspirée par la foi sauvera le malade : le
+							Seigneur
+							le relèvera et, s'il a commis des péchés, il recevra le pardon. »
+							Au nom du Seigneur, nous venons vous donner ce signe de l’Onction des
+							malades, et nous venons prier le Christ de vous donner le réconfort et le
+							salut.</div>
+						<div class=red>
+							Ensuite, a lieu la préparation pénitentielle (ou si nécessaire, la
+							confession sacramentelle).</div>
+						<div class=red>
+							S’il y a danger de mort imminente, il suffit que le prêtre dise les
+							paroles essentielles de la formule d’absolution :</div>
+						<div>
+							Au nom du Père et du Fils <span class='cruzroja'>&#10016;</span> et du
+							Saint-Esprit,
+							je vous pardonne tous vos péchés.<br>
+							<span class=red>R/. </span> Amen.</div>
+						<div class=red>
+							Le sacrement du pardon ou la préparation pénitentielle peuvent être
+							conclu
+							par l’Indulgence plénière à l’article de la mort :</div>
+						<div>
+							(Parce que nous croyons à la communion des saints et)
+							En vertu du pouvoir qui m’est donné,
+							je vous accorde la pleine indulgence de Dieu
+							pour la rémission de vos péchés ;
+							au nom du Père, et du Fils, <span class='cruzroja'>&#10016;</span> et du
+							Saint Esprit. Amen !<br>
+							<span class=red>R/. </span> Amen.</div>
+						<div class=red>
+							ou bien :</div>
+						<div>
+							Dieu dans sa puissance
+							a tout disposé dans son Église
+							pour que le pécheur se relève et qu'il vive.
+							Qu'il vous pardonne vos péchés
+							et lève toute peine qui en découle.
+							Qu'il vous ouvre les portes de la vie
+							et vous attende dans son Royaume.<br>
+							<span class=red>R/. </span> Amen.</div>
+						<div class=red>
+							IMPOSITION DES MAINS</div>
+						<div class=red>Le prêtre impose les mains sur la tête du malade, sans rien
+							dire.
+							Pour signifier la portée de ce geste, il pourra dire, avant ou après
+							:</div>
+
+						<div>Seigneur Jésus, toi qui portes la peine des hommes,
+							vois notre frère <span class='red'>N.</span>
+							Accorde-lui le secours de ton Esprit,
+							enracine en son cœur l’amour et la confiance.
+							Toi qui es vivant pour les siècles des siècles.</div>
+						<div class=red>
+							ou bien :</div>
+						<div>Que le Seigneur soit avec vous,
+							qu’il affermisse votre foi en son amour.</div>
+						<div class=red>
+							L’ONCTION</div>
+						<div class=red>
+							a) Si le prêtre a le temps et si l’huile est déjà bénie, il dit cette
+							prière d’action de grâce :</div>
+						<div>C’est toi, Seigneur, qui sanctifies toutes choses,
+							c’est toi qui as béni cette huile ;
+							nous te rendons grâce.
+							Manifeste encore ton amour
+							pour ton serviteur <span class='red'>N.</span>
+							qui va recevoir l’Onction avec foi.
+							Accorde-lui, nous t’en prions,
+							le réconfort qui apaise les angoisses
+							(le réconfort et la paix).
+							Par Jésus, le Christ, notre Seigneur.<br>
+							<span class=red>R/. </span> Amen.</div>
+						<div class=red>
+							b) Si le prêtre ne dispose pas d’Huile des malades, il bénit l’huile en
+							disant :</div>
+						<div>Seigneur, tu as créé cette huile, bénis-la,
+							et accorde l’abondance de ta grâce
+							à ce malade qui va en recevoir l’onction.</div>
+						<div class=red>
+							Ensuite, le prêtre prend de l’Huile des malades et en fait une onction
+							sur
+							le front puis sur les mains du malade, en disant :</div>
+						<div>
+							<span class='red'>N.</span>, par cette onction sainte,
+							que le Seigneur, en sa grande bonté,
+							vous réconforte
+							par la grâce de l’Esprit Saint.<br>
+							<span class=red>R/. </span> Amen.</div>
+						<div>Ainsi, vous voyant libéré de tous péchés,
+							qu’il vous sauve et vous relève.<br><span class=red>R/. </span>
+							Amen.</div>
+
+						<div class=red>
+							PRIÈRE APRÈS L’ONCTION</div>
+						<div class=red>
+							Puis le prêtre dit l’une des oraisons ci-dessous, selon la situation
+							:</div><br>
+						<span class=red>R/. </span> Amen.
+						<div class=red>
+							Pour quelqu’un qui est en grand péril (autre)</div>
+						<div>Seigneur Jésus-Christ, sauveur de tous les hommes,
+							toi qui dans ta Passion as pris sur toi nos souffrances,
+							nous te prions pour notre frère <span class='red'>N.</span>,
+							éprouvé par la maladie ;
+							puisque tu l’as racheté
+							et que tu viens de lui renouveler ta grâce
+							dans l’Onction sainte,
+							accorde-lui le soulagement de ses souffrances,
+							le réconfort au moment de l’épreuve,
+							et affermis en lui l’espérance d’être sauvé.
+							Toi qui vis pour les siècles des siècles.<br>
+							<span class=red>R/. </span> Amen.</div>
+						<div class=red>
+							Pour quelqu’un qui reçoit en même temps l’Onction et le Viatique
+							(autre)</div>
+						<div>Père de toute tendresse et de toute consolation,
+							regarde <span class='red'>N.</span>, notre frère (sœur, ami…)
+							atteint ans ses forces vives par la maladie ;
+							il met sa confiance en toi :
+							que la grâce de l’Onction sainte le soulage,
+							que la communion au corps et au sang de ton Fils
+							soit pour lui un viatique
+							pour le chemin qui conduit à la vraie vie.
+							Par Jésus, le Christ, notre Seigneur.<br>
+							<span class=red>R/. </span> Amen.</div>
+						<div class=red>
+							Pour un fidèle qui est à l’agonie (autre)</div>
+						<div>Père infiniment bon,
+							toi qui sais voir toute bonne volonté
+							et qui ne refuses jamais le pardon
+							à ceux qui le demandent,
+							aie pitié de <span class='red'>N.</span>, ton ami,
+							(qui mène son dernier combat contre la mort) ;
+							Nous prions pour lui avec toute notre foi :
+							qu’il soit soulagé dans son âme et son corps,
+							que le pardon demandé lui soit accordé,
+							et que ton amour demeure sa force.
+							Soutiens aussi dans cette épreuve
+							ceux qui l’ont entouré et soigné.
+							Par ton Fils Jésus Christ,
+							qui a vaincu la mort pour nous ouvrir la vie éternelle.<br>
+							<span class=red>R/. </span> Amen.</div>
+						<div class=red>
+							ou bien :</div>
+						<div>Seigneur Jésus,
+							Tu as souffert la Passion pour le salut des hommes,
+							et tu as promis au bon larron, crucifié à tes côtés,
+							qu’il serait avec toi dans le Paradis ;
+							Nous te prions pour <span class='red'>N.</span> (ce malade)
+							qui est dans une grande détresse :
+							Allège sa souffrance présente,
+							et fais-lui connaître la lumière et la paix.
+							Toi qui règnes pour les siècles des siècles.<br>
+							<span class=red>R/. </span> Amen.</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+		<div id="menu_diamante"
+			style="  position: absolute;  bottom: 2em;  left: 50%;  transform: translateX(-50%);  width: auto;  font-weight: bold;  display: none;  z-index: 30000;  text-align: left;">
+			<ul
+				class="ul_normal" id="tab_diamante">
+				<li  id="exitBtn" ontouchend="navigator.app.exitApp()">
+					<img src="../../exit.png" alt="Icono"	style="height: 1.2em;" /></li>
+				<li
+					ontouchend="event.stopPropagation();cambia_vista('menu_diamante'); window.location='../preferencias.html'; return false">
+					<img src="../../gear.png" alt="Icono"
+						style="height: 1.2em;"
+						ontouchend="$('#mis_intenciones0').toggle()" /></li>
+				<!-- <li
+		ontouchend=" cambia_idiomas(nuevoidioma1,nuevoidioma2);">
+		<img src="../../dos_colum.png" alt="Icono"
+			style="height: 1.2em;"> &nbsp;<=>&nbsp; <img src="../../una_colum.png"
+			alt="Icono"
+			style="height: 1.2em;"></li> -->
+				<li
+					ontouchend="event.stopPropagation();cambia_vista('menu_diamante'); window.location='../ayuda.html'; return false"><img
+						src="../../interrogacion_rojo.png" style="height:1.3em;"></li>
+				<li
+					id="menunoche"
+					ontouchend="event.stopPropagation();cambia_vista('menu_diamante'); pon_noche();"><img
+						style="height: 1em;" id="bot_noche" src="../../noche.png"></li>
+				<li
+					ontouchend="cambia_pref('tipoletra', nuevaletra ); cambia_fuente(); "><span
+						style=" font-family: Times New Roman; ">ABC</span> &nbsp;<=>&nbsp; <span
+						style=" font-family: Arial; ">ABC</span></li>
+				<li id="titulo002"
+					ontouchend="cambia_pref('tamanotexto', masgrande ); cambia_tamanoletra(masgrande);">12&nbsp;=>&nbsp;<span
+						style=" font-size: 13pt; ">13</span></li>
+				<li id="titulo003"
+					ontouchend="cambia_pref('tamanotexto', maspeq ); cambia_tamanoletra(maspeq); ">12&nbsp;=>&nbsp;<span
+						style=" font-size: 11pt; ">11</span></li>
+				<!-- <li
+		ontouchend="modocopia = ! modocopia ; if (modocopia) { $(this).css('background-color','green'); } else {$(this).css('background-color','maroon'); }; cambia_vista('menu_diamante'); "><img
+			style="height: 1em;" id="bot_copy" src="../../copy-icon.png"></li> -->
+			</ul>
+		</div>
+		<div id="piedepantalla" class="navbar">
+			<ol
+				id="menupie">
+				<li class="botonabajo" ontouchend="botonPantArriba();"><img
+						id="bot_arriba" src="../../angle-double-up2.png" style=" height: 1.6em;"
+						border="0"></li>
+				<li class="botonabajo"
+					ontouchend="cambia_titulos(); cambia_vista('menu_grabar');" '=""><img
+						id="bot_grabar" src="../../bookmark-o2.png"
+						style="height: 1.6em; display: none;"></li>
+				<li
+					ontouchend="event.stopPropagation();cambia_vista('menu_diamante');"><img id="bot_indice"
+						src="../../asterisk2.png" style=" height: 1.6em;"></li>
+				<li class="botonabajo"
+					ontouchend="botonPantAbajo();"><img id="bot_abajo"
+						src="../../angle-double-down2.png" style=" height: 1.6em;"></li>
+			</ol>
+		</div>
+	</body>
+	<script>
+
+
+if (!estoymac) {
+$('.solo_android').css('display', 'block');
+$('.solo_mac').css('display', 'none');
+} else {
+$('.solo_android').css('display', 'none');
+$('.solo_mac').css('display', 'block');
+}
+
+function getUrlParameter(name) {
+		name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+		var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+		var results = regex.exec(location.search);
+		return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+
+$(function($) {
+var input = $('#micampo');
+input.keyup(function(e) {
+pon_pref("misintenciones", $("#micampo").val().replace(/\n/g, "<br>"));
+});
+});
+$('#titulo002').html(mipreferencia['tamanotexto'] + "&nbsp;&#9654;&#xFE0E;&nbsp;<span style=' font-size: 120%; '>" + masgrande + "</span>");
+$('#titulo003').html(mipreferencia['tamanotexto'] + "&nbsp;&#9654;&#xFE0E;&nbsp;<span style=' font-size: 80%; '>" + maspeq + "</span>");
+
+document.addEventListener('DOMContentLoaded', function () { 
+if (esDispositivoMovil) {
+
+if (mipreferencia['presentaciontexto'] == 2) $(" .cast , .engl , .latin , .germ, .port, .ital  , .fran ").each(function() {
+$(this).touchend(function() {
+cambialengua(this);
+return false;
+});
+});
+} else {
+
+if (mipreferencia['presentaciontexto'] == 2) $(" .cast , .engl , .latin , .germ, .port, .ital  , .fran ").each(function() {
+$(this).click(function() {
+cambialengua(this);
+return false;
+});
+
+});
+}
+
+$('#idioma_1').val(dime_pref('idioma_dev_1',idiomas[mipreferencia['misal_pral']]))
+$('#idioma_2').val(dime_pref('idioma_dev_2',idiomas[mipreferencia['segundoidioma']]))
+});
+var ajuste = dime_pref("ajuste", 10);
+function getUrlParameter(name) {
+		name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+		var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+		var results = regex.exec(location.search);
+		return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+window.addEventListener("DOMContentLoaded", loaded, false);
+//document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, ajuste*100); }, false);
+</script>
+</html>
