@@ -13,13 +13,21 @@
   // For Kindle browser, treat file:// as web (no Cordova bridge available).
   var isWeb = proto === "http:" || proto === "https:" || (proto === "file:" && isKindle);
 
+  function loadScript(url, callback) {
+    var s = document.createElement("script");
+    s.src = url;
+    s.onload = function () { if (callback) callback(); };
+    s.onerror = function () { if (callback) callback(); };
+    document.head.appendChild(s);
+  }
+
   if (isWeb) {
     // Web (Vercel / localhost): do NOT load Cordova Android bridge.
-    // Otherwise browsers will show prompt("gap:...") dialogs.
-    document.write('<script src="' + base + 'cordova_web_shim.js"><\/script>');
+    loadScript(base + "cordova_web_shim.js");
   } else {
     // Cordova app (file://, cdvfile://): load the real Cordova runtime.
-    document.write('<script src="' + base + 'cordova.js"><\/script>');
-    document.write('<script src="' + base + 'cordova_plugins.js"><\/script>');
+    loadScript(base + "cordova.js", function () {
+      loadScript(base + "cordova_plugins.js");
+    });
   }
 })();

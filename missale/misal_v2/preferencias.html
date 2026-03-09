@@ -389,6 +389,7 @@
             }
 
             // Corrige comportamento de cliques em botões (legado)
+            var esDispositivoMovil = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
             if (!esDispositivoMovil) {
                 var elementos = document.querySelectorAll("[ontouchend]")
                 elementos.forEach(function (elemento) {
