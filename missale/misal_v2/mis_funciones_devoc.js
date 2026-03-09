@@ -317,7 +317,7 @@ function calcularAlturaPagina() {
       return window.innerHeight || 600;
     }
   } else {
-    console.warn('⚠️ Elementos cabecera o piedepantalla no encontrados');
+    // Normal em páginas sem header/footer fixo (ex: feria_actual.html)
     return window.innerHeight || 600;
   }
 }
@@ -1070,12 +1070,22 @@ function avanza_pantalla() {
 }
 
 function botonPantAbajo() {
-  myScroll.scrollTo(0, avancepantalla, 200, true);
+  if (typeof myScroll !== 'undefined' && myScroll) {
+    myScroll.scrollTo(0, avancepantalla, 200, true);
+  } else {
+    var cont = document.getElementById('contenedor');
+    if (cont) cont.scrollTop += (avancepantalla || 300);
+  }
   return false;
 }
 
 function botonPantArriba() {
-  myScroll.scrollTo(0, -avancepantalla, 200, true);
+  if (typeof myScroll !== 'undefined' && myScroll) {
+    myScroll.scrollTo(0, -avancepantalla, 200, true);
+  } else {
+    var cont = document.getElementById('contenedor');
+    if (cont) cont.scrollTop -= (avancepantalla || 300);
+  }
 }
 
 // Placeholder para arreglaCarga - função grande que precisa ser convertida
@@ -1767,8 +1777,8 @@ function arreglaCarga(pestana) {
   // lo anterior es para depuracion en navegador
 
   Promise.all(tareas).then(function() {
-  reemplazarComentarios()
-    myScroll.refresh();
+    reemplazarComentarios();
+    if (typeof myScroll !== 'undefined' && myScroll) myScroll.refresh();
   });
   
 }
